@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Botswana Business Hub</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Learn about Botswana Business Hub - our mission, vision, and team. We're dedicated to connecting businesses and customers across Botswana to foster economic growth.">
+    <meta name="keywords" content="about us, our mission, our team, Botswana business, company story">
+    <meta property="og:title" content="About Us - Botswana Business Hub">
+    <meta property="og:description" content="Discover the story behind Botswana's fastest growing business community.">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom styles for about page -->
+    <style>
+        /* Hero Section */
+        .about-hero {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-hero::before {
+            content: '🏆';
+            position: absolute;
+            right: 50px;
+            bottom: 50px;
+            font-size: 200px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        
+        .about-hero::after {
+            content: '🤝';
+            position: absolute;
+            left: 50px;
+            top: 50px;
+            font-size: 150px;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+        
+        .about-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .about-hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Story Section */
+        .story-section {
+            padding: 5rem 2rem;
+            background: white;
+        }
+        
+        .story-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .story-content h2 {
+            color: #1e3c72;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .story-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #f4b400;
+            border-radius: 2px;
+        }
+        
+        .story-content p {
+            color: #495057;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .story-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .story-stat {
+            text-align: center;
+        }
+        
+        .story-stat .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e3c72;
+            line-height: 1.2;
+        }
+        
+        .story-stat .label {
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .story-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .story-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .story-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .story-image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 2rem 1rem 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Mission Vision Section */
+        .mission-vision {
+            padding: 5rem 2rem;
+            background: #f8f9fa;
+        }
+        
+        .mv-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+        
+        .mv-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mv-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(30,60,114,0.2);
+        }
+        
+        .mv-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1e3c72, #f4b400);
+        }
+        
+        .mv-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: #f4b400;
+            font-size: 2.5rem;
+        }
+        
+        .mv-card h3 {
+            color: #1e3c72;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .mv-card p {
+            color: #495057;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        /* Values Section */
+        .values-section {
+            padding: 5rem 2rem;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h2 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: #6c757d;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .values-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        .value-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover {
+            background: #f8f9fa;
+            transform: translateY(-5px);
+        }
+        
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            background: #f8f9fa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: #1e3c72;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover .value-icon {
+            background: #1e3c72;
+            color: #f4b400;
+        }
+        
+        .value-card h4 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .value-card p {
+            color: #6c757d;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        /* Team Section */
+        .team-section {
+            padding: 5rem 2rem;
+            background: #f8f9fa;
+        }
+        
+        .team-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+        
+        .team-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(30,60,114,0.2);
+        }
+        
+        .team-image {
+            height: 300px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .team-card:hover .team-image img {
+            transform: scale(1.1);
+        }
+        
+        .team-social {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            transition: bottom 0.3s ease;
+        }
+        
+        .team-card:hover .team-social {
+            bottom: 0;
+        }
+        
+        .team-social a {
+            width: 40px;
+            height: 40px;
+            background: #f4b400;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3c72;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .team-social a:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+        
+        .team-info {
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .team-info h3 {
+            color: #1e3c72;
+            margin-bottom: 0.25rem;
+            font-size: 1.3rem;
+        }
+        
+        .team-info .position {
+            color: #f4b400;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .team-info p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        /* Impact Section */
+        .impact-section {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .impact-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .impact-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        .impact-item {
+            text-align: center;
+        }
+        
+        .impact-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #f4b400;
+            margin-bottom: 0.5rem;
+        }
+        
+        .impact-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .impact-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+        
+        /* Partners Section */
+        .partners-section {
+            padding: 5rem 2rem;
+            background: white;
+        }
+        
+        .partners-grid {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .partner-logo {
+            text-align: center;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        
+        .partner-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        .partner-icon {
+            font-size: 4rem;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+        
+        .partner-name {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+        
+        /* Timeline Section */
+        .timeline-section {
+            padding: 5rem 2rem;
+            background: #f8f9fa;
+        }
+        
+        .timeline {
+            max-width: 1000px;
+            margin: 3rem auto 0;
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, #1e3c72, #f4b400);
+        }
+        
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-date {
+            width: 200px;
+            padding: 1rem;
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(30,60,114,0.3);
+        }
+        
+        .timeline-content {
+            width: calc(50% - 120px);
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 2px;
+            background: #1e3c72;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -20px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -20px;
+        }
+        
+        .timeline-content h4 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .timeline-content p {
+            color: #6c757d;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #f4b400, #f6c23e);
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            color: #1e3c72;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-buttons .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .cta-buttons .btn-primary {
+            background: #1e3c72;
+            color: white;
+        }
+        
+        .cta-buttons .btn-primary:hover {
+            background: #2a5298;
+        }
+        
+        .cta-buttons .btn-outline {
+            border: 2px solid #1e3c72;
+            color: #1e3c72;
+        }
+        
+        .cta-buttons .btn-outline:hover {
+            background: #1e3c72;
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .story-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .story-content h2::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .story-content {
+                text-align: center;
+            }
+            
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .impact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .partners-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-left: 60px;
+            }
+            
+            .timeline-date {
+                width: auto;
+                margin-bottom: 1rem;
+            }
+            
+            .timeline-content {
+                width: 100%;
+            }
+            
+            .timeline-content::before {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .mission-vision .mv-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .partners-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .story-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-store"></i>
+            <div>
+                <h1>Botswana Business Hub</h1>
+                <span>Connect · Grow · Succeed</span>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="providers.html">Providers</a>
+            <a href="marketplace.html">Marketplace</a>
+            <a href="events.html">Events</a>
+            <a href="about.html" class="active">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="user-menu" id="userMenu">
+            <a href="login.html" class="btn btn-outline" style="color: white; border-color: white;">Login</a>
+            <a href="register.html" class="btn btn-primary" style="background: #f4b400; color: #1e3c72;">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <h1 data-aos="fade-down">Our Story</h1>
+        <p data-aos="fade-up">Building Botswana's most trusted digital business community, one connection at a time.</p>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="story-container">
+            <div class="story-content" data-aos="fade-right">
+                <h2>How It All Began</h2>
+                <p>Botswana Business Hub was born from a simple observation: small businesses and entrepreneurs in Botswana were struggling to reach customers affordably. Traditional advertising was too expensive, and online platforms required paid promotions that many couldn't afford.</p>
+                <p>In 2020, our founder, Keitumetse Modise, a small business owner herself, experienced these challenges firsthand. She envisioned a platform where businesses of all sizes could connect with customers, distributors, and manufacturers without breaking the bank.</p>
+                <p>What started as a small WhatsApp group of 50 local businesses has grown into Botswana's premier digital business ecosystem, serving thousands of users across the country.</p>
+                
+                <div class="story-stats">
+                    <div class="story-stat">
+                        <div class="number">2020</div>
+                        <div class="label">Founded</div>
+                    </div>
+                    <div class="story-stat">
+                        <div class="number">500+</div>
+                        <div class="label">Businesses</div>
+                    </div>
+                    <div class="story-stat">
+                        <div class="number">1k+</div>
+                        <div class="label">Customers</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="story-image" data-aos="fade-left">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Botswana Business Hub Team">
+                <div class="story-image-caption">
+                    Our team celebrating our 500th business milestone in Gaborone
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="mission-vision">
+        <div class="mv-container">
+            <div class="mv-card" data-aos="flip-left">
+                <div class="mv-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h3>Our Mission</h3>
+                <p>To democratize business growth in Botswana by providing an affordable, accessible platform where every entrepreneur—from informal traders to registered companies—can showcase their products and services, connect with customers, and build lasting business relationships.</p>
+            </div>
+            
+            <div class="mv-card" data-aos="flip-right">
+                <div class="mv-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h3>Our Vision</h3>
+                <p>To be the heartbeat of Botswana's entrepreneurial ecosystem, creating a digitally connected business community that drives economic growth, fosters innovation, and empowers every Motswana entrepreneur to succeed in the digital age.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Our Core Values</h2>
+            <p>The principles that guide everything we do</p>
+        </div>
+        
+        <div class="values-grid">
+            <div class="value-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="value-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <h4>Community First</h4>
+                <p>We believe in the power of community. Every feature we build, every decision we make, puts our users' needs first.</p>
+            </div>
+            
+            <div class="value-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="value-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h4>Trust & Integrity</h4>
+                <p>We build trust through transparency, verification, and honest business practices. Your success is our success.</p>
+            </div>
+            
+            <div class="value-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="value-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h4>Innovation</h4>
+                <p>We continuously evolve our platform to meet the changing needs of Botswana's dynamic business landscape.</p>
+            </div>
+            
+            <div class="value-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="value-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h4>Inclusivity</h4>
+                <p>We welcome businesses of all sizes, from informal traders to large manufacturers. Everyone has a place here.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Our Journey</h2>
+            <p>Milestones that shaped our story</p>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item" data-aos="fade-right">
+                <div class="timeline-date">January 2020</div>
+                <div class="timeline-content">
+                    <h4>The Beginning</h4>
+                    <p>Started as a WhatsApp group with 50 local businesses in Gaborone sharing leads and referrals.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-left">
+                <div class="timeline-date">August 2020</div>
+                <div class="timeline-content">
+                    <h4>First Website Launch</h4>
+                    <p>Launched our first website with basic business listings. Reached 100 businesses in 3 months.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-right">
+                <div class="timeline-date">March 2021</div>
+                <div class="timeline-content">
+                    <h4>Expansion to Francistown</h4>
+                    <p>Expanded our reach to Francistown, adding 50 new businesses from the northern region.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-left">
+                <div class="timeline-date">September 2021</div>
+                <div class="timeline-content">
+                    <h4>Mobile App Launch</h4>
+                    <p>Launched our mobile app, making it easier for businesses and customers to connect on the go.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-right">
+                <div class="timeline-date">June 2022</div>
+                <div class="timeline-content">
+                    <h4>Marketplace Feature</h4>
+                    <p>Introduced the marketplace, connecting manufacturers with distributors across Botswana.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-left">
+                <div class="timeline-date">January 2023</div>
+                <div class="timeline-content">
+                    <h4>500 Business Milestone</h4>
+                    <p>Celebrated 500 registered businesses and 1,000+ active customers on our platform.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-right">
+                <div class="timeline-date">Today</div>
+                <div class="timeline-content">
+                    <h4>National Coverage</h4>
+                    <p>Now serving businesses in all major cities and towns across Botswana, with plans for regional expansion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Meet Our Team</h2>
+            <p>Passionate people dedicated to your success</p>
+        </div>
+        
+        <div class="team-grid">
+            <div class="team-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="team-image">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Keitumetse Modise">
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="team-info">
+                    <h3>Keitumetse Modise</h3>
+                    <div class="position">Founder & CEO</div>
+                    <p>Former small business owner with 15+ years experience in Botswana's entrepreneurial ecosystem.</p>
+                </div>
+            </div>
+            
+            <div class="team-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="team-image">
+                    <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Thabo Nkosi">
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="team-info">
+                    <h3>Thabo Nkosi</h3>
+                    <div class="position">Chief Technology Officer</div>
+                    <p>Tech innovator with expertise in building scalable platforms for African businesses.</p>
+                </div>
+            </div>
+            
+            <div class="team-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="team-image">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Mpho Banda">
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="team-info">
+                    <h3>Mpho Banda</h3>
+                    <div class="position">Head of Business Development</div>
+                    <p>Passionate about connecting businesses and creating growth opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section class="impact-section">
+        <h2 data-aos="fade-up">Our Impact</h2>
+        
+        <div class="impact-grid">
+            <div class="impact-item" data-aos="zoom-in" data-aos-delay="100">
+                <div class="impact-number">500+</div>
+                <div class="impact-label">Businesses</div>
+                <div class="impact-description">Registered on our platform</div>
+            </div>
+            
+            <div class="impact-item" data-aos="zoom-in" data-aos-delay="200">
+                <div class="impact-number">1,200+</div>
+                <div class="impact-label">Jobs Created</div>
+                <div class="impact-description">Through businesses on our platform</div>
+            </div>
+            
+            <div class="impact-item" data-aos="zoom-in" data-aos-delay="300">
+                <div class="impact-number">P5M+</div>
+                <div class="impact-label">Transactions</div>
+                <div class="impact-description">Processed through our platform</div>
+            </div>
+            
+            <div class="impact-item" data-aos="zoom-in" data-aos-delay="400">
+                <div class="impact-number">12</div>
+                <div class="impact-label">Cities</div>
+                <div class="impact-description">Across Botswana covered</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners-section">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Our Partners</h2>
+            <p>Working together to support Botswana's entrepreneurs</p>
+        </div>
+        
+        <div class="partners-grid">
+            <div class="partner-logo" data-aos="fade-up" data-aos-delay="100">
+                <div class="partner-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="partner-name">CEDA</div>
+            </div>
+            
+            <div class="partner-logo" data-aos="fade-up" data-aos-delay="200">
+                <div class="partner-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="partner-name">LEA</div>
+            </div>
+            
+            <div class="partner-logo" data-aos="fade-up" data-aos-delay="300">
+                <div class="partner-icon">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="partner-name">BNB</div>
+            </div>
+            
+            <div class="partner-logo" data-aos="fade-up" data-aos-delay="400">
+                <div class="partner-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="partner-name">Orange</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2 data-aos="fade-up">Be Part of Our Story</h2>
+        <p data-aos="fade-up">Join thousands of businesses already growing with Botswana Business Hub</p>
+        
+        <div class="cta-buttons" data-aos="fade-up" data-aos-delay="200">
+            <a href="register.html" class="btn btn-primary">Create Free Account</a>
+            <a href="contact.html" class="btn btn-outline">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Botswana Business Hub</h4>
+                <p>Connecting businesses and customers across Botswana. Your trusted platform for growth and success.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="providers.html">Service Providers</a></li>
+                    <li><a href="marketplace.html">Marketplace</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> Gaborone, Botswana</li>
+                    <li><i class="fas fa-phone"></i> +267 123 4567</li>
+                    <li><i class="fas fa-envelope"></i> info@botswanabusinesshub.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Botswana Business Hub. All rights reserved. Built with ❤️ for Batswana entrepreneurs.</p>
+        </div>
+    </footer>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- JavaScript -->
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+        
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('bbh_user');
+            if (user) {
+                const userData = JSON.parse(user);
+                const userMenu = document.getElementById('userMenu');
+                userMenu.innerHTML = `
+                    <span style="color: white;">Welcome, ${userData.firstName || userData.name || 'User'}</span>
+                    <a href="dashboard.html" class="btn btn-primary" style="background: #f4b400; color: #1e3c72;">Dashboard</a>
+                `;
+            }
+            
+            // Add smooth scrolling to all links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Animate numbers on scroll
+            const impactNumbers = document.querySelectorAll('.impact-number');
+            const storyNumbers = document.querySelectorAll('.story-stat .number');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateNumbers(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            impactNumbers.forEach(num => observer.observe(num));
+            storyNumbers.forEach(num => observer.observe(num));
+        });
+        
+        // Animate numbers function
+        function animateNumbers(element) {
+            const value = element.textContent;
+            if (value.includes('+')) {
+                const num = parseInt(value.replace('+', ''));
+                let current = 0;
+                const increment = num / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= num) {
+                        element.textContent = num + '+';
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(current) + '+';
+                    }
+                }, 20);
+            }
+        }
+    </script>
+</body>
+</html>
