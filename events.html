@@ -932,8 +932,8 @@
         <div class="logo">
             <i class="fas fa-store"></i>
             <div>
-                <h1>Botswana Business Hub</h1>
-                <span>Connect · Grow · Succeed</span>
+                <h1>Bzz Connect</h1>
+                <span>Connecting Businesses. Creating Opportunities</span>
             </div>
         </div>
         <div class="nav-links">
@@ -975,16 +975,488 @@
         </div>
     </section>
 
-    <!-- Event Tabs -->
-    <div class="event-tabs">
-        <div class="tabs-container">
-            <button class="tab-btn active" onclick="filterEvents('all')">All Events</button>
-            <button class="tab-btn" onclick="filterEvents('workshop')">Workshops</button>
-            <button class="tab-btn" onclick="filterEvents('summit')">Summits</button>
-            <button class="tab-btn" onclick="filterEvents('networking')">Networking</button>
-            <button class="tab-btn" onclick="filterEvents('training')">Training</button>
-            <button class="tab-btn" onclick="filterEvents('webinar')">Webinars</button>
+   <!-- Event Tabs -->
+<div class="event-tabs">
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="filterEvents('all')">All Events</button>
+        <button class="tab-btn" onclick="filterEvents('workshop')">Workshops</button>
+        <button class="tab-btn" onclick="filterEvents('summit')">Summits</button>
+        <button class="tab-btn" onclick="filterEvents('networking')">Networking</button>
+        <button class="tab-btn" onclick="filterEvents('training')">Training</button>
+        <button class="tab-btn" onclick="filterEvents('webinar')">Webinars</button>
+    </div>
+</div>
+
+<!-- Events Grid -->
+<div class="events-grid" id="eventsGrid">
+    <!-- Workshop Events -->
+    <div class="event-card" data-category="workshop">
+        <div class="event-image">
+            <img src="images/workshop1.jpg" alt="Business Workshop">
+            <span class="event-badge">Workshop</span>
         </div>
+        <div class="event-content">
+            <h3>Digital Marketing Workshop</h3>
+            <p class="event-date"><i class="fas fa-calendar"></i> March 20, 2024</p>
+            <p class="event-location"><i class="fas fa-map-marker-alt"></i> Gaborone</p>
+            <p class="event-description">Learn how to grow your business online with digital marketing strategies.</p>
+            <div class="event-footer">
+                <span class="event-price">Free</span>
+                <button class="btn btn-primary" onclick="registerEvent('Digital Marketing Workshop')">Register</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summit Events -->
+    <div class="event-card" data-category="summit">
+        <div class="event-image">
+            <img src="images/summit1.jpg" alt="Business Summit">
+            <span class="event-badge">Summit</span>
+        </div>
+        <div class="event-content">
+            <h3>Botswana Business Summit 2024</h3>
+            <p class="event-date"><i class="fas fa-calendar"></i> April 5-7, 2024</p>
+            <p class="event-location"><i class="fas fa-map-marker-alt"></i> Gaborone International Convention Centre</p>
+            <p class="event-description">The largest business gathering in Botswana with industry leaders.</p>
+            <div class="event-footer">
+                <span class="event-price">P500</span>
+                <button class="btn btn-primary" onclick="registerEvent('Botswana Business Summit 2024')">Register</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Networking Events -->
+    <div class="event-card" data-category="networking">
+        <div class="event-image">
+            <img src="images/networking1.jpg" alt="Networking Event">
+            <span class="event-badge">Networking</span>
+        </div>
+        <div class="event-content">
+            <h3>Entrepreneurs Networking Night</h3>
+            <p class="event-date"><i class="fas fa-calendar"></i> March 25, 2024</p>
+            <p class="event-location"><i class="fas fa-map-marker-alt"></i> Franscistown</p>
+            <p class="event-description">Connect with fellow entrepreneurs and potential partners.</p>
+            <div class="event-footer">
+                <span class="event-price">P100</span>
+                <button class="btn btn-primary" onclick="registerEvent('Entrepreneurs Networking Night')">Register</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Training Events -->
+    <div class="event-card" data-category="training">
+        <div class="event-image">
+            <img src="images/training1.jpg" alt="Business Training">
+            <span class="event-badge">Training</span>
+        </div>
+        <div class="event-content">
+            <h3>Financial Management Training</h3>
+            <p class="event-date"><i class="fas fa-calendar"></i> April 2-4, 2024</p>
+            <p class="event-location"><i class="fas fa-map-marker-alt"></i> Maun</p>
+            <p class="event-description">Master your business finances with expert trainers.</p>
+            <div class="event-footer">
+                <span class="event-price">P300</span>
+                <button class="btn btn-primary" onclick="registerEvent('Financial Management Training')">Register</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Webinar Events -->
+    <div class="event-card" data-category="webinar">
+        <div class="event-image">
+            <img src="images/webinar1.jpg" alt="Online Webinar">
+            <span class="event-badge">Webinar</span>
+        </div>
+        <div class="event-content">
+            <h3>E-commerce Success Webinar</h3>
+            <p class="event-date"><i class="fas fa-calendar"></i> March 28, 2024</p>
+            <p class="event-location"><i class="fas fa-globe"></i> Online</p>
+            <p class="event-description">Learn how to start and grow your online store.</p>
+            <div class="event-footer">
+                <span class="event-price">Free</span>
+                <button class="btn btn-primary" onclick="registerEvent('E-commerce Success Webinar')">Register</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- No Events Message -->
+<div id="noEventsMessage" style="display: none; text-align: center; padding: 3rem;">
+    <i class="fas fa-calendar-times" style="font-size: 3rem; color: #6c757d;"></i>
+    <h3 style="color: #1e3c72; margin: 1rem 0;">No Events Found</h3>
+    <p style="color: #6c757d;">There are no events in this category at the moment.</p>
+</div>
+
+<style>
+    .event-tabs {
+        margin: 2rem 0;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 0.5rem 0;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tabs-container {
+        display: inline-flex;
+        gap: 1rem;
+        padding: 0.25rem;
+        background: #f8f9fa;
+        border-radius: 50px;
+    }
+
+    .tab-btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        background: transparent;
+        color: #495057;
+        font-weight: 500;
+        cursor: pointer;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+    }
+
+    .tab-btn:hover {
+        background: rgba(30, 60, 114, 0.1);
+        color: #1e3c72;
+    }
+
+    .tab-btn.active {
+        background: #1e3c72;
+        color: white;
+    }
+
+    .events-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .event-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .event-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(30,60,114,0.15);
+    }
+
+    .event-image {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .event-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .event-card:hover .event-image img {
+        transform: scale(1.05);
+    }
+
+    .event-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: #f4b400;
+        color: #1e3c72;
+        padding: 0.25rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .event-content {
+        padding: 1.5rem;
+    }
+
+    .event-content h3 {
+        color: #1e3c72;
+        margin-bottom: 1rem;
+        font-size: 1.25rem;
+    }
+
+    .event-date, .event-location {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .event-date i, .event-location i {
+        margin-right: 0.5rem;
+        color: #f4b400;
+    }
+
+    .event-description {
+        color: #495057;
+        margin: 1rem 0;
+        line-height: 1.6;
+    }
+
+    .event-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+    }
+
+    .event-price {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1e3c72;
+    }
+
+    .btn-primary {
+        background: #1e3c72;
+        color: white;
+        padding: 0.5rem 1.5rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: #2a5298;
+    }
+
+    /* Animation for filtering */
+    .event-card {
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .events-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+    }
+</style>
+
+<script>
+    // Filter events by category
+    function filterEvents(category) {
+        // Get all event cards
+        const events = document.querySelectorAll('.event-card');
+        const noEventsMessage = document.getElementById('noEventsMessage');
+        
+        // Update active tab
+        const tabs = document.querySelectorAll('.tab-btn');
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+            if (tab.getAttribute('onclick').includes(category)) {
+                tab.classList.add('active');
+            }
+        });
+
+        let visibleCount = 0;
+
+        // Filter events
+        events.forEach(event => {
+            const eventCategory = event.getAttribute('data-category');
+            
+            if (category === 'all' || eventCategory === category) {
+                event.style.display = 'block';
+                visibleCount++;
+            } else {
+                event.style.display = 'none';
+            }
+        });
+
+        // Show/hide no events message
+        if (visibleCount === 0) {
+            noEventsMessage.style.display = 'block';
+        } else {
+            noEventsMessage.style.display = 'none';
+        }
+
+        // Optional: Show notification
+        showNotification(`Showing ${visibleCount} events`);
+    }
+
+    // Register for event
+    function registerEvent(eventName) {
+        // Check if user is logged in
+        const user = localStorage.getItem('bbh_user');
+        
+        if (!user) {
+            // Redirect to login if not logged in
+            if (confirm('Please login to register for events. Go to login page?')) {
+                window.location.href = 'login.html?redirect=events';
+            }
+            return;
+        }
+
+        // Show registration modal
+        showRegistrationModal(eventName);
+    }
+
+    // Show registration modal
+    function showRegistrationModal(eventName) {
+        // Create modal
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        `;
+
+        modal.innerHTML = `
+            <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 400px; width: 90%;">
+                <h3 style="color: #1e3c72; margin-bottom: 1.5rem;">Register for Event</h3>
+                <p style="margin-bottom: 1rem;"><strong>Event:</strong> ${eventName}</p>
+                <form onsubmit="confirmRegistration(event, '${eventName}')">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem;">Full Name</label>
+                        <input type="text" required style="width: 100%; padding: 0.75rem; border: 1px solid #dee2e6; border-radius: 5px;">
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem;">Email</label>
+                        <input type="email" required style="width: 100%; padding: 0.75rem; border: 1px solid #dee2e6; border-radius: 5px;">
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem;">Phone Number</label>
+                        <input type="tel" required style="width: 100%; padding: 0.75rem; border: 1px solid #dee2e6; border-radius: 5px;">
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="submit" style="flex: 2; background: #1e3c72; color: white; padding: 0.75rem; border: none; border-radius: 5px; cursor: pointer;">
+                            Confirm Registration
+                        </button>
+                        <button type="button" onclick="closeModal(this)" style="flex: 1; background: transparent; border: 1px solid #1e3c72; color: #1e3c72; padding: 0.75rem; border-radius: 5px; cursor: pointer;">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+    }
+
+    // Confirm registration
+    function confirmRegistration(event, eventName) {
+        event.preventDefault();
+        closeModal(event.target);
+        
+        // Show success message
+        showNotification(`Successfully registered for ${eventName}!`, 'success');
+        
+        // In a real app, send registration data to server
+        console.log('Registration confirmed for:', eventName);
+    }
+
+    // Close modal
+    function closeModal(element) {
+        const modal = element.closest('.modal');
+        if (modal) {
+            modal.remove();
+        }
+    }
+
+    // Show notification
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: ${type === 'success' ? '#28a745' : '#1e3c72'};
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 9999;
+            animation: slideIn 0.3s ease;
+        `;
+        notification.textContent = message;
+
+        // Add animation style
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        document.body.appendChild(notification);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideIn 0.3s ease reverse';
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
+
+    // Search events
+    function searchEvents() {
+        const searchInput = document.getElementById('eventSearch');
+        const searchTerm = searchInput.value.toLowerCase();
+        const events = document.querySelectorAll('.event-card');
+        
+        events.forEach(event => {
+            const title = event.querySelector('h3').textContent.toLowerCase();
+            const description = event.querySelector('.event-description').textContent.toLowerCase();
+            
+            if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                event.style.display = 'block';
+            } else {
+                event.style.display = 'none';
+            }
+        });
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Show all events by default
+        filterEvents('all');
+        
+        // Add search input if needed
+        const searchBox = document.querySelector('.search-box');
+        if (searchBox) {
+            const searchInput = searchBox.querySelector('input');
+            if (searchInput) {
+                searchInput.setAttribute('onkeyup', 'searchEvents()');
+            }
+        }
+    });
+</script>
         
         <button class="create-event-btn" onclick="openCreateEventModal()">
             <i class="fas fa-plus"></i> Create Event
