@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Providers - Botswana Business Hub</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Find verified service providers in Botswana. Browse hairdressers, mechanics, tutors, photographers, plumbers and more. Read reviews and book services online.">
+    <meta name="keywords" content="Botswana service providers, local services, hairdressers Gaborone, mechanics Francistown, tutors Botswana, plumbers, photographers">
+    <meta property="og:title" content="Service Providers - Botswana Business Hub">
+    <meta property="og:description" content="Connect with trusted service providers across Botswana. Read reviews, compare prices, and book services online.">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom styles for providers page -->
+    <style>
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .page-header .breadcrumb {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .page-header .breadcrumb a {
+            color: #f4b400;
+            text-decoration: none;
+        }
+        
+        .page-header .breadcrumb span {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        /* Main Content Layout */
+        .providers-main {
+            display: flex;
+            min-height: calc(100vh - 200px);
+            background: #f5f7fa;
+        }
+        
+        /* Filters Sidebar */
+        .filters-sidebar {
+            width: 300px;
+            background: white;
+            padding: 2rem;
+            border-right: 1px solid #dee2e6;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            transition: all 0.3s ease;
+        }
+        
+        .filters-sidebar.collapsed {
+            width: 80px;
+            padding: 2rem 1rem;
+        }
+        
+        .filters-sidebar.collapsed .filter-section h3,
+        .filters-sidebar.collapsed .filter-section label,
+        .filters-sidebar.collapsed .filter-section .filter-title {
+            display: none;
+        }
+        
+        .filter-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-header h3 {
+            color: #1e3c72;
+            margin: 0;
+        }
+        
+        .clear-filters {
+            color: #f4b400;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .clear-filters:hover {
+            color: #1e3c72;
+        }
+        
+        .filter-section {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 1.5rem;
+        }
+        
+        .filter-section:last-child {
+            border-bottom: none;
+        }
+        
+        .filter-title {
+            font-weight: 600;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .filter-title i {
+            transition: transform 0.3s ease;
+        }
+        
+        .filter-title.collapsed i {
+            transform: rotate(-90deg);
+        }
+        
+        .filter-options {
+            transition: max-height 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .filter-options.collapsed {
+            max-height: 0;
+        }
+        
+        .filter-option {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .filter-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #1e3c72;
+        }
+        
+        .filter-option label {
+            cursor: pointer;
+            flex: 1;
+            color: #495057;
+        }
+        
+        .filter-option .count {
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+        
+        .rating-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .rating-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .rating-option .stars {
+            color: #f4b400;
+            letter-spacing: 2px;
+        }
+        
+        .price-range {
+            padding: 0.5rem 0;
+        }
+        
+        .price-inputs {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .price-inputs input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+        
+        .apply-price {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Providers Content */
+        .providers-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        /* Search and Sort Bar */
+        .search-sort-bar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+        }
+        
+        .sort-options {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .sort-options select {
+            padding: 0.75rem 2rem 0.75rem 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 25px;
+            background: white;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px;
+        }
+        
+        .view-options {
+            display: flex;
+            gap: 0.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 25px;
+            padding: 0.25rem;
+        }
+        
+        .view-option {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-option.active {
+            background: #1e3c72;
+            color: white;
+        }
+        
+        /* Providers Grid */
+        .providers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .providers-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+        
+        .providers-grid.list-view .provider-card {
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .providers-grid.list-view .provider-header {
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .providers-grid.list-view .provider-body {
+            flex: 1;
+        }
+        
+        .provider-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+        }
+        
+        .provider-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        .provider-card.featured {
+            border: 2px solid #f4b400;
+            position: relative;
+        }
+        
+        .provider-card.featured::before {
+            content: 'Featured';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #f4b400;
+            color: #1e3c72;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .provider-header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .provider-avatar {
+            width: 100px;
+            height: 100px;
+            background: #f4b400;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e3c72;
+            border: 4px solid white;
+            transition: transform 0.3s ease;
+        }
+        
+        .provider-card:hover .provider-avatar {
+            transform: scale(1.05);
+        }
+        
+        .provider-status {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #28a745;
+            border: 2px solid white;
+        }
+        
+        .provider-status.offline {
+            background: #6c757d;
+        }
+        
+        .provider-status.busy {
+            background: #dc3545;
+        }
+        
+        .provider-header h3 {
+            color: white;
+            margin-bottom: 0.25rem;
+            font-size: 1.25rem;
+        }
+        
+        .provider-header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        .provider-verified {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        
+        .provider-verified i {
+            color: #f4b400;
+            margin-right: 0.25rem;
+        }
+        
+        .provider-body {
+            padding: 1.5rem;
+        }
+        
+        .provider-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .stars {
+            color: #f4b400;
+            letter-spacing: 2px;
+        }
+        
+        .rating-number {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+        
+        .reviews-count {
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+        
+        .provider-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .provider-location i {
+            color: #f4b400;
+            width: 16px;
+        }
+        
+        .provider-description {
+            color: #495057;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        
+        .provider-services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-tag {
+            background: #f8f9fa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #1e3c72;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+        
+        .service-tag:hover {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+        
+        .provider-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-top: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            color: #1e3c72;
+            font-size: 1.1rem;
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: #6c757d;
+        }
+        
+        .provider-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .provider-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+        
+        .provider-price span {
+            font-size: 0.85rem;
+            font-weight: normal;
+            color: #6c757d;
+        }
+        
+        .provider-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #dee2e6;
+            background: white;
+            color: #1e3c72;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-icon:hover {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+        
+        .btn-icon.favorite.active {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+        
+        /* Quick View Modal */
+        .quick-view-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .quick-view-modal.active {
+            display: flex;
+        }
+        
+        .quick-view-content {
+            background: white;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            position: relative;
+            animation: modalSlideUp 0.3s ease;
+        }
+        
+        @keyframes modalSlideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .quick-view-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        
+        .quick-view-close:hover {
+            background: #1e3c72;
+            color: white;
+        }
+        
+        .quick-view-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+        
+        .quick-view-gallery {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        
+        .gallery-main {
+            width: 100%;
+            height: 300px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: #1e3c72;
+        }
+        
+        .gallery-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+        
+        .gallery-thumb {
+            height: 80px;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+        }
+        
+        .gallery-thumb:hover,
+        .gallery-thumb.active {
+            border-color: #1e3c72;
+        }
+        
+        .quick-view-info h2 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+        
+        .quick-view-meta {
+            display: flex;
+            gap: 2rem;
+            margin: 1rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .booking-form {
+            margin-top: 2rem;
+        }
+        
+        .booking-form .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .booking-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1e3c72;
+            font-weight: 500;
+        }
+        
+        .booking-form input,
+        .booking-form select,
+        .booking-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+        
+        .page-item {
+            list-style: none;
+        }
+        
+        .page-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            color: #1e3c72;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .page-link:hover,
+        .page-item.active .page-link {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+        
+        /* Loading Skeleton */
+        .skeleton-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .skeleton-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+        }
+        
+        .skeleton-line {
+            height: 1rem;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .skeleton-line:nth-child(2) { width: 80%; }
+        .skeleton-line:nth-child(3) { width: 60%; }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 12px;
+        }
+        
+        .no-results i {
+            font-size: 4rem;
+            color: #dee2e6;
+            margin-bottom: 1rem;
+        }
+        
+        .no-results h3 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+        
+        .no-results p {
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .filters-sidebar {
+                position: fixed;
+                left: -300px;
+                top: 80px;
+                z-index: 1000;
+                transition: left 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            }
+            
+            .filters-sidebar.active {
+                left: 0;
+            }
+            
+            .filter-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .quick-view-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .providers-grid.list-view .provider-card {
+                flex-direction: column;
+            }
+            
+            .providers-grid.list-view .provider-header {
+                width: 100%;
+            }
+            
+            .search-sort-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                min-width: auto;
+            }
+            
+            .sort-options {
+                justify-content: space-between;
+            }
+            
+            .provider-footer {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .provider-actions {
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-store"></i>
+            <div>
+                <h1>Botswana Business Hub</h1>
+                <span>Connect · Grow · Succeed</span>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="providers.html" class="active">Providers</a>
+            <a href="marketplace.html">Marketplace</a>
+            <a href="events.html">Events</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="user-menu" id="userMenu">
+            <a href="login.html" class="btn btn-outline" style="color: white; border-color: white;">Login</a>
+            <a href="register.html" class="btn btn-primary" style="background: #f4b400; color: #1e3c72;">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Service Providers</h1>
+        <p>Find trusted professionals for all your needs across Botswana</p>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> <span>></span> <span>Providers</span>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="providers-main">
+        <!-- Filter Toggle Button (Mobile) -->
+        <button class="filter-toggle" onclick="toggleFilters()">
+            <i class="fas fa-filter"></i>
+        </button>
+
+        <!-- Filters Sidebar -->
+        <aside class="filters-sidebar" id="filtersSidebar">
+            <div class="filter-header">
+                <h3>Filters</h3>
+                <span class="clear-filters" onclick="clearAllFilters()">Clear All</span>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleFilterSection(this)">
+                    <span>Category</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-hair" onchange="applyFilters()">
+                        <label for="cat-hair">Hair & Beauty</label>
+                        <span class="count">(24)</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-mechanic" onchange="applyFilters()">
+                        <label for="cat-mechanic">Auto Mechanics</label>
+                        <span class="count">(18)</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-tutor" onchange="applyFilters()">
+                        <label for="cat-tutor">Tutors</label>
+                        <span class="count">(15)</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-photo" onchange="applyFilters()">
+                        <label for="cat-photo">Photographers</label>
+                        <span class="count">(12)</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-plumber" onchange="applyFilters()">
+                        <label for="cat-plumber">Plumbers</label>
+                        <span class="count">(10)</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-electrician" onchange="applyFilters()">
+                        <label for="cat-electrician">Electricians</label>
+                        <span class="count">(8)</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-cleaner" onchange="applyFilters()">
+                        <label for="cat-cleaner">Cleaning Services</label>
+                        <span class="count">(7)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleFilterSection(this)">
+                    <span>Location</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="loc-gaborone" onchange="applyFilters()">
+                        <label for="loc-gaborone">Gaborone</label>
+                        <span class="count">(45)</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="loc-francistown" onchange="applyFilters()">
+                        <label for="loc-francistown">Francistown</label>
+                        <span class="count">(23)</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="loc-maun" onchange="applyFilters()">
+                        <label for="loc-maun">Maun</label>
+                        <span class="count">(15)</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="loc-kasane" onchange="applyFilters()">
+                        <label for="loc-kasane">Kasane</label>
+                        <span class="count">(8)</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="loc-palapye" onchange="applyFilters()">
+                        <label for="loc-palapye">Palapye</label>
+                        <span class="count">(7)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rating Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleFilterSection(this)">
+                    <span>Minimum Rating</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-options">
+                    <div class="rating-option" onclick="setRating(4.5)">
+                        <input type="radio" name="rating" id="rating-5" style="display: none;">
+                        <span class="stars">★★★★★</span>
+                        <span>(4.5 & up)</span>
+                    </div>
+                    <div class="rating-option" onclick="setRating(4.0)">
+                        <input type="radio" name="rating" id="rating-4" style="display: none;">
+                        <span class="stars">★★★★☆</span>
+                        <span>(4.0 & up)</span>
+                    </div>
+                    <div class="rating-option" onclick="setRating(3.5)">
+                        <input type="radio" name="rating" id="rating-3" style="display: none;">
+                        <span class="stars">★★★☆☆</span>
+                        <span>(3.5 & up)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Range Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleFilterSection(this)">
+                    <span>Price Range (BWP)</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-options">
+                    <div class="price-range">
+                        <div class="price-inputs">
+                            <input type="number" id="min-price" placeholder="Min" min="0" step="50">
+                            <span>to</span>
+                            <input type="number" id="max-price" placeholder="Max" min="0" step="50">
+                        </div>
+                        <button class="apply-price" onclick="applyPriceFilter()">Apply</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Availability Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleFilterSection(this)">
+                    <span>Availability</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="avail-today" onchange="applyFilters()">
+                        <label for="avail-today">Available Today</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="avail-weekend" onchange="applyFilters()">
+                        <label for="avail-weekend">Weekend Availability</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="avail-emergency" onchange="applyFilters()">
+                        <label for="avail-emergency">24/7 Emergency</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Verification Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleFilterSection(this)">
+                    <span>Verification</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="verified-only" onchange="applyFilters()">
+                        <label for="verified-only">Verified Only</label>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Providers Content -->
+        <div class="providers-content">
+            <!-- Search and Sort Bar -->
+            <div class="search-sort-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search by name, service, or location..." onkeyup="searchProviders()">
+                </div>
+                
+                <div class="sort-options">
+                    <select id="sortSelect" onchange="sortProviders()">
+                        <option value="recommended">Recommended</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="reviews">Most Reviewed</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                    
+                    <div class="view-options">
+                        <button class="view-option active" onclick="changeView('grid')" title="Grid View">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button class="view-option" onclick="changeView('list')" title="List View">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Count -->
+            <div style="margin-bottom: 1rem; color: #6c757d;">
+                <span id="resultsCount">24</span> providers found
+            </div>
+
+            <!-- Providers Grid -->
+            <div class="providers-grid" id="providersGrid">
+                <!-- Loading Skeleton (hidden by default) -->
+                <div id="loadingSkeleton" style="display: none;">
+                    <div class="skeleton-card">
+                        <div class="skeleton-avatar"></div>
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line" style="width: 40%;"></div>
+                    </div>
+                </div>
+
+                <!-- Provider Card 1 - Featured -->
+                <div class="provider-card featured" data-category="hair" data-location="gaborone" data-rating="4.8" data-reviews="156" data-price="250" data-verified="true">
+                    <div class="provider-header">
+                        <div class="provider-avatar">K</div>
+                        <div class="provider-status"></div>
+                        <h3>Keitumetse's Braiding</h3>
+                        <p>Hair Stylist</p>
+                        <span class="provider-verified"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                    <div class="provider-body">
+                        <div class="provider-rating">
+                            <span class="stars">★★★★½</span>
+                            <span class="rating-number">4.8</span>
+                            <span class="reviews-count">(156 reviews)</span>
+                        </div>
+                        <div class="provider-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Gaborone, CBD</span>
+                        </div>
+                        <p class="provider-description">
+                            Specializing in traditional and modern African hairstyles. 10+ years experience.
+                        </p>
+                        <div class="provider-services">
+                            <span class="service-tag">Braiding</span>
+                            <span class="service-tag">Weaves</span>
+                            <span class="service-tag">Natural Hair</span>
+                            <span class="service-tag">Cornrows</span>
+                        </div>
+                        <div class="provider-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">500+</div>
+                                <div class="stat-label">Jobs Done</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">98%</div>
+                                <div class="stat-label">Satisfaction</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">5+</div>
+                                <div class="stat-label">Years Exp</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="provider-footer">
+                        <div class="provider-price">
+                            P250 <span>/ session</span>
+                        </div>
+                        <div class="provider-actions">
+                            <button class="btn-icon favorite" onclick="toggleFavorite(this)" title="Save to favorites">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="btn-icon" onclick="quickView(1)" title="Quick view">
+                                <i class="far fa-eye"></i>
+                            </button>
+                            <button class="btn-icon" onclick="openChat('Keitumetse')" title="Send message">
+                                <i class="far fa-comment"></i>
+                            </button>
+                            <button class="btn btn-primary" style="padding: 0.5rem 1rem;" onclick="bookNow(1)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Provider Card 2 -->
+                <div class="provider-card" data-category="mechanic" data-location="francistown" data-rating="5.0" data-reviews="203" data-price="450" data-verified="true">
+                    <div class="provider-header">
+                        <div class="provider-avatar">T</div>
+                        <div class="provider-status"></div>
+                        <h3>Thabo's Auto Repairs</h3>
+                        <p>Master Mechanic</p>
+                        <span class="provider-verified"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                    <div class="provider-body">
+                        <div class="provider-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-number">5.0</span>
+                            <span class="reviews-count">(203 reviews)</span>
+                        </div>
+                        <div class="provider-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Francistown, Industrial</span>
+                        </div>
+                        <p class="provider-description">
+                            Expert diagnostics and repairs for all vehicle makes. Certified mechanic with 15+ years experience.
+                        </p>
+                        <div class="provider-services">
+                            <span class="service-tag">Engine Repair</span>
+                            <span class="service-tag">Oil Change</span>
+                            <span class="service-tag">Diagnostics</span>
+                            <span class="service-tag">Brakes</span>
+                        </div>
+                        <div class="provider-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">1000+</div>
+                                <div class="stat-label">Cars Fixed</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">100%</div>
+                                <div class="stat-label">Satisfaction</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">15+</div>
+                                <div class="stat-label">Years Exp</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="provider-footer">
+                        <div class="provider-price">
+                            P450 <span>/ hour</span>
+                        </div>
+                        <div class="provider-actions">
+                            <button class="btn-icon favorite" onclick="toggleFavorite(this)">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="btn-icon" onclick="quickView(2)">
+                                <i class="far fa-eye"></i>
+                            </button>
+                            <button class="btn-icon" onclick="openChat('Thabo')">
+                                <i class="far fa-comment"></i>
+                            </button>
+                            <button class="btn btn-primary" style="padding: 0.5rem 1rem;" onclick="bookNow(2)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Provider Card 3 -->
+                <div class="provider-card" data-category="photo" data-location="maun" data-rating="4.7" data-reviews="89" data-price="800" data-verified="true">
+                    <div class="provider-header">
+                        <div class="provider-avatar">M</div>
+                        <div class="provider-status"></div>
+                        <h3>Mpho Photography</h3>
+                        <p>Professional Photographer</p>
+                        <span class="provider-verified"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                    <div class="provider-body">
+                        <div class="provider-rating">
+                            <span class="stars">★★★★½</span>
+                            <span class="rating-number">4.7</span>
+                            <span class="reviews-count">(89 reviews)</span>
+                        </div>
+                        <div class="provider-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Maun, Near Airport</span>
+                        </div>
+                        <p class="provider-description">
+                            Professional photography for weddings, events, and portraits. Drone photography available.
+                        </p>
+                        <div class="provider-services">
+                            <span class="service-tag">Weddings</span>
+                            <span class="service-tag">Portraits</span>
+                            <span class="service-tag">Events</span>
+                            <span class="service-tag">Drone</span>
+                        </div>
+                        <div class="provider-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">300+</div>
+                                <div class="stat-label">Shoots</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">95%</div>
+                                <div class="stat-label">Satisfaction</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">8+</div>
+                                <div class="stat-label">Years Exp</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="provider-footer">
+                        <div class="provider-price">
+                            P800 <span>/ session</span>
+                        </div>
+                        <div class="provider-actions">
+                            <button class="btn-icon favorite" onclick="toggleFavorite(this)">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="btn-icon" onclick="quickView(3)">
+                                <i class="far fa-eye"></i>
+                            </button>
+                            <button class="btn-icon" onclick="openChat('Mpho')">
+                                <i class="far fa-comment"></i>
+                            </button>
+                            <button class="btn btn-primary" style="padding: 0.5rem 1rem;" onclick="bookNow(3)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Provider Card 4 -->
+                <div class="provider-card" data-category="tutor" data-location="gaborone" data-rating="4.9" data-reviews="67" data-price="350" data-verified="true">
+                    <div class="provider-header">
+                        <div class="provider-avatar">G</div>
+                        <div class="provider-status"></div>
+                        <h3>Grace Tutoring Services</h3>
+                        <p>Mathematics & Science Tutor</p>
+                        <span class="provider-verified"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                    <div class="provider-body">
+                        <div class="provider-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-number">4.9</span>
+                            <span class="reviews-count">(67 reviews)</span>
+                        </div>
+                        <div class="provider-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Gaborone, Phase 2</span>
+                        </div>
+                        <p class="provider-description">
+                            Qualified teacher offering tutoring in Mathematics, Physics, and Chemistry. All levels welcome.
+                        </p>
+                        <div class="provider-services">
+                            <span class="service-tag">Mathematics</span>
+                            <span class="service-tag">Physics</span>
+                            <span class="service-tag">Chemistry</span>
+                            <span class="service-tag">Exam Prep</span>
+                        </div>
+                        <div class="provider-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">200+</div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">98%</div>
+                                <div class="stat-label">Pass Rate</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">7+</div>
+                                <div class="stat-label">Years Exp</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="provider-footer">
+                        <div class="provider-price">
+                            P350 <span>/ hour</span>
+                        </div>
+                        <div class="provider-actions">
+                            <button class="btn-icon favorite" onclick="toggleFavorite(this)">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="btn-icon" onclick="quickView(4)">
+                                <i class="far fa-eye"></i>
+                            </button>
+                            <button class="btn-icon" onclick="openChat('Grace')">
+                                <i class="far fa-comment"></i>
+                            </button>
+                            <button class="btn btn-primary" style="padding: 0.5rem 1rem;" onclick="bookNow(4)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Provider Card 5 -->
+                <div class="provider-card" data-category="plumber" data-location="gaborone" data-rating="4.6" data-reviews="42" data-price="300" data-verified="true">
+                    <div class="provider-header">
+                        <div class="provider-avatar">J</div>
+                        <div class="provider-status offline"></div>
+                        <h3>John's Plumbing</h3>
+                        <p>Licensed Plumber</p>
+                        <span class="provider-verified"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                    <div class="provider-body">
+                        <div class="provider-rating">
+                            <span class="stars">★★★★½</span>
+                            <span class="rating-number">4.6</span>
+                            <span class="reviews-count">(42 reviews)</span>
+                        </div>
+                        <div class="provider-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Gaborone, Broadhurst</span>
+                        </div>
+                        <p class="provider-description">
+                            24/7 emergency plumbing services. Leaks, installations, and maintenance.
+                        </p>
+                        <div class="provider-services">
+                            <span class="service-tag">Leak Repairs</span>
+                            <span class="service-tag">Installations</span>
+                            <span class="service-tag">Maintenance</span>
+                            <span class="service-tag">Emergency</span>
+                        </div>
+                        <div class="provider-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">400+</div>
+                                <div class="stat-label">Jobs</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">96%</div>
+                                <div class="stat-label">Satisfaction</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">12+</div>
+                                <div class="stat-label">Years Exp</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="provider-footer">
+                        <div class="provider-price">
+                            P300 <span>/ hour</span>
+                        </div>
+                        <div class="provider-actions">
+                            <button class="btn-icon favorite" onclick="toggleFavorite(this)">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="btn-icon" onclick="quickView(5)">
+                                <i class="far fa-eye"></i>
+                            </button>
+                            <button class="btn-icon" onclick="openChat('John')">
+                                <i class="far fa-comment"></i>
+                            </button>
+                            <button class="btn btn-primary" style="padding: 0.5rem 1rem;" onclick="bookNow(5)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Provider Card 6 -->
+                <div class="provider-card" data-category="electrician" data-location="francistown" data-rating="4.8" data-reviews="56" data-price="350" data-verified="true">
+                    <div class="provider-header">
+                        <div class="provider-avatar">P</div>
+                        <div class="provider-status"></div>
+                        <h3>Peter's Electrical</h3>
+                        <p>Master Electrician</p>
+                        <span class="provider-verified"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                    <div class="provider-body">
+                        <div class="provider-rating">
+                            <span class="stars">★★★★½</span>
+                            <span class="rating-number">4.8</span>
+                            <span class="reviews-count">(56 reviews)</span>
+                        </div>
+                        <div class="provider-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Francistown, Somerset</span>
+                        </div>
+                        <p class="provider-description">
+                            Certified electrician for residential and commercial installations and repairs.
+                        </p>
+                        <div class="provider-services">
+                            <span class="service-tag">Wiring</span>
+                            <span class="service-tag">Installations</span>
+                            <span class="service-tag">Repairs</span>
+                            <span class="service-tag">Inspections</span>
+                        </div>
+                        <div class="provider-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">350+</div>
+                                <div class="stat-label">Jobs</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">98%</div>
+                                <div class="stat-label">Satisfaction</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">10+</div>
+                                <div class="stat-label">Years Exp</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="provider-footer">
+                        <div class="provider-price">
+                            P350 <span>/ hour</span>
+                        </div>
+                        <div class="provider-actions">
+                            <button class="btn-icon favorite" onclick="toggleFavorite(this)">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="btn-icon" onclick="quickView(6)">
+                                <i class="far fa-eye"></i>
+                            </button>
+                            <button class="btn-icon" onclick="openChat('Peter')">
+                                <i class="far fa-comment"></i>
+                            </button>
+                            <button class="btn btn-primary" style="padding: 0.5rem 1rem;" onclick="bookNow(6)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Results Message (hidden by default) -->
+            <div class="no-results" id="noResults" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No Providers Found</h3>
+                <p>Try adjusting your filters or search criteria</p>
+                <button class="btn btn-primary" onclick="clearAllFilters()">Clear Filters</button>
+            </div>
+
+            <!-- Pagination -->
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div class="quick-view-modal" id="quickViewModal">
+        <div class="quick-view-content">
+            <button class="quick-view-close" onclick="closeQuickView()">&times;</button>
+            <div class="quick-view-grid">
+                <div class="quick-view-gallery">
+                    <div class="gallery-main" id="galleryMain">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeGalleryImage(this, 1)">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <div class="gallery-thumb" onclick="changeGalleryImage(this, 2)">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="gallery-thumb" onclick="changeGalleryImage(this, 3)">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="gallery-thumb" onclick="changeGalleryImage(this, 4)">
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="quick-view-info">
+                    <h2 id="modalProviderName">Keitumetse's Braiding</h2>
+                    <div class="provider-rating">
+                        <span class="stars">★★★★½</span>
+                        <span class="rating-number">4.8</span>
+                        <span class="reviews-count">(156 reviews)</span>
+                    </div>
+                    
+                    <div class="quick-view-meta">
+                        <div><i class="fas fa-map-marker-alt"></i> Gaborone, CBD</div>
+                        <div><i class="fas fa-clock"></i> Available Today</div>
+                    </div>
+                    
+                    <p id="modalProviderDesc">Specializing in traditional and modern African hairstyles. 10+ years experience in braiding, weaves, and natural hair care.</p>
+                    
+                    <div class="provider-services" id="modalServices">
+                        <span class="service-tag">Braiding</span>
+                        <span class="service-tag">Weaves</span>
+                        <span class="service-tag">Natural Hair</span>
+                    </div>
+                    
+                    <div class="booking-form">
+                        <h3>Book an Appointment</h3>
+                        <div class="form-group">
+                            <label for="bookingDate">Select Date</label>
+                            <input type="date" id="bookingDate" min="2024-01-01">
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingTime">Select Time</label>
+                            <select id="bookingTime">
+                                <option>09:00 AM</option>
+                                <option>10:00 AM</option>
+                                <option>11:00 AM</option>
+                                <option>02:00 PM</option>
+                                <option>03:00 PM</option>
+                                <option>04:00 PM</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingService">Select Service</label>
+                            <select id="bookingService">
+                                <option>Full Braiding - P250</option>
+                                <option>Partial Braiding - P150</option>
+                                <option>Weave Installation - P300</option>
+                                <option>Hair Treatment - P200</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingNotes">Additional Notes</label>
+                            <textarea id="bookingNotes" rows="3" placeholder="Any special requests?"></textarea>
+                        </div>
+                        <button class="btn btn-primary btn-block" onclick="confirmBooking()">Confirm Booking</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Botswana Business Hub</h4>
+                <p>Connecting businesses and customers across Botswana. Your trusted platform for growth and success.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="providers.html">Service Providers</a></li>
+                    <li><a href="marketplace.html">Marketplace</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> Gaborone, Botswana</li>
+                    <li><i class="fas fa-phone"></i> +267 123 4567</li>
+                    <li><i class="fas fa-envelope"></i> info@botswanabusinesshub.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Botswana Business Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('bbh_user');
+            if (user) {
+                const userData = JSON.parse(user);
+                const userMenu = document.getElementById('userMenu');
+                userMenu.innerHTML = `
+                    <span style="color: white;">Welcome, ${userData.name}</span>
+                    <a href="dashboard.html" class="btn btn-primary" style="background: #f4b400; color: #1e3c72;">Dashboard</a>
+                `;
+            }
+        });
+
+        // Toggle filters on mobile
+        function toggleFilters() {
+            const sidebar = document.getElementById('filtersSidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Toggle filter sections
+        function toggleFilterSection(element) {
+            element.classList.toggle('collapsed');
+            const options = element.nextElementSibling;
+            options.classList.toggle('collapsed');
+        }
+
+        // Toggle favorite
+        function toggleFavorite(button) {
+            button.classList.toggle('active');
+            const icon = button.querySelector('i');
+            if (button.classList.contains('active')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                showNotification('Added to favorites');
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                showNotification('Removed from favorites');
+            }
+        }
+
+        // Quick view
+        function quickView(providerId) {
+            document.getElementById('quickViewModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // In real app, load provider details based on ID
+            console.log('Loading provider:', providerId);
+        }
+
+        // Close quick view
+        function closeQuickView() {
+            document.getElementById('quickViewModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Change gallery image
+        function changeGalleryImage(element, imageId) {
+            document.querySelectorAll('.gallery-thumb').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            element.classList.add('active');
+            
+            const main = document.getElementById('galleryMain');
+            // In real app, change image source
+            main.innerHTML = '<i class="fas fa-cut"></i>';
+        }
+
+        // Book now
+        function bookNow(providerId) {
+            if (!localStorage.getItem('bbh_user')) {
+                if (confirm('Please login to book a service')) {
+                    window.location.href = 'login.html';
+                }
+                return;
+            }
+            quickView(providerId);
+        }
+
+        // Confirm booking
+        function confirmBooking() {
+            if (!localStorage.getItem('bbh_user')) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            alert('Booking confirmed! The provider will contact you shortly.');
+            closeQuickView();
+        }
+
+        // Open chat
+        function openChat(providerName) {
+            if (!localStorage.getItem('bbh_user')) {
+                if (confirm('Please login to send messages')) {
+                    window.location.href = 'login.html';
+                }
+                return;
+            }
+            window.location.href = 'messages.html?chat=' + encodeURIComponent(providerName);
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #1e3c72;
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                z-index: 3000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Search providers
+        function searchProviders() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.provider-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            document.getElementById('resultsCount').textContent = visibleCount;
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Sort providers
+        function sortProviders() {
+            const sortBy = document.getElementById('sortSelect').value;
+            const grid = document.getElementById('providersGrid');
+            const cards = Array.from(document.querySelectorAll('.provider-card'));
+            
+            cards.sort((a, b) => {
+                switch(sortBy) {
+                    case 'rating':
+                        return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+                    case 'reviews':
+                        return parseInt(b.dataset.reviews) - parseInt(a.dataset.reviews);
+                    case 'price-low':
+                        return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                    case 'price-high':
+                        return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                    default:
+                        return 0;
+                }
+            });
+            
+            cards.forEach(card => grid.appendChild(card));
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const selectedCategories = [];
+            document.querySelectorAll('#cat-hair, #cat-mechanic, #cat-tutor, #cat-photo, #cat-plumber, #cat-electrician, #cat-cleaner')
+                .forEach(cb => {
+                    if (cb.checked) selectedCategories.push(cb.id.replace('cat-', ''));
+                });
+            
+            const cards = document.querySelectorAll('.provider-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                let show = true;
+                
+                if (selectedCategories.length > 0) {
+                    const category = card.dataset.category;
+                    if (!selectedCategories.includes(category)) show = false;
+                }
+                
+                card.style.display = show ? 'block' : 'none';
+                if (show) visibleCount++;
+            });
+            
+            document.getElementById('resultsCount').textContent = visibleCount;
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Apply price filter
+        function applyPriceFilter() {
+            const min = parseFloat(document.getElementById('min-price').value) || 0;
+            const max = parseFloat(document.getElementById('max-price').value) || Infinity;
+            
+            const cards = document.querySelectorAll('.provider-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const price = parseFloat(card.dataset.price);
+                if (price >= min && price <= max) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            document.getElementById('resultsCount').textContent = visibleCount;
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Set rating filter
+        function setRating(rating) {
+            const cards = document.querySelectorAll('.provider-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const cardRating = parseFloat(card.dataset.rating);
+                if (cardRating >= rating) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            document.getElementById('resultsCount').textContent = visibleCount;
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Clear all filters
+        function clearAllFilters() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+            document.getElementById('min-price').value = '';
+            document.getElementById('max-price').value = '';
+            document.getElementById('searchInput').value = '';
+            
+            document.querySelectorAll('.provider-card').forEach(card => {
+                card.style.display = 'block';
+            });
+            
+            document.getElementById('resultsCount').textContent = document.querySelectorAll('.provider-card').length;
+            document.getElementById('noResults').style.display = 'none';
+        }
+
+        // Change view (grid/list)
+        function changeView(view) {
+            const grid = document.getElementById('providersGrid');
+            const buttons = document.querySelectorAll('.view-option');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            if (view === 'grid') {
+                grid.classList.remove('list-view');
+            } else {
+                grid.classList.add('list-view');
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('quickViewModal');
+            if (event.target === modal) {
+                closeQuickView();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set minimum date for booking to today
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('bookingDate');
+            if (dateInput) {
+                dateInput.min = today;
+            }
+            
+            // Initialize results count
+            document.getElementById('resultsCount').textContent = document.querySelectorAll('.provider-card').length;
+        });
+    </script>
+</body>
+</html>
