@@ -8,11 +8,6 @@
     <!-- Meta Tags for SEO -->
     <meta name="description" content="Get in touch with Bizz Connect. We're here to help with any questions about our platform, partnerships, or support needs.">
     <meta name="keywords" content="contact us, customer support, help, Bizz Connect, get in touch">
-    <meta property="og:title" content="Contact Us - Bizz Connect">
-    <meta property="og:description" content="Reach out to our team. We'd love to hear from you!">
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/styles.css">
     
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -23,8 +18,107 @@
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
-    <!-- Custom styles for contact page -->
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #f4b400;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .logo span {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #f4b400;
+            border-bottom-color: #f4b400;
+        }
+
+        .user-menu {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline {
+            border: 1px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: #1e3c72;
+        }
+
+        .btn-primary {
+            background: #f4b400;
+            color: #1e3c72;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(244, 180, 0, 0.3);
+        }
+
         /* Hero Section */
         .contact-hero {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
@@ -59,7 +153,6 @@
             font-size: 3rem;
             margin-bottom: 1rem;
             color: white;
-            animation: fadeInDown 1s ease;
         }
         
         .contact-hero p {
@@ -67,29 +160,6 @@
             opacity: 0.95;
             max-width: 600px;
             margin: 0 auto;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-        
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         
         /* Contact Info Cards */
@@ -181,6 +251,70 @@
         .info-link:hover {
             color: #f4b400;
             gap: 1rem;
+        }
+        
+        /* Simple Contact Methods Section */
+        .simple-contact-section {
+            padding: 3rem 2rem;
+            background: #f8f9fa;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .simple-contact-section h3 {
+            color: #1e3c72;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .simple-contact-section p {
+            color: #6c757d;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-method {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .contact-method i {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            background: white;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-method span {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+        
+        .contact-method a {
+            color: #6c757d;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-method a:hover {
+            color: #f4b400;
         }
         
         /* Contact Form Section */
@@ -524,72 +658,80 @@
             margin: 0;
         }
         
-        /* Simple Contact Section */
-        .simple-contact-section {
-            padding: 3rem 2rem;
-            background: #f8f9fa;
-            text-align: center;
-            border-top: 1px solid #dee2e6;
-            border-bottom: 1px solid #dee2e6;
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            padding: 3rem 5% 1rem;
         }
         
-        .simple-contact-section h3 {
-            color: #1e3c72;
-            font-size: 1.8rem;
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h4 {
             margin-bottom: 1rem;
+            color: #f4b400;
         }
         
-        .simple-contact-section p {
-            color: #6c757d;
-            max-width: 600px;
-            margin: 0 auto 2rem;
+        .footer-links {
+            list-style: none;
         }
         
-        .contact-methods {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            flex-wrap: wrap;
-        }
-        
-        .contact-method {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .contact-method i {
-            font-size: 2.5rem;
-            color: #1e3c72;
-            background: white;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .footer-links li {
             margin-bottom: 0.5rem;
         }
         
-        .contact-method span {
-            font-weight: 600;
-            color: #1e3c72;
-        }
-        
-        .contact-method a {
-            color: #6c757d;
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
             text-decoration: none;
             transition: color 0.3s ease;
         }
         
-        .contact-method a:hover {
+        .footer-links a:hover {
             color: #f4b400;
         }
         
+        .footer-links i {
+            margin-right: 0.5rem;
+            color: #f4b400;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+        
         /* Responsive */
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
         @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .user-menu {
+                width: 100%;
+                justify-content: center;
+            }
+            
             .contact-hero h1 {
                 font-size: 2.2rem;
             }
@@ -619,6 +761,10 @@
                 height: 60px;
                 font-size: 1.8rem;
             }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -641,8 +787,8 @@
             <a href="contact.html" class="active">Contact</a>
         </div>
         <div class="user-menu" id="userMenu">
-            <a href="login.html" class="btn btn-outline" style="color: white; border-color: white;">Login</a>
-            <a href="register.html" class="btn btn-primary" style="background: #f4b400; color: #1e3c72;">Sign Up</a>
+            <a href="login.html" class="btn btn-outline">Login</a>
+            <a href="register.html" class="btn btn-primary">Sign Up</a>
         </div>
     </nav>
 
@@ -929,124 +1075,10 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; 2024 Bizz Connect. All rights reserved.</p>
+            <p>&copy; 2026 Bizz Connect. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- AOS Animation Library -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
-    <!-- JavaScript -->
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 100
-        });
-        
-        // Check if user is logged in
-        document.addEventListener('DOMContentLoaded', function() {
-            const user = localStorage.getItem('bbh_user');
-            if (user) {
-                const userData = JSON.parse(user);
-                const userMenu = document.getElementById('userMenu');
-                userMenu.innerHTML = `
-                    <span style="color: white;">Welcome, ${userData.firstName || userData.name || 'User'}</span>
-                    <a href="dashboard.html" class="btn btn-primary" style="background: #f4b400; color: #1e3c72;">Dashboard</a>
-                `;
-            }
-            
-            // Add input listeners for validation
-            const inputs = ['firstName', 'lastName', 'email', 'subject', 'message'];
-            inputs.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.addEventListener('input', function() {
-                        const group = document.getElementById(id + 'Group');
-                        const error = document.getElementById(id + 'Error');
-                        if (group) group.classList.remove('error');
-                        if (error) error.classList.remove('show');
-                    });
-                }
-            });
-        });
-        
-        // Handle contact form submission
-        function handleContactSubmit(event) {
-            event.preventDefault();
-            
-            // Reset errors
-            document.querySelectorAll('.input-group').forEach(group => {
-                group.classList.remove('error');
-            });
-            document.querySelectorAll('.error-message').forEach(msg => {
-                msg.classList.remove('show');
-            });
-            
-            // Validate form
-            let isValid = true;
-            
-            const firstName = document.getElementById('firstName').value.trim();
-            if (!firstName) {
-                document.getElementById('firstNameGroup').classList.add('error');
-                document.getElementById('firstNameError').classList.add('show');
-                isValid = false;
-            }
-            
-            const lastName = document.getElementById('lastName').value.trim();
-            if (!lastName) {
-                document.getElementById('lastNameGroup').classList.add('error');
-                document.getElementById('lastNameError').classList.add('show');
-                isValid = false;
-            }
-            
-            const email = document.getElementById('email').value.trim();
-            if (!email || !isValidEmail(email)) {
-                document.getElementById('emailGroup').classList.add('error');
-                document.getElementById('emailError').classList.add('show');
-                isValid = false;
-            }
-            
-            const subject = document.getElementById('subject').value;
-            if (!subject) {
-                document.getElementById('subjectGroup').classList.add('error');
-                document.getElementById('subjectError').classList.add('show');
-                isValid = false;
-            }
-            
-            const message = document.getElementById('message').value.trim();
-            if (!message) {
-                document.getElementById('messageGroup').classList.add('error');
-                document.getElementById('messageError').classList.add('show');
-                isValid = false;
-            }
-            
-            if (!isValid) return;
-            
-            // Show loading state
-            const submitButton = document.getElementById('submitButton');
-            const originalText = submitButton.innerHTML;
-            submitButton.innerHTML = '<span class="spinner"></span> Sending...';
-            submitButton.disabled = true;
-            
-            // Simulate API call
-            setTimeout(() => {
-                // Show success message
-                const successMessage = document.getElementById('successMessage');
-                successMessage.classList.add('show');
-                
-                // Reset form
-                document.getElementById('contactForm').reset();
-                
-                // Reset button
-                submitButton.innerHTML = originalText;
-                submitButton.disabled = false;
-                
-                // Hide success message after 5 seconds
-                setTimeout(() => {
-                    successMessage.classList.remove('show');
-                }, 5000);
-                
-                // Scroll
-  
+    <script src="https://unpkg.com/a
+ 
