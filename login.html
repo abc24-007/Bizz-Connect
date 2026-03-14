@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Botswana Business Hub</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Login to Botswana Business Hub. Access your dashboard, manage your business profile, connect with customers and partners.">
+    <meta name="keywords" content="login, sign in, business account, Botswana business hub">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom styles for login page -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .bg-bubbles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .bg-bubbles li {
+            position: absolute;
+            list-style: none;
+            display: block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            bottom: -160px;
+            animation: square 25s infinite;
+            transition-timing-function: linear;
+            border-radius: 50%;
+        }
+        
+        .bg-bubbles li:nth-child(1) {
+            left: 10%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 0s;
+            animation-duration: 20s;
+        }
+        
+        .bg-bubbles li:nth-child(2) {
+            left: 20%;
+            width: 120px;
+            height: 120px;
+            animation-delay: 2s;
+            animation-duration: 25s;
+        }
+        
+        .bg-bubbles li:nth-child(3) {
+            left: 30%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 4s;
+            animation-duration: 22s;
+        }
+        
+        .bg-bubbles li:nth-child(4) {
+            left: 40%;
+            width: 100px;
+            height: 100px;
+            animation-delay: 0s;
+            animation-duration: 18s;
+        }
+        
+        .bg-bubbles li:nth-child(5) {
+            left: 50%;
+            width: 70px;
+            height: 70px;
+            animation-delay: 3s;
+            animation-duration: 24s;
+        }
+        
+        .bg-bubbles li:nth-child(6) {
+            left: 60%;
+            width: 90px;
+            height: 90px;
+            animation-delay: 1s;
+            animation-duration: 21s;
+        }
+        
+        .bg-bubbles li:nth-child(7) {
+            left: 70%;
+            width: 50px;
+            height: 50px;
+            animation-delay: 5s;
+            animation-duration: 23s;
+        }
+        
+        .bg-bubbles li:nth-child(8) {
+            left: 80%;
+            width: 110px;
+            height: 110px;
+            animation-delay: 2s;
+            animation-duration: 19s;
+        }
+        
+        .bg-bubbles li:nth-child(9) {
+            left: 90%;
+            width: 85px;
+            height: 85px;
+            animation-delay: 4s;
+            animation-duration: 26s;
+        }
+        
+        .bg-bubbles li:nth-child(10) {
+            left: 95%;
+            width: 65px;
+            height: 65px;
+            animation-delay: 3s;
+            animation-duration: 22s;
+        }
+        
+        @keyframes square {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+                border-radius: 50%;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+                border-radius: 50%;
+            }
+        }
+        
+        /* Main Container */
+        .login-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1100px;
+            min-height: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            display: flex;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Left Panel - Branding */
+        .brand-panel {
+            flex: 1;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .brand-panel::before {
+            content: '🤝';
+            position: absolute;
+            right: -50px;
+            bottom: -50px;
+            font-size: 200px;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+        
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .brand-logo i {
+            font-size: 2.5rem;
+            color: #f4b400;
+        }
+        
+        .brand-logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+        }
+        
+        .brand-logo span {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            display: block;
+        }
+        
+        .brand-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            margin: 3rem 0;
+        }
+        
+        .brand-content h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        
+        .brand-content p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .brand-features {
+            list-style: none;
+            margin-top: 2rem;
+        }
+        
+        .brand-features li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .brand-features i {
+            color: #f4b400;
+            font-size: 1.2rem;
+        }
+        
+        .testimonial {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
+        
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            background: #f4b400;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+        
+        .author-info {
+            font-size: 0.9rem;
+        }
+        
+        .author-info .name {
+            font-weight: 600;
+        }
+        
+        .author-info .title {
+            opacity: 0.8;
+            font-size: 0.8rem;
+        }
+        
+        .brand-footer {
+            position: relative;
+            z-index: 2;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .brand-footer a {
+            color: #f4b400;
+            text-decoration: none;
+            margin-left: 1rem;
+        }
+        
+        /* Right Panel - Login Form */
+        .form-panel {
+            flex: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: white;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .form-header h2 {
+            font-size: 2rem;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-header p {
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+        
+        /* Social Login */
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            color: #495057;
+        }
+        
+        .social-btn:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .social-btn.google:hover {
+            border-color: #db4437;
+            color: #db4437;
+        }
+        
+        .social-btn.facebook:hover {
+            border-color: #4267B2;
+            color: #4267B2;
+        }
+        
+        .social-btn.linkedin:hover {
+            border-color: #0077b5;
+            color: #0077b5;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #dee2e6;
+            z-index: 1;
+        }
+        
+        .divider span {
+            background: white;
+            padding: 0 1rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Login Form */
+        .login-form {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1e3c72;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30,60,114,0.1);
+        }
+        
+        .input-group input:focus + i {
+            color: #1e3c72;
+        }
+        
+        .input-group .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            cursor: pointer;
+            z-index: 1;
+        }
+        
+        .input-group .toggle-password:hover {
+            color: #1e3c72;
+        }
+        
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #1e3c72;
+        }
+        
+        .remember-me label {
+            color: #495057;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+        
+        .forgot-password {
+            color: #1e3c72;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        
+        .forgot-password:hover {
+            color: #f4b400;
+            text-decoration: underline;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30,60,114,0.3);
+        }
+        
+        .login-btn i {
+            font-size: 1.1rem;
+        }
+        
+        .signup-link {
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+        
+        .signup-link a {
+            color: #1e3c72;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .signup-link a:hover {
+            color: #f4b400;
+            text-decoration: underline;
+        }
+        
+        /* Error Messages */
+        .error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .input-group.error input {
+            border-color: #dc3545;
+        }
+        
+        .input-group.error i {
+            color: #dc3545;
+        }
+        
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            border-left: 4px solid #28a745;
+        }
+        
+        .success-message.show {
+            display: flex;
+        }
+        
+        .success-message i {
+            font-size: 1.2rem;
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Demo Accounts Section */
+        .demo-accounts {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px dashed #dee2e6;
+        }
+        
+        .demo-accounts p {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .demo-accounts p i {
+            color: #f4b400;
+        }
+        
+        .demo-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+        
+        .demo-btn {
+            padding: 0.5rem;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #1e3c72;
+        }
+        
+        .demo-btn:hover {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .login-container {
+                flex-direction: column;
+                margin: 1rem;
+                min-height: auto;
+            }
+            
+            .brand-panel {
+                padding: 2rem;
+            }
+            
+            .brand-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .form-panel {
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .social-login {
+                flex-direction: column;
+            }
+            
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .demo-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Bubbles -->
+    <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <!-- Main Container -->
+    <div class="login-container">
+        <!-- Left Panel - Branding -->
+        <div class="brand-panel">
+            <div class="brand-logo">
+                <i class="fas fa-store"></i>
+                <div>
+                    <h1>Botswana Business Hub</h1>
+                    <span>Connect · Grow · Succeed</span>
+                </div>
+            </div>
+            
+            <div class="brand-content">
+                <h2>Welcome Back! 👋</h2>
+                <p>Access your business dashboard, connect with customers, and grow your network.</p>
+                
+                <ul class="brand-features">
+                    <li><i class="fas fa-check-circle"></i> Manage your business profile</li>
+                    <li><i class="fas fa-check-circle"></i> Respond to customer inquiries</li>
+                    <li><i class="fas fa-check-circle"></i> Track your bookings and earnings</li>
+                    <li><i class="fas fa-check-circle"></i> Connect with other businesses</li>
+                </ul>
+                
+                <div class="testimonial">
+                    <p>"Since joining Botswana Business Hub, my customer base has grown significantly. The platform is easy to use and the support is excellent!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">K</div>
+                        <div class="author-info">
+                            <div class="name">Keitumetse Modise</div>
+                            <div class="title">Hair Stylist, Gaborone</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="brand-footer">
+                <span>© 2024 Botswana Business Hub</span>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+            </div>
+        </div>
+        
+        <!-- Right Panel - Login Form -->
+        <div class="form-panel">
+            <div class="form-header">
+                <h2>Sign In</h2>
+                <p>Welcome back! Please enter your details</p>
+            </div>
+            
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <span>Login successful! Redirecting to dashboard...</span>
+            </div>
+            
+            <!-- Social Login Buttons -->
+            <div class="social-login">
+                <button class="social-btn google" onclick="socialLogin('google')">
+                    <i class="fab fa-google"></i> Google
+                </button>
+                <button class="social-btn facebook" onclick="socialLogin('facebook')">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </button>
+                <button class="social-btn linkedin" onclick="socialLogin('linkedin')">
+                    <i class="fab fa-linkedin-in"></i> LinkedIn
+                </button>
+            </div>
+            
+            <div class="divider">
+                <span>or continue with email</span>
+            </div>
+            
+            <!-- Login Form -->
+            <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
+                <!-- Email Field -->
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-group" id="emailGroup">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" value="demo@business.co.bw" required>
+                    </div>
+                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                </div>
+                
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-group" id="passwordGroup">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" value="Demo123!" required>
+                        <i class="fas fa-eye toggle-password" onclick="togglePassword()" id="togglePassword"></i>
+                    </div>
+                    <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
+                </div>
+                
+                <!-- Form Options -->
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe" checked>
+                        <label for="rememberMe">Remember me for 30 days</label>
+                    </label>
+                    <a href="forgot-password.html" class="forgot-password">Forgot password?</a>
+                </div>
+                
+                <!-- Login Button -->
+                <button type="submit" class="login-btn" id="loginButton">
+                    <span>Sign In</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <!-- Sign Up Link -->
+                <div class="signup-link">
+                    Don't have an account? <a href="register.html">Sign up for free</a>
+                </div>
+            </form>
+            
+            <!-- Demo Accounts -->
+            <div class="demo-accounts">
+                <p><i class="fas fa-info-circle"></i> Demo Accounts (Click to autofill)</p>
+                <div class="demo-buttons">
+                    <button class="demo-btn" onclick="fillDemoCredentials('provider')">
+                        <i class="fas fa-briefcase"></i> Service Provider
+                    </button>
+                    <button class="demo-btn" onclick="fillDemoCredentials('customer')">
+                        <i class="fas fa-user"></i> Customer
+                    </button>
+                    <button class="demo-btn" onclick="fillDemoCredentials('distributor')">
+                        <i class="fas fa-truck"></i> Distributor
+                    </button>
+                    <button class="demo-btn" onclick="fillDemoCredentials('manufacturer')">
+                        <i class="fas fa-industry"></i> Manufacturer
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Help Link -->
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <a href="help.html" style="color: #6c757d; font-size: 0.85rem; text-decoration: none;">
+                    <i class="fas fa-question-circle"></i> Need help signing in?
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePassword');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+        
+        // Handle login form submission
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            // Get form values
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            // Reset error messages
+            resetErrors();
+            
+            // Validate form
+            if (!validateForm(email, password)) {
+                return;
+            }
+            
+            // Show loading state
+            const loginButton = document.getElementById('loginButton');
+            const originalText = loginButton.innerHTML;
+            loginButton.innerHTML = '<span class="spinner"></span> Signing in...';
+            loginButton.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // For demo purposes, accept any credentials
+                // In real app, this would validate against backend
+                
+                // Create user object
+                const user = {
+                    name: email.split('@')[0].replace(/[.]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                    email: email,
+                    userType: getUserTypeFromEmail(email),
+                    lastLogin: new Date().toISOString(),
+                    verified: true
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('bbh_user', JSON.stringify(user));
+                
+                if (rememberMe) {
+                    localStorage.setItem('bbh_remember', 'true');
+                }
+                
+                // Show success message
+                const successMessage = document.getElementById('successMessage');
+                successMessage.classList.add('show');
+                
+                // Redirect to dashboard
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+                
+            }, 1500);
+        }
+        
+        // Determine user type from email (for demo)
+        function getUserTypeFromEmail(email) {
+            if (email.includes('provider')) {
+                return 'Service Provider';
+            } else if (email.includes('distributor')) {
+                return 'Distributor';
+            } else if (email.includes('manufacturer')) {
+                return 'Manufacturer';
+            } else {
+                return 'Customer';
+            }
+        }
+        
+        // Validate form fields
+        function validateForm(email, password) {
+            let isValid = true;
+            
+            // Validate email
+            if (!email || !isValidEmail(email)) {
+                document.getElementById('emailGroup').classList.add('error');
+                document.getElementById('emailError').classList.add('show');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (!password || password.length < 6) {
+                document.getElementById('passwordGroup').classList.add('error');
+                document.getElementById('passwordError').classList.add('show');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+        
+        // Email validation
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // Reset error messages
+        function resetErrors() {
+            document.querySelectorAll('.input-group').forEach(group => {
+                group.classList.remove('error');
+            });
+            document.querySelectorAll('.error-message').forEach(msg => {
+                msg.classList.remove('show');
+            });
+        }
+        
+        // Fill demo credentials
+        function fillDemoCredentials(type) {
+            const emailField = document.getElementById('email');
+            const passwordField = document.getElementById('password');
+            
+            switch(type) {
+                case 'provider':
+                    emailField.value = 'provider@business.co.bw';
+                    passwordField.value = 'Demo123!';
+                    break;
+                case 'customer':
+                    emailField.value = 'customer@example.co.bw';
+                    passwordField.value = 'Demo123!';
+                    break;
+                case 'distributor':
+                    emailField.value = 'distributor@business.co.bw';
+                    passwordField.value = 'Demo123!';
+                    break;
+                case 'manufacturer':
+                    emailField.value = 'manufacturer@business.co.bw';
+                    passwordField.value = 'Demo123!';
+                    break;
+            }
+            
+            // Highlight fields briefly
+            emailField.style.transition = 'all 0.3s ease';
+            passwordField.style.transition = 'all 0.3s ease';
+            emailField.style.backgroundColor = '#e8f4fd';
+            passwordField.style.backgroundColor = '#e8f4fd';
+            
+            setTimeout(() => {
+                emailField.style.backgroundColor = '';
+                passwordField.style.backgroundColor = '';
+            }, 500);
+        }
+        
+        // Social login
+        function socialLogin(provider) {
+            // Show loading state
+            const button = event.currentTarget;
+            const originalText = button.innerHTML;
+            button.innerHTML = `<span class="spinner" style="border-top-color: ${provider === 'google' ? '#db4437' : provider === 'facebook' ? '#4267B2' : '#0077b5'}"></span> Connecting...`;
+            button.disabled = true;
+            
+            // Simulate OAuth redirect
+            setTimeout(() => {
+                alert(`Redirecting to ${provider} login...\n(This is a demo - in production, you would be redirected to OAuth)`);
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }, 1500);
+        }
+        
+        // Check for existing session
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            const user = localStorage.getItem('bbh_user');
+            const remember = localStorage.getItem('bbh_remember');
+            
+            if (user && remember === 'true') {
+                // Show quick message and redirect
+                const successMessage = document.getElementById('successMessage');
+                successMessage.querySelector('span').textContent = 'You are already logged in! Redirecting...';
+                successMessage.classList.add('show');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            }
+            
+            // Add input event listeners to remove error styling when user types
+            document.getElementById('email').addEventListener('input', function() {
+                document.getElementById('emailGroup').classList.remove('error');
+                document.getElementById('emailError').classList.remove('show');
+            });
+            
+            document.getElementById('password').addEventListener('input', function() {
+                document.getElementById('passwordGroup').classList.remove('error');
+                document.getElementById('passwordError').classList.remove('show');
+            });
+            
+            // Add animation to form fields
+            const formGroups = document.querySelectorAll('.form-group');
+            formGroups.forEach((group, index) => {
+                group.style.animation = `fadeInUp 0.5s ease ${index * 0.1}s both`;
+            });
+        });
+        
+        // Prevent form submission on enter key from demo buttons
+        document.querySelectorAll('.demo-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+            });
+        });
+        
+        // Add keyboard shortcut for demo (Ctrl/Cmd + D to fill demo credentials)
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                e.preventDefault();
+                fillDemoCredentials('provider');
+            }
+        });
+    </script>
+</body>
+</html>
