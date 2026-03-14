@@ -6,26 +6,121 @@
     <title>Blog - Bizz Connect</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #f4b400;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .logo span {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f4b400;
+        }
+
+        /* Page Content */
+        .page-content {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .content-card h1 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        .content-card > p {
+            color: #6c757d;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Blog Grid */
         .blog-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin: 2rem 0;
         }
-        
+
         .blog-card {
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
-        
+
         .blog-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 24px rgba(30,60,114,0.15);
         }
-        
+
         .blog-image {
             height: 200px;
             background: linear-gradient(135deg, #1e3c72, #2a5298);
@@ -34,29 +129,55 @@
             justify-content: center;
             color: #f4b400;
             font-size: 3rem;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .blog-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.2), transparent);
+        }
+
         .blog-content {
             padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
-        
+
         .blog-meta {
             color: #6c757d;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
         }
-        
+
+        .blog-meta i {
+            color: #f4b400;
+            margin-right: 0.25rem;
+        }
+
         .blog-content h3 {
             color: #1e3c72;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+            line-height: 1.4;
         }
-        
+
         .blog-content p {
             color: #495057;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             line-height: 1.6;
+            flex: 1;
         }
-        
+
         .read-more {
             color: #1e3c72;
             text-decoration: none;
@@ -64,54 +185,657 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            width: fit-content;
+            cursor: pointer;
+        }
+
+        .read-more:hover {
+            color: #f4b400;
+            gap: 1rem;
+            border-bottom-color: #f4b400;
+        }
+
+        .read-more i {
+            font-size: 0.9rem;
+            transition: transform 0.3s;
+        }
+
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Categories */
+        .blog-categories {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 30px;
+            color: #495057;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+
+        /* Newsletter */
+        .newsletter-box {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+
+        .newsletter-box h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-box p {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: #1e3c72;
+        }
+
+        .newsletter-form button {
+            padding: 0.75rem 2rem;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background: #2a5298;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            padding: 4rem 5% 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+        }
+
+        .footer-section h4 {
+            color: #f4b400;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #f4b400;
+            padding-left: 5px;
+        }
+
+        .footer-links i {
+            margin-right: 0.5rem;
+            color: #f4b400;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Same navigation -->
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-store"></i>
+            <div>
+                <h1>Bizz Connect</h1>
+                <span>Connecting Businesses. Creating Opportunities</span>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="providers.html">Providers</a>
+            <a href="marketplace.html">Marketplace</a>
+            <a href="events.html">Events</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
     <div class="page-content">
         <div class="content-card">
             <h1>Business Blog</h1>
             <p>Tips, insights, and success stories for Batswana entrepreneurs</p>
             
-            <div class="blog-grid">
-                <div class="blog-card">
+            <!-- Categories -->
+            <div class="blog-categories">
+                <button class="category-btn active" onclick="filterBlog('all')">All Posts</button>
+                <button class="category-btn" onclick="filterBlog('business')">Business Tips</button>
+                <button class="category-btn" onclick="filterBlog('marketing')">Marketing</button>
+                <button class="category-btn" onclick="filterBlog('success')">Success Stories</button>
+                <button class="category-btn" onclick="filterBlog('technology')">Technology</button>
+            </div>
+            
+            <!-- Blog Grid -->
+            <div class="blog-grid" id="blogGrid">
+                <!-- Blog Post 1 -->
+                <div class="blog-card" data-category="business">
                     <div class="blog-image">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="blog-content">
-                        <div class="blog-meta">March 15, 2026 • 5 min read</div>
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> March 15, 2026</span>
+                            <span><i class="far fa-clock"></i> 5 min read</span>
+                        </div>
                         <h3>10 Ways to Grow Your Small Business</h3>
-                        <p>Discover proven strategies to take your business to the next level...</p>
-                        <a href="blog-post-1.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        <p>Discover proven strategies to take your business to the next level. Learn from successful entrepreneurs who started small and grew big.</p>
+                        <a href="#" class="read-more" onclick="openBlogPost(1); return false;">Read Full Article <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 
-                <div class="blog-card">
+                <!-- Blog Post 2 -->
+                <div class="blog-card" data-category="marketing">
                     <div class="blog-image">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <div class="blog-content">
-                        <div class="blog-meta">March 10, 2026 • 4 min read</div>
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> March 10, 2026</span>
+                            <span><i class="far fa-clock"></i> 4 min read</span>
+                        </div>
                         <h3>Digital Marketing Guide for 2024</h3>
-                        <p>Learn how to market your business online effectively...</p>
-                        <a href="blog-post-2.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        <p>Learn how to market your business online effectively. From social media to SEO, we cover everything you need to know.</p>
+                        <a href="#" class="read-more" onclick="openBlogPost(2); return false;">Read Full Article <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 
-                <div class="blog-card">
+                <!-- Blog Post 3 -->
+                <div class="blog-card" data-category="success">
                     <div class="blog-image">
                         <i class="fas fa-handshake"></i>
                     </div>
                     <div class="blog-content">
-                        <div class="blog-meta">March 5, 2026 • 6 min read</div>
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> March 5, 2026</span>
+                            <span><i class="far fa-clock"></i> 6 min read</span>
+                        </div>
                         <h3>Success Story: From Local to National</h3>
-                        <p>How one business used Bizz Connect to expand across Botswana...</p>
-                        <a href="blog-post-3.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        <p>How one business used Bizz Connect to expand across Botswana. Read the inspiring journey of a local entrepreneur.</p>
+                        <a href="#" class="read-more" onclick="openBlogPost(3); return false;">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 4 -->
+                <div class="blog-card" data-category="technology">
+                    <div class="blog-image">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> March 1, 2026</span>
+                            <span><i class="far fa-clock"></i> 5 min read</span>
+                        </div>
+                        <h3>Tech Tools Every Business Needs</h3>
+                        <p>Essential technology solutions to streamline your operations and boost productivity. Save time and money with these tools.</p>
+                        <a href="#" class="read-more" onclick="openBlogPost(4); return false;">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 5 -->
+                <div class="blog-card" data-category="business">
+                    <div class="blog-image">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> Feb 25, 2026</span>
+                            <span><i class="far fa-clock"></i> 4 min read</span>
+                        </div>
+                        <h3>Financial Management for Small Business</h3>
+                        <p>Learn the basics of bookkeeping, budgeting, and financial planning to keep your business healthy and growing.</p>
+                        <a href="#" class="read-more" onclick="openBlogPost(5); return false;">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 6 -->
+                <div class="blog-card" data-category="marketing">
+                    <div class="blog-image">
+                        <i class="fas fa-facebook"></i>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> Feb 20, 2026</span>
+                            <span><i class="far fa-clock"></i> 3 min read</span>
+                        </div>
+                        <h3>Social Media Marketing Tips</h3>
+                        <p>Master Facebook, Instagram, and LinkedIn to reach more customers in Botswana. Practical tips that work.</p>
+                        <a href="#" class="read-more" onclick="openBlogPost(6); return false;">Read Full Article <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
+
+            <!-- Newsletter Signup -->
+            <div class="newsletter-box">
+                <h3>Subscribe to Our Newsletter</h3>
+                <p>Get the latest business tips and success stories delivered to your inbox</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Bizz Connect</h4>
+                <p>Connecting businesses. Creating Opportunities</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="providers.html">Service Providers</a></li>
+                    <li><a href="marketplace.html">Marketplace</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> Gaborone, Botswana</li>
+                    <li><i class="fas fa-phone"></i> +267 72149273</li>
+                    <li><i class="fas fa-envelope"></i> connectbizz384@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Bizz Connect. All rights reserved. Designed for Batswana entrepreneurs.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to open blog post in a modal
+        function openBlogPost(postId) {
+            // Create modal element
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                padding: 2rem;
+                overflow-y: auto;
+            `;
+
+            // Blog post content
+            const blogPosts = {
+                1: {
+                    title: "10 Ways to Grow Your Small Business",
+                    date: "March 15, 2026",
+                    readTime: "5 min read",
+                    author: "Keitumetse Modise",
+                    content: `
+                        <h2>1. Leverage Social Media</h2>
+                        <p>Create engaging content on platforms where your customers spend time. Facebook and Instagram are particularly effective in Botswana.</p>
+                        
+                        <h2>2. Network with Other Businesses</h2>
+                        <p>Join business groups and attend networking events. Partnerships can lead to new opportunities and referrals.</p>
+                        
+                        <h2>3. Invest in Customer Service</h2>
+                        <p>Happy customers become repeat customers. Train your staff to provide excellent service and always follow up.</p>
+                        
+                        <h2>4. Use Digital Marketing</h2>
+                        <p>From SEO to email marketing, digital channels offer cost-effective ways to reach new customers.</p>
+                        
+                        <h2>5. Diversify Your Offerings</h2>
+                        <p>Consider adding complementary products or services to increase revenue from existing customers.</p>
+                        
+                        <h2>6. Focus on Quality</h2>
+                        <p>Never compromise on quality. Your reputation is your most valuable asset.</p>
+                        
+                        <h2>7. Get Customer Feedback</h2>
+                        <p>Regularly ask customers how you can improve. Use surveys and reviews to gather insights.</p>
+                        
+                        <h2>8. Optimize Your Operations</h2>
+                        <p>Look for ways to streamline processes and reduce costs without sacrificing quality.</p>
+                        
+                        <h2>9. Build a Strong Team</h2>
+                        <p>Hire people who share your vision and invest in their training and development.</p>
+                        
+                        <h2>10. Plan for Growth</h2>
+                        <p>Create a business plan with clear goals and strategies for achieving them.</p>
+                    `
+                },
+                2: {
+                    title: "Digital Marketing Guide for 2024",
+                    date: "March 10, 2026",
+                    readTime: "4 min read",
+                    author: "Thabo Nkosi",
+                    content: `
+                        <h2>Understanding Digital Marketing</h2>
+                        <p>Digital marketing encompasses all marketing efforts that use electronic devices or the internet. It's essential for modern businesses.</p>
+                        
+                        <h2>Social Media Marketing</h2>
+                        <p>Platforms like Facebook, Instagram, and LinkedIn allow you to reach specific audiences with targeted content.</p>
+                        
+                        <h2>Search Engine Optimization (SEO)</h2>
+                        <p>Optimize your website to rank higher in search results. Focus on keywords your customers use to find services like yours.</p>
+                        
+                        <h2>Email Marketing</h2>
+                        <p>Build an email list and send regular newsletters with valuable content and offers to keep customers engaged.</p>
+                        
+                        <h2>Content Marketing</h2>
+                        <p>Create blog posts, videos, and other content that educates and entertains your audience.</p>
+                        
+                        <h2>Paid Advertising</h2>
+                        <p>Consider Google Ads or social media ads for faster results. Start with a small budget and scale what works.</p>
+                    `
+                },
+                3: {
+                    title: "Success Story: From Local to National",
+                    date: "March 5, 2026",
+                    readTime: "6 min read",
+                    author: "Mpho Banda",
+                    content: `
+                        <h2>How Keitumetse Built a Beauty Empire</h2>
+                        <p>Starting with just a small salon in Gaborone, Keitumetse Modise now has branches in Francistown, Maun, and Kasane.</p>
+                        
+                        <h2>The Turning Point</h2>
+                        <p>"Joining Bizz Connect was the best decision I ever made," says Keitumetse. "I started getting bookings from customers I never would have reached otherwise."</p>
+                        
+                        <h2>Expanding Through Partnerships</h2>
+                        <p>Through the platform, Keitumetse connected with distributors who now supply her salons with quality products at better prices.</p>
+                        
+                        <h2>Building a Team</h2>
+                        <p>Today, Keitumetse employs 15 stylists and is training the next generation of beauty professionals.</p>
+                        
+                        <h2>Advice for Entrepreneurs</h2>
+                        <p>"Don't be afraid to start small. Focus on quality, treat your customers well, and use every tool available to grow."</p>
+                    `
+                },
+                4: {
+                    title: "Tech Tools Every Business Needs",
+                    date: "March 1, 2026",
+                    readTime: "5 min read",
+                    author: "Grace Mokwena",
+                    content: `
+                        <h2>1. Accounting Software</h2>
+                        <p>QuickBooks or Wave can help you track income, expenses, and taxes with ease.</p>
+                        
+                        <h2>2. Customer Relationship Management (CRM)</h2>
+                        <p>HubSpot or Salesforce help you manage customer interactions and sales pipelines.</p>
+                        
+                        <h2>3. Project Management</h2>
+                        <p>Trello, Asana, or Monday.com keep your team organized and on track.</p>
+                        
+                        <h2>4. Communication Tools</h2>
+                        <p>Slack and Microsoft Teams make it easy for teams to collaborate, especially when working remotely.</p>
+                        
+                        <h2>5. Scheduling Software</h2>
+                        <p>Calendly or Acuity let customers book appointments without back-and-forth emails.</p>
+                        
+                        <h2>6. Payment Processing</h2>
+                        <p>Accept card payments with systems like iVeri or Peach Payments popular in Botswana.</p>
+                    `
+                },
+                5: {
+                    title: "Financial Management for Small Business",
+                    date: "Feb 25, 2026",
+                    readTime: "4 min read",
+                    author: "Olebogeng K.",
+                    content: `
+                        <h2>Separate Business and Personal Finances</h2>
+                        <p>Open a dedicated business bank account to make tracking easier.</p>
+                        
+                        <h2>Track Every Expense</h2>
+                        <p>Use apps to record all business expenses. Save receipts for tax purposes.</p>
+                        
+                        <h2>Create a Budget</h2>
+                        <p>Plan your income and expenses monthly. Adjust as needed based on actual performance.</p>
+                        
+                        <h2>Monitor Cash Flow</h2>
+                        <p>Know when money comes in and goes out. Maintain a buffer for slow periods.</p>
+                        
+                        <h2>Plan for Taxes</h2>
+                        <p>Set aside money for taxes regularly. Consider working with an accountant familiar with Botswana regulations.</p>
+                        
+                        <h2>Invest in Growth</h2>
+                        <p>Reinvest profits wisely to expand your business. Track return on investment for major decisions.</p>
+                    `
+                },
+                6: {
+                    title: "Social Media Marketing Tips",
+                    date: "Feb 20, 2026",
+                    readTime: "3 min read",
+                    author: "Thabo Nkosi",
+                    content: `
+                        <h2>Choose the Right Platforms</h2>
+                        <p>Focus on where your customers are. In Botswana, Facebook is widely used across all age groups.</p>
+                        
+                        <h2>Post Consistently</h2>
+                        <p>Create a content calendar and post regularly. Aim for 3-5 posts per week.</p>
+                        
+                        <h2>Engage With Followers</h2>
+                        <p>Respond to comments and messages promptly. Build a community around your brand.</p>
+                        
+                        <h2>Use Visuals</h2>
+                        <p>Photos and videos get more engagement than text-only posts. Show your products and behind-the-scenes content.</p>
+                        
+                        <h2>Run Contests</h2>
+                        <p>Giveaways and contests can quickly grow your following and increase engagement.</p>
+                        
+                        <h2>Track Analytics</h2>
+                        <p>Use platform insights to see what works. Adjust your strategy based on data.</p>
+                    `
+                }
+            };
+
+            const post = blogPosts[postId];
+            
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: 12px;
+                    padding: 2rem;
+                    max-width: 800px;
+                    width: 100%;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    position: relative;
+                ">
+                    <button onclick="this.closest('.modal').remove()" style="
+                        position: absolute;
+                        top: 1rem;
+                        right: 1rem;
+                        background: none;
+                        border: none;
+                        font-size: 1.5rem;
+                        cursor: pointer;
+                        color: #6c757d;
+                    ">&times;</button>
+                    
+                    <h2 style="color: #1e3c72; margin-bottom: 1rem; font-size: 2rem;">${post.title}</h2>
+                    
+                    <div style="display: flex; gap: 1rem; color: #6c757d; margin-bottom: 2rem; font-size: 0.9rem;">
+                        <span><i class="far fa-calendar"></i> ${post.date}</span>
+                        <span><i class="far fa-clock"></i> ${post.readTime}</span>
+                        <span><i class="far fa-user"></i> By ${post.author}</span>
+                    </div>
+                    
+                    <div style="color: #495057; line-height: 1.8;">
+                        ${post.content}
+                    </div>
+                    
+                    <hr style="margin: 2rem 0; border: none; border-top: 1px solid #dee2e6;">
+                    
+                    <div style="text-align: center;">
+                        <p style="color: #6c757d; margin-bottom: 1rem;">Enjoyed this article? Share it with others!</p>
+                        <div style="display: flex; gap: 1rem; justify-content: center;">
+                            <a href="https://www.facebook.com/share/1Gju4NZzSd/" style="color: #1e3c72; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
+                            <a href="https://x.com/BizzConnect384" style="color: #1e3c72; font-size: 1.5rem;"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.linkedin.com/in/bizz-connect-73b3b03b7?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" style="color: #1e3c72; font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://wa.me/message/EOVFBBEEAWQEB1" style="color: #1e3c72; font-size: 1.5rem;"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.className = 'modal';
+            document.body.appendChild(modal);
+        }
+
+        // Filter blog posts by category
+        function filterBlog(category) {
+            const posts = document.querySelectorAll('.blog-card');
+            const buttons = document.querySelectorAll('.category-btn');
+            
+            // Update active button
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(category) || 
+                    (category === 'all' && btn.textContent === 'All Posts')) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter posts
+            posts.forEach(post => {
+                if (category === 'all' || post.dataset.category === category) {
+                    post.style.display = 'flex';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+
+        // Newsletter subscription
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input').value;
+            alert(`Thank you for subscribing! We've sent a confirmation to ${email}`);
+            event.target.reset();
+        }
+    </script>
 </body>
 </html>
