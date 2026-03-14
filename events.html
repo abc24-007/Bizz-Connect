@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Events - Botswana Business Hub</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Discover business events, workshops, and networking opportunities in Botswana. Connect with entrepreneurs, attend training, and grow your business.">
+    <meta name="keywords" content="Botswana business events, networking events Gaborone, entrepreneurship workshops, business training Botswana, startup events">
+    <meta property="og:title" content="Business Events - Botswana Business Hub">
+    <meta property="og:description" content="Join business events, workshops, and networking sessions across Botswana. Learn, connect, and grow.">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom styles for events page -->
+    <style>
+        /* Events Header */
+        .events-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .events-header::before {
+            content: '📅';
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            font-size: 150px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        
+        .events-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            position: relative;
+        }
+        
+        .events-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .quick-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            position: relative;
+            flex-wrap: wrap;
+        }
+        
+        .quick-stat-item {
+            text-align: center;
+        }
+        
+        .quick-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #f4b400;
+        }
+        
+        .quick-stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Event Type Tabs */
+        .event-tabs {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .tabs-container {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding: 0.5rem 0;
+            flex: 1;
+        }
+        
+        .tab-btn {
+            padding: 0.75rem 2rem;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+        
+        .create-event-btn {
+            padding: 0.75rem 2rem;
+            background: #f4b400;
+            color: #1e3c72;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        
+        .create-event-btn:hover {
+            background: #1e3c72;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        /* Main Layout */
+        .events-main {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            padding: 2rem;
+            background: #f5f7fa;
+            min-height: calc(100vh - 200px);
+        }
+        
+        /* Calendar Section */
+        .calendar-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .calendar-header h2 {
+            color: #1e3c72;
+            margin: 0;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .calendar-nav-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-nav-btn:hover {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+        
+        #calendar {
+            min-height: 600px;
+        }
+        
+        /* Events Sidebar */
+        .events-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        /* Upcoming Events List */
+        .upcoming-events {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .upcoming-events h3 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .event-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .event-item:hover {
+            transform: translateX(5px);
+            border-color: #1e3c72;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .event-date-badge {
+            min-width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .event-date-badge .day {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        
+        .event-date-badge .month {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+        
+        .event-details {
+            flex: 1;
+        }
+        
+        .event-details h4 {
+            color: #1e3c72;
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+        
+        .event-details p {
+            color: #6c757d;
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .event-details i {
+            color: #f4b400;
+            width: 16px;
+            margin-right: 0.25rem;
+        }
+        
+        /* Featured Events */
+        .featured-events {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .featured-events h3 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .featured-event-card {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-event-card::before {
+            content: '⭐';
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            font-size: 100px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        
+        .featured-event-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .featured-event-card .event-meta {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .featured-event-card .event-meta i {
+            color: #f4b400;
+            margin-right: 0.25rem;
+        }
+        
+        .featured-event-card .btn {
+            background: #f4b400;
+            color: #1e3c72;
+            border: none;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .featured-event-card .btn:hover {
+            background: white;
+        }
+        
+        /* Event Categories */
+        .event-categories {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .event-categories h3 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+        }
+        
+        .categories-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #dee2e6;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-item:hover {
+            color: #1e3c72;
+            transform: translateX(5px);
+        }
+        
+        .category-item .count {
+            background: #f8f9fa;
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: #1e3c72;
+        }
+        
+        /* Events Grid */
+        .events-grid-section {
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .section-header h2 {
+            color: #1e3c72;
+            margin: 0;
+        }
+        
+        .view-all-link {
+            color: #f4b400;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .event-card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            border-color: #1e3c72;
+        }
+        
+        .event-card.featured {
+            border: 2px solid #f4b400;
+            position: relative;
+        }
+        
+        .event-card.featured::before {
+            content: 'Featured';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #f4b400;
+            color: #1e3c72;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .event-image {
+            height: 160px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.2);
+            font-size: 3rem;
+        }
+        
+        .event-image.workshop { background: linear-gradient(135deg, #f4b400, #f6c23e); }
+        .event-image.summit { background: linear-gradient(135deg, #1e3c72, #2a5298); }
+        .event-image.networking { background: linear-gradient(135deg, #28a745, #34ce57); }
+        .event-image.training { background: linear-gradient(135deg, #dc3545, #e4606d); }
+        
+        .event-date-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 60px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .event-date-tag .day {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3c72;
+            line-height: 1;
+        }
+        
+        .event-date-tag .month {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-transform: uppercase;
+        }
+        
+        .event-content {
+            padding: 1.5rem;
+        }
+        
+        .event-category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #f8f9fa;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #1e3c72;
+            margin-bottom: 0.75rem;
+        }
+        
+        .event-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+        
+        .event-organizer {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        .organizer-avatar {
+            width: 24px;
+            height: 24px;
+            background: #f4b400;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3c72;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        .event-details-list {
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .event-details-list div {
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+        
+        .event-details-list i {
+            color: #f4b400;
+            width: 20px;
+            margin-right: 0.5rem;
+        }
+        
+        .event-attendees {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .attendee-avatars {
+            display: flex;
+        }
+        
+        .attendee-avatar {
+            width: 30px;
+            height: 30px;
+            background: #1e3c72;
+            border: 2px solid white;
+            border-radius: 50%;
+            margin-left: -10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f4b400;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        .attendee-avatar:first-child {
+            margin-left: 0;
+        }
+        
+        .attendees-count {
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+        
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .event-price {
+            font-weight: 700;
+            color: #1e3c72;
+        }
+        
+        .event-price.free {
+            color: #28a745;
+        }
+        
+        .event-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        /* Create Event Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            position: relative;
+            padding: 2rem;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        
+        .modal-close:hover {
+            background: #1e3c72;
+            color: white;
+        }
+        
+        .modal-header {
+            margin-bottom: 2rem;
+        }
+        
+        .modal-header h2 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1e3c72;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30,60,114,0.1);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .image-upload {
+            border: 2px dashed #dee2e6;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .image-upload:hover {
+            border-color: #1e3c72;
+            background: #f8f9fa;
+        }
+        
+        .image-upload i {
+            font-size: 2rem;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        /* Event Detail Modal */
+        .event-detail-modal {
+            max-width: 900px;
+        }
+        
+        .event-detail-header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        
+        .event-detail-header h2 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .event-detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+        
+        .event-detail-meta div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .event-detail-meta i {
+            color: #f4b400;
+        }
+        
+        .event-detail-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        .event-description h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+        
+        .event-speakers {
+            margin: 2rem 0;
+        }
+        
+        .speaker-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .speaker-avatar {
+            width: 50px;
+            height: 50px;
+            background: #f4b400;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        
+        .event-sidebar-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .event-sidebar-card h4 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .events-main {
+                grid-template-columns: 1fr;
+            }
+            
+            .event-detail-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .event-tabs {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .tabs-container {
+                justify-content: flex-start;
+            }
+            
+            .create-event-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .event-detail-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top-color: #1e3c72;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Calendar Custom Styles */
+        .fc-event {
+            cursor: pointer;
+            border-radius: 5px;
+            padding: 2px 5px;
+        }
+        
+        .fc-event-title {
+            font-weight: 500;
+        }
+        
+        .fc-day-today {
+            background: rgba(244, 180, 0, 0.1) !important;
+        }
+        
+        .fc-event.workshop {
+            background: #f4b400;
+            border-color: #f4b400;
+        }
+        
+        .fc-event.summit {
+            background: #1e3c72;
+            border-color: #1e3c72;
+        }
+        
+        .fc-event.networking {
+            background: #28a745;
+            border-color: #28a745;
+        }
+        
+        .fc-event.training {
+            background: #dc3545;
+            border-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-store"></i>
+            <div>
+                <h1>Botswana Business Hub</h1>
+                <span>Connect · Grow · Succeed</span>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="providers.html">Providers</a>
+            <a href="marketplace.html">Marketplace</a>
+            <a href="events.html" class="active">Events</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="user-menu" id="userMenu">
+            <a href="login.html" class="btn btn-outline" style="color: white; border-color: white;">Login</a>
+            <a href="register.html" class="btn btn-primary" style="background: #f4b400; color: #1e3c72;">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Events Header -->
+    <section class="events-header">
+        <h1>Business Events & Networking</h1>
+        <p>Discover workshops, seminars, and networking opportunities to grow your business</p>
+        
+        <div class="quick-stats">
+            <div class="quick-stat-item">
+                <div class="quick-stat-value">45+</div>
+                <div class="quick-stat-label">Upcoming Events</div>
+            </div>
+            <div class="quick-stat-item">
+                <div class="quick-stat-value">1,200+</div>
+                <div class="quick-stat-label">Attendees</div>
+            </div>
+            <div class="quick-stat-item">
+                <div class="quick-stat-value">30+</div>
+                <div class="quick-stat-label">Speakers</div>
+            </div>
+            <div class="quick-stat-item">
+                <div class="quick-stat-value">12</div>
+                <div class="quick-stat-label">Cities</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Tabs -->
+    <div class="event-tabs">
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="filterEvents('all')">All Events</button>
+            <button class="tab-btn" onclick="filterEvents('workshop')">Workshops</button>
+            <button class="tab-btn" onclick="filterEvents('summit')">Summits</button>
+            <button class="tab-btn" onclick="filterEvents('networking')">Networking</button>
+            <button class="tab-btn" onclick="filterEvents('training')">Training</button>
+            <button class="tab-btn" onclick="filterEvents('webinar')">Webinars</button>
+        </div>
+        
+        <button class="create-event-btn" onclick="openCreateEventModal()">
+            <i class="fas fa-plus"></i> Create Event
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="events-main">
+        <!-- Calendar Section -->
+        <div class="calendar-section">
+            <div class="calendar-header">
+                <h2>Events Calendar</h2>
+                <div class="calendar-nav">
+                    <button class="calendar-nav-btn" onclick="changeMonth(-1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="calendar-nav-btn" onclick="changeMonth(1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="calendar-nav-btn" onclick="goToToday()">Today</button>
+                </div>
+            </div>
+            <div id="calendar"></div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="events-sidebar">
+            <!-- Upcoming Events -->
+            <div class="upcoming-events">
+                <h3><i class="fas fa-clock" style="color: #f4b400;"></i> Upcoming Events</h3>
+                <div class="events-list">
+                    <div class="event-item" onclick="viewEvent(1)">
+                        <div class="event-date-badge">
+                            <span class="day">15</span>
+                            <span class="month">MAR</span>
+                        </div>
+                        <div class="event-details">
+                            <h4>Entrepreneurship Summit 2024</h4>
+                            <p><i class="fas fa-map-marker-alt"></i> GICC, Gaborone</p>
+                            <p><i class="fas fa-users"></i> 234 attending</p>
+                        </div>
+                    </div>
+                    
+                    <div class="event-item" onclick="viewEvent(2)">
+                        <div class="event-date-badge">
+                            <span class="day">20</span>
+                            <span class="month">MAR</span>
+                        </div>
+                        <div class="event-details">
+                            <h4>Digital Marketing Workshop</h4>
+                            <p><i class="fas fa-map-marker-alt"></i> Online</p>
+                            <p><i class="fas fa-users"></i> 156 attending</p>
+                        </div>
+                    </div>
+                    
+                    <div class="event-item" onclick="viewEvent(3)">
+                        <div class="event-date-badge">
+                            <span class="day">25</span>
+                            <span class="month">MAR</span>
+                        </div>
+                        <div class="event-details">
+                            <h4>Women in Business Networking</h4>
+                            <p><i class="fas fa-map-marker-alt"></i> Francistown</p>
+                            <p><i class="fas fa-users"></i> 89 attending</p>
+                        </div>
+                    </div>
+                    
+                    <div class="event-item" onclick="viewEvent(4)">
+                        <div class="event-date-badge">
+                            <span class="day">28</span>
+                            <span class="month">MAR</span>
+                        </div>
+                        <div class="event-details">
+                            <h4>Access to Finance Seminar</h4>
+                            <p><i class="fas fa-map-marker-alt"></i> CEDA, Gaborone</p>
+                            <p><i class="fas fa-users"></i> 67 attending</p>
+                        </div>
+                    </div>
+                    
+                    <div class="event-item" onclick="viewEvent(5)">
+                        <div class="event-date-badge">
+                            <span class="day">02</span>
+                            <span class="month">APR</span>
+                        </div>
+                        <div class="event-details">
+                            <h4>Business Plan Competition</h4>
+                            <p><i class="fas fa-map-marker-alt"></i> Maun</p>
+                            <p><i class="fas fa-users"></i> 45 attending</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="view-all-link" style="display: block; text-align: center; margin-top: 1rem;">View All Events</a>
+            </div>
+            
+            <!-- Featured Event -->
+            <div class="featured-events">
+                <h3><i class="fas fa-star" style="color: #f4b400;"></i> Featured Event</h3>
+                <div class="featured-event-card">
+                    <h4>Botswana Entrepreneurship Summit 2024</h4>
+                    <p>The largest gathering of entrepreneurs, investors, and business leaders in Botswana.</p>
+                    <div class="event-meta">
+                        <span><i class="fas fa-calendar"></i> Mar 15-16</span>
+                        <span><i class="fas fa-map-marker-alt"></i> GICC</span>
+                    </div>
+                    <div class="event-meta">
+                        <span><i class="fas fa-user-tie"></i> 25+ Speakers</span>
+                        <span><i class="fas fa-users"></i> 500+ Attendees</span>
+                    </div>
+                    <button class="btn" onclick="viewEvent(1)">Register Now</button>
+                </div>
+            </div>
+            
+            <!-- Event Categories -->
+            <div class="event-categories">
+                <h3><i class="fas fa-tags" style="color: #f4b400;"></i> Categories</h3>
+                <div class="categories-list">
+                    <div class="category-item" onclick="filterByCategory('workshop')">
+                        <span><i class="fas fa-tools" style="margin-right: 0.5rem;"></i> Workshops</span>
+                        <span class="count">18</span>
+                    </div>
+                    <div class="category-item" onclick="filterByCategory('summit')">
+                        <span><i class="fas fa-mountain" style="margin-right: 0.5rem;"></i> Summits</span>
+                        <span class="count">6</span>
+                    </div>
+                    <div class="category-item" onclick="filterByCategory('networking')">
+                        <span><i class="fas fa-handshake" style="margin-right: 0.5rem;"></i> Networking</span>
+                        <span class="count">12</span>
+                    </div>
+                    <div class="category-item" onclick="filterByCategory('training')">
+                        <span><i class="fas fa-chalkboard-teacher" style="margin-right: 0.5rem;"></i> Training</span>
+                        <span class="count">15</span>
+                    </div>
+                    <div class="category-item" onclick="filterByCategory('webinar')">
+                        <span><i class="fas fa-video" style="margin-right: 0.5rem;"></i> Webinars</span>
+                        <span class="count">8</span>
+                    </div>
+                    <div class="category-item" onclick="filterByCategory('conference')">
+                        <span><i class="fas fa-users" style="margin-right: 0.5rem;"></i> Conferences</span>
+                        <span class="count">4</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Events Grid Section -->
+        <div class="events-grid-section">
+            <div class="section-header">
+                <h2>This Week's Events</h2>
+                <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="events-grid" id="eventsGrid">
+                <!-- Event Card 1 - Featured -->
+                <div class="event-card featured" data-category="summit">
+                    <div class="event-image summit">
+                        <div class="event-date-tag">
+                            <span class="day">15</span>
+                            <span class="month">MAR</span>
+                        </div>
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <div class="event-content">
+                        <span class="event-category">Summit</span>
+                        <h3 class="event-title">Entrepreneurship Summit 2024</h3>
+                        <div class="event-organizer">
+                            <span class="organizer-avatar">C</span>
+                            <span>CEDA & LEA</span>
+                        </div>
+                        <div class="event-details-list">
+                            <div><i class="fas fa-clock"></i> 09:00 - 17:00</div>
+                            <div><i class="fas fa-map-marker-alt"></i> GICC, Gaborone</div>
+                            <div><i class="fas fa-tag"></i> Free Entry</div>
+                        </div>
+                        <div class="event-attendees">
+                            <div class="attendee-avatars">
+                                <div class="attendee-avatar">K</div>
+                                <div class="attendee-avatar">T</div>
+                                <div class="attendee-avatar">M</div>
+                                <div class="attendee-avatar">P</div>
+                            </div>
+                            <span class="attendees-count">+234 attending</span>
+                        </div>
+                        <div class="event-footer">
+                            <span class="event-price free">Free</span>
+                            <div class="event-actions">
+                                <button class="btn-icon" onclick="saveEvent(1)" title="Save event">
+                                    <i class="far fa-bookmark"></i>
+                                </button>
+                                <button class="btn-icon" onclick="shareEvent(1)" title="Share">
+                                    <i class="far fa-share-square"></i>
+                                </button>
+                                <button class="btn btn-primary" onclick="registerForEvent(1)">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 2 -->
+                <div class="event-card" data-category="workshop">
+                    <div class="event-image workshop">
+                        <div class="event-date-tag">
+                            <span class="day">20</span>
+                            <span class="month">MAR</span>
+                        </div>
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <div class="event-content">
+                        <span class="event-category">Workshop</span>
+                        <h3 class="event-title">Digital Marketing Masterclass</h3>
+                        <div class="event-organizer">
+                            <span class="organizer-avatar">D</span>
+                            <span>Digital Academy</span>
+                        </div>
+                        <div class="event-details-list">
+                            <div><i class="fas fa-clock"></i> 14:00 - 17:00</div>
+                            <div><i class="fas fa-map-marker-alt"></i> Online (Zoom)</div>
+                            <div><i class="fas fa-tag"></i> P150</div>
+                        </div>
+                        <div class="event-attendees">
+                            <div class="attendee-avatars">
+                                <div class="attendee-avatar">A</div>
+                                <div class="attendee-avatar">B</div>
+                                <div class="attendee-avatar">C</div>
+                            </div>
+                            <span class="attendees-count">+156 attending</span>
+                        </div>
+                        <div class="event-footer">
+                            <span class="event-price">P150</span>
+                            <div class="event-actions">
+                                <button class="btn-icon" onclick="saveEvent(2)">
+                                    <i class="far fa-bookmark"></i>
+                                </button>
+                                <button class="btn-icon" onclick="shareEvent(2)">
+                                    <i class="far fa-share-square"></i>
+                                </button>
+                                <button class="btn btn-primary" onclick="registerForEvent(2)">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 3 -->
+                <div class="event-card" data-category="networking">
+                    <div class="event-image networking">
+                        <div class="event-date-tag">
+                            <span class="day">25</span>
+                            <span class="month">MAR</span>
+                        </div>
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="event-content">
+                        <span class="event-category">Networking</span>
+                        <h3 class="event-title">Women in Business Mixer</h3>
+                        <div class="event-organizer">
+                            <span class="organizer-avatar">W</span>
+                            <span>Women Biz Network</span>
+                        </div>
+                        <div class="event-details-list">
+                            <div><i class="fas fa-clock"></i> 18:00 - 21:00</div>
+                            <div><i class="fas fa-map-marker-alt"></i> Francistown Hotel</div>
+                            <div><i class="fas fa-tag"></i> P100</div>
+                        </div>
+                        <div class="event-attendees">
+                            <div class="attendee-avatars">
+                                <div class="attendee-avatar">K</div>
+                                <div class="attendee-avatar">M</div>
+                                <div class="attendee-avatar">P</div>
+                            </div>
+                            <span class="attendees-count">+89 attending</span>
+                        </div>
+                        <div class="event-footer">
+                            <span class="event-price">P100</span>
+                            <div class="event-actions">
+                                <button class="btn-icon" onclick="saveEvent(3)">
+                                    <i class="far fa-bookmark"></i>
+                                </button>
+                                <button class="btn-icon" onclick="shareEvent(3)">
+                                    <i class="far fa-share-square"></i>
+                                </button>
+                                <button class="btn btn-primary" onclick="registerForEvent(3)">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 4 -->
+                <div class="event-card" data-category="training">
+                    <div class="event-image training">
+                        <div class="event-date-tag">
+                            <span class="day">28</span>
+                            <span class="month">MAR</span>
+                        </div>
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="event-content">
+                        <span class="event-category">Training</span>
+                        <h3 class="event-title">Financial Management for SMEs</h3>
+                        <div class="event-organizer">
+                            <span class="organizer-avatar">C</span>
+                            <span>CEDA</span>
+                        </div>
+                        <div class="event-details-list">
+                            <div><i class="fas fa-clock"></i> 09:00 - 13:00</div>
+                            <div><i class="fas fa-map-marker-alt"></i> CEDA Training Centre</div>
+                            <div><i class="fas fa-tag"></i> Free</div>
+                        </div>
+                        <div class="event-attendees">
+                            <div class="attendee-avatars">
+                                <div class="attendee-avatar">T</div>
+                                <div class="attendee-avatar">D</div>
+                            </div>
+                            <span class="attendees-count">+67 attending</span>
+                        </div>
+                        <div class="event-footer">
+                            <span class="event-price free">Free</span>
+                            <div class="event-actions">
+                                <button class="btn-icon" onclick="saveEvent(4)">
+                                    <i class="far fa-bookmark"></i>
+                                </button>
+                                <button class="btn-icon" onclick="shareEvent(4)">
+                                    <i class="far fa-share-square"></i>
+                                </button>
+                                <button class="btn btn-primary" onclick="registerForEvent(4)">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 5 -->
+                <div class="event-card" data-category="competition">
+                    <div class="event-image workshop">
+                        <div class="event-date-tag">
+                            <span class="day">02</span>
+                            <span class="month">APR</span>
+                        </div>
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="event-content">
+                        <span class="event-category">Competition</span>
+                        <h3 class="event-title">Business Plan Competition</h3>
+                        <div class="event-organizer">
+                            <span class="organizer-avatar">L</span>
+                            <span>LEA</span>
+                        </div>
+                        <div class="event-details-list">
+                            <div><i class="fas fa-clock"></i> 10:00 - 16:00</div>
+                            <div><i class="fas fa-map-marker-alt"></i> Maun</div>
+                            <div><i class="fas fa-tag"></i> Free</div>
+                        </div>
+                        <div class="event-attendees">
+                            <div class="attendee-avatars">
+                                <div class="attendee-avatar">K</div>
+                                <div class="attendee-avatar">B</div>
+                            </div>
+                            <span class="attendees-count">+45 attending</span>
+                        </div>
+                        <div class="event-footer">
+                            <span class="event-price free">Free</span>
+                            <div class="event-actions">
+                                <button class="btn-icon" onclick="saveEvent(5)">
+                                    <i class="far fa-bookmark"></i>
+                                </button>
+                                <button class="btn-icon" onclick="shareEvent(5)">
+                                    <i class="far fa-share-square"></i>
+                                </button>
+                                <button class="btn btn-primary" onclick="registerForEvent(5)">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 6 -->
+                <div class="event-card" data-category="webinar">
+                    <div class="event-image training">
+                        <div class="event-date-tag">
+                            <span class="day">05</span>
+                            <span class="month">APR</span>
+                        </div>
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="event-content">
+                        <span class="event-category">Webinar</span>
+                        <h3 class="event-title">Export Readiness Webinar</h3>
+                        <div class="event-organizer">
+                            <span class="organizer-avatar">B</span>
+                            <span>Botswana Exports</span>
+                        </div>
+                        <div class="event-details-list">
+                            <div><i class="fas fa-clock"></i> 11:00 - 12:30</div>
+                            <div><i class="fas fa-map-marker-alt"></i> Online</div>
+                            <div><i class="fas fa-tag"></i> Free</div>
+                        </div>
+                        <div class="event-attendees">
+                            <div class="attendee-avatars">
+                                <div class="attendee-avatar">M</div>
+                                <div class="attendee-avatar">J</div>
+                            </div>
+                            <span class="attendees-count">+78 attending</span>
+                        </div>
+                        <div class="event-footer">
+                            <span class="event-price free">Free</span>
+                            <div class="event-actions">
+                                <button class="btn-icon" onclick="saveEvent(6)">
+                                    <i class="far fa-bookmark"></i>
+                                </button>
+                                <button class="btn-icon" onclick="shareEvent(6)">
+                                    <i class="far fa-share-square"></i>
+                                </button>
+                                <button class="btn btn-primary" onclick="registerForEvent(6)">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Load More Button -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn btn-outline" onclick="loadMoreEvents()">
+                    <i class="fas fa-spinner"></i> Load More Events
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Event Modal -->
+    <div class="modal" id="createEventModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCreateEventModal()">&times;</button>
+            
+            <div class="modal-header">
+                <h2>Create New Event</h2>
+                <p>Share your event with the Botswana business community</p>
+            </div>
+            
+            <form onsubmit="createEvent(event)">
+                <div class="form-group">
+                    <label for="eventTitle">Event Title *</label>
+                    <input type="text" id="eventTitle" required placeholder="e.g., Entrepreneurship Summit 2024">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventCategory">Category *</label>
+                        <select id="eventCategory" required>
+                            <option value="">Select category</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="summit">Summit</option>
+                            <option value="networking">Networking</option>
+                            <option value="training">Training</option>
+                            <option value="webinar">Webinar</option>
+                            <option value="conference">Conference</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventType">Event Type *</label>
+                        <select id="eventType" required>
+                            <option value="in-person">In Person</option>
+                            <option value="online">Online</option>
+                            <option value="hybrid">Hybrid</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventDate">Date *</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventTime">Time *</label>
+                        <input type="time" id="eventTime" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventEndDate">End Date (if multi-day)</label>
+                    <input type="date" id="eventEndDate">
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventLocation">Location *</label>
+                    <input type="text" id="eventLocation" required placeholder="e.g., GICC, Gaborone or Online">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventPrice">Price (Pula) *</label>
+                        <input type="number" id="eventPrice" min="0" step="50" required placeholder="0 for free">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventCapacity">Capacity</label>
+                        <input type="number" id="eventCapacity" min="1" placeholder="Max attendees">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventDescription">Description *</label>
+                    <textarea id="eventDescription" rows="4" required placeholder="Describe your event..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Event Image</label>
+                    <div class="image-upload" onclick="document.getElementById('eventImage').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click to upload event image</p>
+                        <input type="file" id="eventImage" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventOrganizer">Organizer Name *</label>
+                    <input type="text" id="eventOrganizer" required placeholder="Your name or organization">
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventContact">Contact Email *</label>
+                    <input type="email" id="eventContact" required placeholder="contact@example.com">
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeCreateEventModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Event Detail Modal -->
+    <div class="modal" id="eventDetailModal">
+        <div class="modal-content event-detail-modal">
+            <button class="modal-close" onclick="closeEventDetail()">&times;</button>
+            
+            <div class="event-detail-header">
+                <h2 id="detailEventTitle">Entrepreneurship Summit 2024</h2>
+                <div class="event-detail-meta">
+                    <div><i class="fas fa-calendar"></i> March 15-16, 2024</div>
+                    <div><i class="fas fa-clock"></i> 09:00 - 17:00</div>
+                    <div><i class="fas fa-map-marker-alt"></i> GICC, Gaborone</div>
+                    <div><i class="fas fa-tag"></i> Free Entry</div>
+                </div>
+            </div>
+            
+            <div class="event-detail-content">
+                <div class="event-description">
+                    <h3>About This Event</h3>
+                    <p id="detailEventDescription">The Botswana Entrepreneurship Summit is the premier gathering for entrepreneurs, investors, and business leaders in Botswana. This two-day event features keynote speeches from successful entrepreneurs, panel discussions on key business topics, networking opportunities, and a startup exhibition.</p>
+                    
+                    <h3 style="margin-top: 2rem;">What You'll Learn</h3>
+                    <ul style="margin-left: 1.5rem; color: #495057;">
+                        <li>How to access funding for your business</li>
+                        <li>Digital marketing strategies for SMEs</li>
+                        <li>Export opportunities for Botswana businesses</li>
+                        <li>Building a successful team</li>
+                        <li>Financial management best practices</li>
+                    </ul>
+                    
+                    <div class="event-speakers">
+                        <h3>Speakers</h3>
+                        <div class="speaker-item">
+                            <div class="speaker-avatar">K</div>
+                            <div>
+                                <div style="font-weight: 600;">Keitumetse Modise</div>
+                                <div style="font-size: 0.85rem; color: #6c757d;">CEO, Botswana Crafts</div>
+                            </div>
+                        </div>
+                        <div class="speaker-item">
+                            <div class="speaker-avatar">T</div>
+                            <div>
+                                <div style="font-weight: 600;">Thabo Nkosi</div>
+                                <div style="font-size: 0.85rem; color: #6c757d;">Director, CEDA</div>
+                            </div>
+                        </div>
+                        <div class="speaker-item">
+                            <div class="speaker-avatar">M</div>
+                            <div>
+                                <div style="font-weight: 600;">Mpho Banda</div>
+                                <div style="font-size: 0.85rem; color: #6c757d;">Founder, TechStart Botswana</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="event-sidebar-card">
+                        <h4>Date and Time</h4>
+                        <p><i class="fas fa-calendar"></i> March 15, 2024</p>
+                        <p><i class="fas fa-clock"></i> 09:00 - 17:00</p>
+                        <p><i class="fas fa-calendar"></i> March 16, 2024</p>
+                        <p><i class="fas fa-clock"></i> 09:00 - 16:00</p>
+                    </div>
+                    
+                    <div class="event-sidebar-card">
+                        <h4>Location</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> Gaborone International Convention Centre</p>
+                        <p>Plot 123, CBD, Gaborone, Botswana</p>
+                        <a href="#" style="color: #1e3c72;">Get Directions <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                    
+                    <div class="event-sidebar-card">
+                        <h4>Organizer</h4>
+                        <p><i class="fas fa-building"></i> CEDA & LEA</p>
+                        <p><i class="fas fa-envelope"></i> events@ceda.co.bw</p>
+                        <p><i class="fas fa-phone"></i> +267 123 4567</p>
+                    </div>
+                    
+                    <div class="event-sidebar-card">
+                        <h4>Share This Event</h4>
+                        <div style="display: flex; gap: 1rem;">
+                            <a href="#" style="color: #1e3c72;"><i class="fab fa-facebook fa-2x"></i></a>
+                            <a href="#" style="color: #1e3c72;"><i class="fab fa-twitter fa-2x"></i></a>
+                            <a href="#" style="color: #1e3c72;"><i class="fab fa-linkedin fa-2x"></i></a>
+                            <a href="#" style="color: #1e3c72;"><i class="fab fa-whatsapp fa-2x"></i></a>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-block" style="margin-top: 1rem;" onclick="registerForEvent(1)">Register for Event</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Botswana Business Hub</h4>
+                <p>Connecting businesses and customers across Botswana. Your trusted platform for growth and success.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="providers.html">Service Providers</a></li>
+                    <li><a href="marketplace.html">Marketplace</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> Gaborone, Botswana</li>
+                    <li><i class="fas fa-phone"></i> +267 123 4567</li>
+                    <li><i class="fas fa-envelope"></i> info@botswanabusinesshub.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Botswana Business Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- FullCalendar JS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    
+    <!-- JavaScript -->
+    <script>
+        // Calendar instance
+        let calendar;
+        
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('bbh_user');
+            if (user) {
+                const userData = JSON.parse(user);
+                const userMenu = document.getElementById('userMenu');
+                userMenu.innerHTML = `
+                    <span style="color: white;">Welcome, ${userData.name}</span>
+                    <a href="dashboard.html" class="btn btn-primary" style="background: #f4b400; color: #1e3c72;">Dashboard</a>
+                `;
+            }
+            
+            // Initialize calendar
+            initializeCalendar();
+        });
+        
+        // Initialize FullCalendar
+        function initializeCalendar() {
+            const calendarEl = document.getElementById('calendar');
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: '',
+                    center: 'title',
+                    right: ''
+                },
+                events: [
+                    {
+                        title: 'Entrepreneurship Summit',
+                        start: '2024-03-15',
+                        end: '2024-03-16',
+                        className: 'summit',
+                        extendedProps: { id: 1 }
+                    },
+                    {
+                        title: 'Digital Marketing Workshop',
+                        start: '2024-03-20',
+                        className: 'workshop',
+                        extendedProps: { id: 2 }
+                    },
+                    {
+                        title: 'Women in Business Mixer',
+                        start: '2024-03-25',
+                        className: 'networking',
+                        extendedProps: { id: 3 }
+                    },
+                    {
+                        title: 'Financial Management Training',
+                        start: '2024-03-28',
+                        className: 'training',
+                        extendedProps: { id: 4 }
+                    },
+                    {
+                        title: 'Business Plan Competition',
+                        start: '2024-04-02',
+                        className: 'workshop',
+                        extendedProps: { id: 5 }
+                    },
+                    {
+                        title: 'Export Readiness Webinar',
+                        start: '2024-04-05',
+                        className: 'training',
+                        extendedProps: { id: 6 }
+                    }
+                ],
+                eventClick: function(info) {
+                    viewEvent(info.event.extendedProps.id);
+                }
+            });
+            calendar.render();
+        }
+        
+        // Change month
+        function changeMonth(delta) {
+            calendar.incrementDate({ months: delta });
+        }
+        
+        // Go to today
+        function goToToday() {
+            calendar.today();
+        }
+        
+        // Filter events by category
+        function filterEvents(category) {
+            // Update active tab
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Filter grid events
+            const cards = document.querySelectorAll('.event-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Filter by category from sidebar
+        function filterByCategory(category) {
+            // Activate corresponding tab
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(category)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter grid events
+            const cards = document.querySelectorAll('.event-card');
+            cards.forEach(card => {
+                if (card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // View event details
+        function viewEvent(eventId) {
+            document.getElementById('eventDetailModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close event detail
+        function closeEventDetail() {
+            document.getElementById('eventDetailModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Open create event modal
+        function openCreateEventModal() {
+            if (!localStorage.getItem('bbh_user')) {
+                if (confirm('Please login to create an event')) {
+                    window.location.href = 'login.html';
+                }
+                return;
+            }
+            document.getElementById('createEventModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close create event modal
+        function closeCreateEventModal() {
+            document.getElementById('createEventModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Create event
+        function createEvent(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const eventData = {
+                title: document.getElementById('eventTitle').value,
+                category: document.getElementById('eventCategory').value,
+                type: document.getElementById('eventType').value,
+                date: document.getElementById('eventDate').value,
+                time: document.getElementById('eventTime').value,
+                endDate: document.getElementById('eventEndDate').value,
+                location: document.getElementById('eventLocation').value,
+                price: document.getElementById('eventPrice').value,
+                capacity: document.getElementById('eventCapacity').value,
+                description: document.getElementById('eventDescription').value,
+                organizer: document.getElementById('eventOrganizer').value,
+                contact: document.getElementById('eventContact').value
+            };
+            
+            alert('Event created successfully! It will be reviewed and published shortly.');
+            closeCreateEventModal();
+        }
+        
+        // Register for event
+        function registerForEvent(eventId) {
+            if (!localStorage.getItem('bbh_user')) {
+                if (confirm('Please login to register for events')) {
+                    window.location.href = 'login.html';
+                }
+                return;
+            }
+            
+            alert('Registration successful! Check your email for confirmation.');
+        }
+        
+        // Save event
+        function saveEvent(eventId) {
+            if (!localStorage.getItem('bbh_user')) {
+                if (confirm('Please login to save events')) {
+                    window.location.href = 'login.html';
+                }
+                return;
+            }
+            
+            const button = event.currentTarget;
+            const icon = button.querySelector('i');
+            
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                showNotification('Event saved to your calendar');
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                showNotification('Event removed from saved');
+            }
+        }
+        
+        // Share event
+        function shareEvent(eventId) {
+            // In real app, open share dialog
+            alert('Share this event with your network!');
+        }
+        
+        // Load more events
+        function loadMoreEvents() {
+            const button = event.currentTarget;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-spinner"></i> Load More Events';
+                showNotification('More events loaded');
+            }, 1500);
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #1e3c72;
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                z-index: 3000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const createModal = document.getElementById('createEventModal');
+            const detailModal = document.getElementById('eventDetailModal');
+            
+            if (event.target === createModal) {
+                closeCreateEventModal();
+            }
+            if (event.target === detailModal) {
+                closeEventDetail();
+            }
+        }
+    </script>
+</body>
+</html>
