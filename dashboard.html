@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Botswana Business Hub</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Your business dashboard - manage your profile, view messages, track bookings, and grow your business.">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom styles for dashboard -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .dashboard-sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .sidebar-logo i {
+            font-size: 2rem;
+            color: #f4b400;
+        }
+
+        .sidebar-logo span {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .sidebar-logo small {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            display: block;
+        }
+
+        .user-info-sidebar {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .user-avatar-large {
+            width: 100px;
+            height: 100px;
+            background: #f4b400;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e3c72;
+            border: 4px solid white;
+        }
+
+        .user-info-sidebar h3 {
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-info-sidebar p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .badge-sidebar {
+            display: inline-block;
+            background: #f4b400;
+            color: #1e3c72;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .sidebar-menu {
+            padding: 1.5rem 0;
+        }
+
+        .sidebar-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-menu-item:hover,
+        .sidebar-menu-item.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-left-color: #f4b400;
+        }
+
+        .sidebar-menu-item i {
+            width: 20px;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-menu-item span {
+            flex: 1;
+        }
+
+        .sidebar-menu-item .badge {
+            background: #f4b400;
+            color: #1e3c72;
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .dashboard-main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .page-title h2 {
+            color: #1e3c72;
+            margin: 0;
+        }
+
+        .page-title p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin: 0.25rem 0 0;
+        }
+
+        .top-nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 30px;
+            width: 250px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30,60,114,0.1);
+            width: 300px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notification-icon i {
+            font-size: 1.3rem;
+            color: #6c757d;
+            transition: color 0.3s ease;
+        }
+
+        .notification-icon:hover i {
+            color: #1e3c72;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .user-dropdown:hover {
+            background: #f8f9fa;
+        }
+
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f4b400;
+            font-weight: bold;
+        }
+
+        .user-info-small {
+            line-height: 1.2;
+        }
+
+        .user-info-small .name {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        .user-info-small .role {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(30,60,114,0.15);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f4b400;
+            font-size: 1.8rem;
+        }
+
+        .stat-info h3 {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-info .number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e3c72;
+            line-height: 1.2;
+        }
+
+        .stat-info .trend {
+            font-size: 0.8rem;
+            color: #28a745;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stat-info .trend.down {
+            color: #dc3545;
+        }
+
+        /* Charts Row */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chart-header h3 {
+            color: #1e3c72;
+            margin: 0;
+        }
+
+        .chart-header select {
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Recent Activity */
+        .recent-activity {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .activity-header h3 {
+            color: #1e3c72;
+            margin: 0;
+        }
+
+        .view-all-link {
+            color: #1e3c72;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: #f8f9fa;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .activity-icon.booking {
+            background: #e3f2fd;
+            color: #1e3c72;
+        }
+
+        .activity-icon.message {
+            background: #f3e5f5;
+            color: #6f42c1;
+        }
+
+        .activity-icon.review {
+            background: #fff3e0;
+            color: #f4b400;
+        }
+
+        .activity-icon.payment {
+            background: #e8f5e9;
+            color: #28a745;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-details p {
+            margin: 0;
+            color: #1e3c72;
+            font-weight: 500;
+        }
+
+        .activity-details small {
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+
+        .activity-time {
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .action-card {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-card:hover {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .action-card:hover i {
+            color: #f4b400;
+        }
+
+        .action-card:hover p {
+            color: white;
+        }
+
+        .action-card i {
+            font-size: 2rem;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-card p {
+            color: #495057;
+            font-weight: 500;
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Recent Bookings Table */
+        .recent-bookings {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem;
+            color: #1e3c72;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+            color: #495057;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .status-badge.confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge.completed {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-badge.cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-btn {
+            padding: 0.25rem 0.75rem;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            background: white;
+            color: #1e3c72;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 0.25rem;
+        }
+
+        .action-btn:hover {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+
+        /* Messages List */
+        .messages-preview {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .message-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .message-item:last-child {
+            border-bottom: none;
+        }
+
+        .message-item:hover {
+            background: #f8f9fa;
+        }
+
+        .message-item.unread {
+            background: #fff3cd;
+        }
+
+        .message-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f4b400;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-content h4 {
+            color: #1e3c72;
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+
+        .message-content p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .message-meta {
+            text-align: right;
+        }
+
+        .message-meta .time {
+            font-size: 0.8rem;
+            color: #6c757d;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .unread-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #dc3545;
+            border-radius: 50%;
+        }
+
+        /* Profile Completion Card */
+        .profile-completion {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .progress-circle {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            position: relative;
+        }
+
+        .progress-circle svg {
+            width: 120px;
+            height: 120px;
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+        }
+
+        .progress-circle .bg {
+            stroke: #f8f9fa;
+        }
+
+        .progress-circle .progress {
+            stroke: #1e3c72;
+            stroke-dasharray: 314;
+            stroke-dashoffset: calc(314 - (314 * 75) / 100);
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        .task-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .task-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            color: #495057;
+        }
+
+        .task-list li.completed {
+            color: #28a745;
+            text-decoration: line-through;
+        }
+
+        .task-list li i {
+            width: 20px;
+        }
+
+        .task-list li.completed i {
+            color: #28a745;
+        }
+
+        /* Loading Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .dashboard-sidebar {
+                left: -280px;
+            }
+            
+            .dashboard-sidebar.active {
+                left: 0;
+            }
+            
+            .dashboard-main {
+                margin-left: 0;
+            }
+            
+            .top-nav {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            .search-box input:focus {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-dropdown .user-info-small {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <div class="dashboard-sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="sidebar-logo">
+                    <i class="fas fa-store"></i>
+                    <div>
+                        <span>Botswana Business Hub</span>
+                        <small>Dashboard</small>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="user-info-sidebar" id="sidebarUserInfo">
+                <div class="user-avatar-large">K</div>
+                <h3 id="sidebarUserName">Keitumetse Modise</h3>
+                <p id="sidebarUserType">Service Provider</p>
+                <span class="badge-sidebar" id="sidebarBadge">Verified Business</span>
+            </div>
+            
+            <div class="sidebar-menu">
+                <a href="#" class="sidebar-menu-item active" onclick="showSection('overview')">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="sidebar-menu-item" onclick="showSection('bookings')">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>My Bookings</span>
+                    <span class="badge">3</span>
+                </a>
+                <a href="#" class="sidebar-menu-item" onclick="showSection('messages')">
+                    <i class="fas fa-comments"></i>
+                    <span>Messages</span>
+                    <span class="badge">5</span>
+                </a>
+                <a href="#" class="sidebar-menu-item" onclick="showSection('reviews')">
+                    <i class="fas fa-star"></i>
+                    <span>Reviews</span>
+                </a>
+                <a href="#" class="sidebar-menu-item" onclick="showSection('earnings')">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Earnings</span>
+                </a>
+                <a href="#" class="sidebar-menu-item" onclick="showSection('products')">
+                    <i class="fas fa-box"></i>
+                    <span>My Products</span>
+                </a>
+                <a href="#" class="sidebar-menu-item" onclick="showSection('profile')">
+                    <i class="fas fa-user"></i>
+                    <span>Profile Settings</span>
+                </a>
+                <a href="#" class="sidebar-menu-item" onclick="showSection('analytics')">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="sidebar-menu-item" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="dashboard-main">
+            <!-- Top Navigation -->
+            <div class="top-nav">
+                <div class="page-title">
+                    <h2 id="pageTitle">Dashboard Overview</h2>
+                    <p id="pageSubtitle">Welcome back! Here's what's happening with your business today.</p>
+                </div>
+                
+                <div class="top-nav-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    
+                    <div class="notification-icon" onclick="showNotifications()">
+                        <i class="far fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    
+                    <div class="user-dropdown" onclick="toggleUserMenu()">
+                        <div class="user-avatar-small" id="headerAvatar">K</div>
+                        <div class="user-info-small">
+                            <div class="name" id="headerName">Keitumetse</div>
+                            <div class="role" id="headerRole">Provider</div>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Content Sections -->
+            <div id="overview-section">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Profile Views</h3>
+                            <div class="number">1,247</div>
+                            <div class="trend"><i class="fas fa-arrow-up"></i> +12.5%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Bookings</h3>
+                            <div class="number">156</div>
+                            <div class="trend"><i class="fas fa-arrow-up"></i> +8.2%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Average Rating</h3>
+                            <div class="number">4.8</div>
+                            <div class="trend"><i class="fas fa-arrow-up"></i> +0.3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-pula-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Earnings</h3>
+                            <div class="number">P12,450</div>
+                            <div class="trend"><i class="fas fa-arrow-up"></i> +23%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Revenue Overview</h3>
+                            <select>
+                                <option>Last 7 days</option>
+                                <option>Last 30 days</option>
+                                <option>Last 3 months</option>
+                                <option>Last year</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Booking Statistics</h3>
+                            <select>
+                                <option>This month</option>
+                                <option>Last month</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="bookingsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Completion -->
+                <div class="profile-completion">
+                    <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                        <div class="progress-circle">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="bg" cx="60" cy="60" r="50"></circle>
+                                <circle class="progress" cx="60" cy="60" r="50"></circle>
+                            </svg>
+                            <div class="progress-text">75%</div>
+                        </div>
+                        
+                        <div style="flex: 1;">
+                            <h3 style="color: #1e3c72; margin-bottom: 1rem;">Complete Your Profile</h3>
+                            <ul class="task-list">
+                                <li class="completed"><i class="fas fa-check-circle"></i> Add profile photo</li>
+                                <li class="completed"><i class="fas fa-check-circle"></i> Verify phone number</li>
+                                <li><i class="far fa-circle"></i> Add business description</li>
+                                <li><i class="far fa-circle"></i> Upload service photos</li>
+                                <li><i class="far fa-circle"></i> Set availability hours</li>
+                            </ul>
+                        </div>
+                        
+                        <button class="btn btn-primary" onclick="showSection('profile')">
+                            Complete Profile <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Activity & Quick Actions -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                    <!-- Recent Activity -->
+                    <div class="recent-activity">
+                        <div class="activity-header">
+                            <h3>Recent Activity</h3>
+                            <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon booking">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <p>New booking from Keitumetse</p>
+                                    <small>Hair styling appointment</small>
+                                </div>
+                                <div class="activity-time">5 min ago</div>
+                            </div>
+                            
+                            <div class="activity-item">
+                                <div class="activity-icon message">
+                                    <i class="fas fa-comment"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <p>New message from Thabo</p>
+                                    <small>Question about pricing</small>
+                                </div>
+                                <div class="activity-time">2 hours ago</div>
+                            </div>
+                            
+                            <div class="activity-item">
+                                <div class="activity-icon review">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <p>New 5-star review</p>
+                                    <small>"Excellent service, highly recommended!"</small>
+                                </div>
+                                <div class="activity-time">Yesterday</div>
+                            </div>
+                            
+                            <div class="activity-item">
+                                <div class="activity-icon payment">
+                                    <i class="fas fa-pula-sign"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <p>Payment received</p>
+                                    <small>P450 from booking #1234</small>
+                                </div>
+                                <div class="activity-time">Yesterday</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <h3 style="color: #1e3c72; margin-bottom: 1.5rem;">Quick Actions</h3>
+                        <div class="actions-grid">
+                            <div class="action-card" onclick="createBooking()">
+                                <i class="fas fa-calendar-plus"></i>
+                                <p>New Booking</p>
+                            </div>
+                            
+                            <div class="action-card" onclick="sendMessage()">
+                                <i class="fas fa-paper-plane"></i>
+                                <p>Send Message</p>
+                            </div>
+                            
+                            <div class="action-card" onclick="addProduct()">
+                                <i class="fas fa-plus-circle"></i>
+                                <p>Add Product</p>
+                            </div>
+                            
+                            <div class="action-card" onclick="viewEarnings()">
+                                <i class="fas fa-chart-bar"></i>
+                                <p>View Earnings</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Bookings -->
+                <div class="recent-bookings">
+                    <div class="activity-header">
+                        <h3>Recent Bookings</h3>
+                        <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Customer</th>
+                                    <th>Service</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#1234</td>
+                                    <td>Keitumetse M.</td>
+                                    <td>Hair Braiding</td>
+                                    <td>2024-03-15</td>
+                                    <td>14:00</td>
+                                    <td>P250</td>
+                                    <td><span class="status-badge confirmed">Confirmed</span></td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-edit"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#1235</td>
+                                    <td>Thabo N.</td>
+                                    <td>Car Repair</td>
+                                    <td>2024-03-16</td>
+                                    <td>10:00</td>
+                                    <td>P450</td>
+                                    <td><span class="status-badge pending">Pending</span></td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-check"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#1236</td>
+                                    <td>Mpho B.</td>
+                                    <td>Photography</td>
+                                    <td>2024-03-14</td>
+                                    <td>09:00</td>
+                                    <td>P800</td>
+                                    <td><span class="status-badge completed">Completed</span></td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-star"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Messages Preview -->
+                <div class="messages-preview">
+                    <div class="activity-header">
+                        <h3>Recent Messages</h3>
+                        <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="message-item unread">
+                        <div class="message-avatar">K</div>
+                        <div class="message-content">
+                            <h4>Keitumetse Modise</h4>
+                            <p>Hi, I'd like to book an appointment for...</p>
+                        </div>
+                        <div class="message-meta">
+                            <span class="time">5 min ago</span>
+                            <span class="unread-dot"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="message-item">
+                        <div class="message-avatar">T</div>
+                        <div class="message-content">
+                            <h4>Thabo Nkosi</h4>
+                            <p>Thank you for the great service!</p>
+                        </div>
+                        <div class="message-meta">
+                            <span class="time">2 hours ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="message-item">
+                        <div class="message-avatar">M</div>
+                        <div class="message-content">
+                            <h4>Mpho Banda</h4>
+                            <p>Is Saturday available?</p>
+                        </div>
+                        <div class="message-meta">
+                            <span class="time">Yesterday</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bookings Section (Hidden by default) -->
+            <div id="bookings-section" style="display: none;">
+                <h2>My Bookings</h2>
+                <!-- Bookings content would go here -->
+            </div>
+
+            <!-- Messages Section (Hidden by default) -->
+            <div id="messages-section" style="display: none;">
+                <h2>Messages</h2>
+                <!-- Messages content would go here -->
+            </div>
+
+            <!-- Reviews Section (Hidden by default) -->
+            <div id="reviews-section" style="display: none;">
+                <h2>Reviews</h2>
+                <!-- Reviews content would go here -->
+            </div>
+
+            <!-- Earnings Section (Hidden by default) -->
+            <div id="earnings-section" style="display: none;">
+                <h2>Earnings</h2>
+                <!-- Earnings content would go here -->
+            </div>
+
+            <!-- Products Section (Hidden by default) -->
+            <div id="products-section" style="display: none;">
+                <h2>My Products</h2>
+                <!-- Products content would go here -->
+            </div>
+
+            <!-- Profile Section (Hidden by default) -->
+            <div id="profile-section" style="display: none;">
+                <h2>Profile Settings</h2>
+                <!-- Profile content would go here -->
+            </div>
+
+            <!-- Analytics Section (Hidden by default) -->
+            <div id="analytics-section" style="display: none;">
+                <h2>Analytics</h2>
+                <!-- Analytics content would go here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart initialization
+        let revenueChart, bookingsChart;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const user = localStorage.getItem('bbh_user');
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Parse user data
+            const userData = JSON.parse(user);
+            
+            // Update UI with user data
+            updateUserUI(userData);
+            
+            // Initialize charts
+            initCharts();
+            
+            // Show overview section by default
+            showSection('overview');
+        });
+
+        // Update UI with user data
+        function updateUserUI(userData) {
+            // Get first name or full name
+            const firstName = userData.firstName || userData.name?.split(' ')[0] || 'User';
+            const fullName = userData.firstName && userData.lastName ? 
+                `${userData.firstName} ${userData.lastName}` : 
+                userData.name || 'Keitumetse Modise';
+            
+            // Get user type
+            const userType = userData.userType || 'Service Provider';
+            
+            // Get initials for avatar
+            const initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase() || 'U';
+            
+            // Update sidebar
+            document.getElementById('sidebarUserName').textContent = fullName;
+            document.getElementById('sidebarUserType').textContent = userType;
+            document.querySelectorAll('.user-avatar-large, .user-avatar-small').forEach(el => {
+                el.textContent = initials;
+            });
+            
+            // Update header
+            document.getElementById('headerName').textContent = firstName;
+            document.getElementById('headerRole').textContent = userType;
+            
+            // Update badge if verified
+            if (userData.verified) {
+                document.getElementById('sidebarBadge').textContent = 'Verified Business';
+            }
+        }
+
+        // Initialize charts
+        function initCharts() {
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Revenue (P)',
+                        data: [1200, 1900, 1500, 2200, 2800, 2100, 1800],
+                        borderColor: '#1e3c72',
+                        backgroundColor: 'rgba(30,60,114,0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'P' + value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Bookings Chart
+            const bookingsCtx = document.getElementById('bookingsChart').getContext('2d');
+            bookingsChart = new Chart(bookingsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Completed', 'Pending', 'Confirmed', 'Cancelled'],
+                    datasets: [{
+                        data: [45, 12, 28, 5],
+                        backgroundColor: ['#28a745', '#f4b400', '#1e3c72', '#dc3545'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        // Show different sections
+        function showSection(section) {
+            // Hide all sections
+            document.getElementById('overview-section').style.display = 'none';
+            document.getElementById('bookings-section').style.display = 'none';
+            document.getElementById('messages-section').style.display = 'none';
+            document.getElementById('reviews-section').style.display = 'none';
+            document.getElementById('earnings-section').style.display = 'none';
+            document.getElementById('products-section').style.display = 'none';
+            document.getElementById('profile-section').style.display = 'none';
+            document.getElementById('analytics-section').style.display = 'none';
+            
+            // Show selected section
+            document.getElementById(section + '-section').style.display = 'block';
+            
+            // Update page title
+            const titles = {
+                'overview': 'Dashboard Overview',
+                'bookings': 'My Bookings',
+                'messages': 'Messages',
+                'reviews': 'Reviews & Ratings',
+                'earnings': 'Earnings Report',
+                'products': 'My Products',
+                'profile': 'Profile Settings',
+                'analytics': 'Business Analytics'
+            };
+            
+            document.getElementById('pageTitle').textContent = titles[section];
+            document.getElementById('pageSubtitle').textContent = getSubtitle(section);
+            
+            // Update active menu item
+            document.querySelectorAll('.sidebar-menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+
+        // Get subtitle for each section
+        function getSubtitle(section) {
+            const subtitles = {
+                'overview': 'Welcome back! Here\'s what\'s happening with your business today.',
+                'bookings': 'Manage your appointments and service bookings.',
+                'messages': 'Communicate with your customers and partners.',
+                'reviews': 'See what customers are saying about your business.',
+                'earnings': 'Track your income and payment history.',
+                'products': 'Manage your products and inventory.',
+                'profile': 'Update your business information and settings.',
+                'analytics': 'In-depth insights into your business performance.'
+            };
+            return subtitles[section];
+        }
+
+        // Quick action functions
+        function createBooking() {
+            showSection('bookings');
+            alert('Redirecting to booking creation...');
+        }
+
+        function sendMessage() {
+            showSection('messages');
+            alert('Opening messaging interface...');
+        }
+
+        function addProduct() {
+            showSection('products');
+            alert('Opening product creation form...');
+        }
+
+        function viewEarnings() {
+            showSection('earnings');
+        }
+
+        // Notification functions
+        function showNotifications() {
+            alert('You have 3 new notifications');
+        }
+
+        function toggleUserMenu() {
+            // In a real app, this would show a dropdown menu
+            console.log('Toggle user menu');
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('bbh_user');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Resize charts when window resizes
+        window.addEventListener('resize', function() {
+            if (revenueChart) revenueChart.resize();
+            if (bookingsChart) bookingsChart.resize();
+        });
+
+        // Simulate real-time updates
+        setInterval(() => {
+            // Update stats with random changes (demo only)
+            const trends = document.querySelectorAll('.trend');
+            trends.forEach(trend => {
+                const random = Math.random();
+                if (random > 0.7) {
+                    trend.classList.toggle('down');
+                }
+            });
+        }, 10000);
+    </script>
+</body>
+</html>
