@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Botswana Business Hub</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Create your free account on Botswana Business Hub. Join as a Service Provider, Customer, Distributor, or Manufacturer. Start growing your business today.">
+    <meta name="keywords" content="register, sign up, create account, Botswana business, join business hub">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom styles for register page -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+            padding: 2rem;
+        }
+        
+        /* Animated Background */
+        .bg-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            animation: float 25s infinite;
+            bottom: -150px;
+            border-radius: 50%;
+        }
+        
+        .particle:nth-child(1) {
+            left: 10%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 0s;
+            animation-duration: 20s;
+        }
+        
+        .particle:nth-child(2) {
+            left: 20%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 2s;
+            animation-duration: 25s;
+        }
+        
+        .particle:nth-child(3) {
+            left: 30%;
+            width: 40px;
+            height: 40px;
+            animation-delay: 4s;
+            animation-duration: 22s;
+        }
+        
+        .particle:nth-child(4) {
+            left: 40%;
+            width: 100px;
+            height: 100px;
+            animation-delay: 0s;
+            animation-duration: 18s;
+        }
+        
+        .particle:nth-child(5) {
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            animation-delay: 3s;
+            animation-duration: 24s;
+        }
+        
+        .particle:nth-child(6) {
+            left: 60%;
+            width: 70px;
+            height: 70px;
+            animation-delay: 1s;
+            animation-duration: 21s;
+        }
+        
+        .particle:nth-child(7) {
+            left: 70%;
+            width: 45px;
+            height: 45px;
+            animation-delay: 5s;
+            animation-duration: 23s;
+        }
+        
+        .particle:nth-child(8) {
+            left: 80%;
+            width: 90px;
+            height: 90px;
+            animation-delay: 2s;
+            animation-duration: 19s;
+        }
+        
+        .particle:nth-child(9) {
+            left: 90%;
+            width: 55px;
+            height: 55px;
+            animation-delay: 4s;
+            animation-duration: 26s;
+        }
+        
+        .particle:nth-child(10) {
+            left: 95%;
+            width: 65px;
+            height: 65px;
+            animation-delay: 3s;
+            animation-duration: 22s;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+                border-radius: 50%;
+            }
+            100% {
+                transform: translateY(-1200px) rotate(720deg);
+                opacity: 0;
+                border-radius: 50%;
+            }
+        }
+        
+        /* Main Container */
+        .register-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 700px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            overflow: hidden;
+            animation: slideUp 0.8s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Left Panel - Benefits */
+        .benefits-panel {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .benefits-panel::before {
+            content: '🚀';
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            font-size: 200px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        
+        .benefits-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 2rem;
+        }
+        
+        .benefits-logo i {
+            font-size: 2.5rem;
+            color: #f4b400;
+        }
+        
+        .benefits-logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+        }
+        
+        .benefits-logo span {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            display: block;
+        }
+        
+        .benefits-title {
+            position: relative;
+            z-index: 2;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .benefits-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        
+        .benefits-title p {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .benefits-list {
+            position: relative;
+            z-index: 2;
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .benefits-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .benefits-list i {
+            color: #f4b400;
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+        
+        .benefits-list h4 {
+            color: white;
+            margin-bottom: 0.25rem;
+            font-size: 1.1rem;
+        }
+        
+        .benefits-list p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .stats-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            z-index: 2;
+            margin-top: auto;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+            color: white;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f4b400;
+            line-height: 1.2;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .testimonial-mini {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            background: #f4b400;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3c72;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .testimonial-text {
+            color: white;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+        
+        .testimonial-text span {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            font-style: normal;
+        }
+        
+        /* Right Panel - Registration Form */
+        .form-panel {
+            padding: 3rem;
+            background: white;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .form-header h2 {
+            font-size: 2rem;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-header p {
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #dee2e6;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            z-index: 2;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            border: 2px solid #dee2e6;
+            color: #6c757d;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .step.active {
+            border-color: #1e3c72;
+            color: #1e3c72;
+            background: #f8f9fa;
+        }
+        
+        .step.completed {
+            border-color: #28a745;
+            color: #28a745;
+            background: #f0fff4;
+        }
+        
+        /* User Type Selection */
+        .user-type-section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-label {
+            display: block;
+            margin-bottom: 1rem;
+            color: #1e3c72;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .user-type-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .user-type-card {
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .user-type-card:hover {
+            border-color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(30,60,114,0.1);
+        }
+        
+        .user-type-card.selected {
+            border-color: #1e3c72;
+            background: #f0f7ff;
+            position: relative;
+        }
+        
+        .user-type-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .user-type-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: #f4b400;
+            font-size: 1.8rem;
+        }
+        
+        .user-type-card h4 {
+            color: #1e3c72;
+            margin-bottom: 0.25rem;
+        }
+        
+        .user-type-card p {
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Registration Form */
+        .register-form {
+            margin-top: 1rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1e3c72;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .form-group label .required {
+            color: #dc3545;
+            margin-left: 0.25rem;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .input-group textarea {
+            padding-top: 0.75rem;
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .input-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 16px;
+        }
+        
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30,60,114,0.1);
+        }
+        
+        .input-group input:focus + i,
+        .input-group select:focus + i,
+        .input-group textarea:focus + i {
+            color: #1e3c72;
+        }
+        
+        .input-group .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            cursor: pointer;
+            z-index: 1;
+        }
+        
+        .input-group .toggle-password:hover {
+            color: #1e3c72;
+        }
+        
+        /* Password Strength Meter */
+        .password-strength {
+            margin-top: 0.5rem;
+        }
+        
+        .strength-meter {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .strength-segment {
+            height: 4px;
+            flex: 1;
+            background: #dee2e6;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .strength-segment.weak {
+            background: #dc3545;
+        }
+        
+        .strength-segment.medium {
+            background: #f4b400;
+        }
+        
+        .strength-segment.strong {
+            background: #28a745;
+        }
+        
+        .strength-text {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        /* Terms Checkbox */
+        .terms-group {
+            margin: 1.5rem 0;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            cursor: pointer;
+            color: #495057;
+            font-size: 0.95rem;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 0.15rem;
+            cursor: pointer;
+            accent-color: #1e3c72;
+        }
+        
+        .checkbox-label a {
+            color: #1e3c72;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .checkbox-label a:hover {
+            color: #f4b400;
+            text-decoration: underline;
+        }
+        
+        /* Register Button */
+        .register-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30,60,114,0.3);
+        }
+        
+        .register-btn i {
+            font-size: 1.1rem;
+        }
+        
+        /* Login Link */
+        .login-link {
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+        
+        .login-link a {
+            color: #1e3c72;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .login-link a:hover {
+            color: #f4b400;
+            text-decoration: underline;
+        }
+        
+        /* Error Messages */
+        .error-message {
+            color: #dc3545;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .input-group.error input,
+        .input-group.error select,
+        .input-group.error textarea {
+            border-color: #dc3545;
+        }
+        
+        .input-group.error i {
+            color: #dc3545;
+        }
+        
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            border-left: 4px solid #28a745;
+        }
+        
+        .success-message.show {
+            display: flex;
+        }
+        
+        /* Tooltip */
+        .tooltip-icon {
+            display: inline-block;
+            margin-left: 0.5rem;
+            color: #6c757d;
+            cursor: help;
+            position: relative;
+        }
+        
+        .tooltip-icon:hover .tooltip-text {
+            display: block;
+        }
+        
+        .tooltip-text {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e3c72;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            z-index: 10;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tooltip-text::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e3c72 transparent transparent transparent;
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .register-container {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+            
+            .benefits-panel {
+                display: none;
+            }
+            
+            .form-panel {
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-type-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-panel {
+                padding: 1.5rem;
+            }
+            
+            .form-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .step {
+                font-size: 0.8rem;
+                padding: 0.25rem 0.5rem;
+            }
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Business Registration Info */
+        .business-info {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #1e3c72;
+        }
+        
+        .business-info h4 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .business-info p {
+            color: #6c757d;
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .business-info i {
+            color: #f4b400;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Particles -->
+    <ul class="bg-particles">
+        <li class="particle"></li>
+        <li class="particle"></li>
+        <li class="particle"></li>
+        <li class="particle"></li>
+        <li class="particle"></li>
+        <li class="particle"></li>
+        <li class="particle"></li>
+        <li class="particle"></li>
+        <li class="particle"></li>
+        <li class="particle"></li>
+    </ul>
+
+    <!-- Main Container -->
+    <div class="register-container">
+        <!-- Left Panel - Benefits -->
+        <div class="benefits-panel">
+            <div class="benefits-logo">
+                <i class="fas fa-store"></i>
+                <div>
+                    <h1>Botswana Business Hub</h1>
+                    <span>Connect · Grow · Succeed</span>
+                </div>
+            </div>
+            
+            <div class="benefits-title">
+                <h2>Join Botswana's Fastest Growing Business Community</h2>
+                <p>Create your free account and start connecting with customers and partners today.</p>
+            </div>
+            
+            <ul class="benefits-list">
+                <li>
+                    <i class="fas fa-rocket"></i>
+                    <div>
+                        <h4>Increase Visibility</h4>
+                        <p>Showcase your business to thousands of potential customers across Botswana</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-handshake"></i>
+                    <div>
+                        <h4>Build Connections</h4>
+                        <p>Network with other businesses, distributors, and manufacturers</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-chart-line"></i>
+                    <div>
+                        <h4>Grow Your Business</h4>
+                        <p>Access new markets, get bookings, and increase your revenue</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        <h4>Verified & Trusted</h4>
+                        <p>Build credibility with customer reviews and verification badges</p>
+                    </div>
+                </li>
+            </ul>
+            
+            <div class="stats-card">
+                <div class="stats-grid">
+                    <div>
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Businesses</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">1k+</div>
+                        <div class="stat-label">Customers</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Partners</div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-mini">
+                    <div class="testimonial-avatar">K</div>
+                    <div class="testimonial-text">
+                        "My business has grown so much since joining. Best decision I made!"
+                        <span>- Keitumetse, Hair Stylist</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Panel - Registration Form -->
+        <div class="form-panel">
+            <div class="form-header">
+                <h2>Create Your Account</h2>
+                <p>Join thousands of businesses already growing with us</p>
+            </div>
+            
+            <!-- Progress Steps -->
+            <div class="progress-steps">
+                <span class="step active" id="step1">1. Account Type</span>
+                <span class="step" id="step2">2. Personal Info</span>
+                <span class="step" id="step3">3. Business Details</span>
+            </div>
+            
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <span>Account created successfully! Redirecting to dashboard...</span>
+            </div>
+            
+            <!-- Registration Form -->
+            <form class="register-form" id="registerForm" onsubmit="handleRegistration(event)">
+                <!-- Step 1: Account Type -->
+                <div id="step1-content">
+                    <div class="user-type-section">
+                        <span class="section-label">I want to join as <span class="required">*</span></span>
+                        <div class="user-type-grid">
+                            <div class="user-type-card" onclick="selectUserType(this, 'provider')" data-type="provider">
+                                <div class="user-type-icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <h4>Service Provider</h4>
+                                <p>Offer services like hair, repairs, tutoring, etc.</p>
+                            </div>
+                            
+                            <div class="user-type-card" onclick="selectUserType(this, 'customer')" data-type="customer">
+                                <div class="user-type-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <h4>Customer</h4>
+                                <p>Find and book services</p>
+                            </div>
+                            
+                            <div class="user-type-card" onclick="selectUserType(this, 'distributor')" data-type="distributor">
+                                <div class="user-type-icon">
+                                    <i class="fas fa-truck"></i>
+                                </div>
+                                <h4>Distributor</h4>
+                                <p>Supply products to businesses</p>
+                            </div>
+                            
+                            <div class="user-type-card" onclick="selectUserType(this, 'manufacturer')" data-type="manufacturer">
+                                <div class="user-type-icon">
+                                    <i class="fas fa-industry"></i>
+                                </div>
+                                <h4>Manufacturer</h4>
+                                <p>Produce and sell products</p>
+                            </div>
+                        </div>
+                        <div class="error-message" id="userTypeError">Please select an account type</div>
+                    </div>
+                    
+                    <button type="button" class="register-btn" onclick="nextStep()" style="background: #1e3c72;">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <!-- Step 2: Personal Information (Hidden by default) -->
+                <div id="step2-content" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name <span class="required">*</span></label>
+                            <div class="input-group" id="firstNameGroup">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="firstName" placeholder="Enter your first name">
+                            </div>
+                            <div class="error-message" id="firstNameError">First name is required</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName">Last Name <span class="required">*</span></label>
+                            <div class="input-group" id="lastNameGroup">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="lastName" placeholder="Enter your last name">
+                            </div>
+                            <div class="error-message" id="lastNameError">Last name is required</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <div class="input-group" id="emailGroup">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" placeholder="Enter your email">
+                        </div>
+                        <div class="error-message" id="emailError">Please enter a valid email address</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span class="required">*</span></label>
+                        <div class="input-group" id="phoneGroup">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="phone" placeholder="e.g., 71 234 567">
+                        </div>
+                        <div class="error-message" id="phoneError">Please enter a valid phone number</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="password">Password <span class="required">*</span>
+                                <span class="tooltip-icon">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltip-text">Min 8 characters with letters and numbers</span>
+                                </span>
+                            </label>
+                            <div class="input-group" id="passwordGroup">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" placeholder="Create a password">
+                                <i class="fas fa-eye toggle-password" onclick="togglePassword('password', 'togglePasswordIcon')" id="togglePasswordIcon"></i>
+                            </div>
+                            <div class="password-strength">
+                                <div class="strength-meter">
+                                    <div class="strength-segment" id="strength1"></div>
+                                    <div class="strength-segment" id="strength2"></div>
+                                    <div class="strength-segment" id="strength3"></div>
+                                </div>
+                                <div class="strength-text" id="strengthText">Enter a password</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
+                            <div class="input-group" id="confirmPasswordGroup">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="confirmPassword" placeholder="Confirm your password">
+                                <i class="fas fa-eye toggle-password" onclick="togglePassword('confirmPassword', 'toggleConfirmIcon')" id="toggleConfirmIcon"></i>
+                            </div>
+                            <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="button" class="btn btn-outline" onclick="prevStep()" style="flex: 1;">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button type="button" class="register-btn" onclick="nextStep()" style="flex: 2;">
+                            Continue <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Business Details (Hidden by default) -->
+                <div id="step3-content" style="display: none;">
+                    <div class="form-group">
+                        <label for="businessName">Business Name <span class="required">*</span></label>
+                        <div class="input-group" id="businessNameGroup">
+                            <i class="fas fa-building"></i>
+                            <input type="text" id="businessName" placeholder="Enter your business name">
+                        </div>
+                        <div class="error-message" id="businessNameError">Business name is required</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="businessType">Business Type</label>
+                            <div class="input-group">
+                                <i class="fas fa-tag"></i>
+                                <select id="businessType">
+                                    <option value="">Select business type</option>
+                                    <option value="sole">Sole Proprietorship</option>
+                                    <option value="partnership">Partnership</option>
+                                    <option value="pty">Pty Ltd</option>
+                                    <option value="close">Close Corporation</option>
+                                    <option value="nonprofit">Non-Profit</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cipa">CIPA Registration (Optional)</label>
+                            <div class="input-group">
+                                <i class="fas fa-registered"></i>
+                                <input type="text" id="cipa" placeholder="e.g., CIPA-2024-001234">
+                            </div>
+                            <small style="color: #6c757d;">For registered businesses only</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="businessLocation">Business Location <span class="required">*</span></label>
+                        <div class="input-group" id="locationGroup">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <select id="businessLocation">
+                                <option value="">Select city/town</option>
+                                <option value="gaborone">Gaborone</option>
+                                <option value="francistown">Francistown</option>
+                                <option value="maun">Maun</option>
+                                <option value="kasane">Kasane</option>
+                                <option value="palapye">Palapye</option>
+                                <option value="serowe">Serowe</option>
+                                <option value="kanye">Kanye</option>
+                                <option value="molepolole">Molepolole</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="error-message" id="locationError">Please select a location</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="businessAddress">Business Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-map-pin"></i>
+                            <textarea id="businessAddress" rows="2" placeholder="Enter your business address"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="businessDescription">Business Description</label>
+                        <div class="input-group">
+                            <i class="fas fa-align-left"></i>
+                            <textarea id="businessDescription" rows="3" placeholder="Tell customers about your business..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Business Info Box -->
+                    <div class="business-info">
+                        <h4><i class="fas fa-info-circle"></i> For Unregistered Businesses</h4>
+                        <p>Don't have a CIPA registration? No problem! You can still join as an informal business and upgrade later.</p>
+                    </div>
+                    
+                    <div class="terms-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="terms" checked>
+                            <span>I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a> <span class="required">*</span></span>
+                        </label>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="button" class="btn btn-outline" onclick="prevStep()" style="flex: 1;">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button type="submit" class="register-btn" id="registerButton" style="flex: 2;">
+                            Create Account <i class="fas fa-user-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            
+            <!-- Login Link -->
+            <div class="login-link">
+                Already have an account? <a href="login.html">Sign in</a>
+            </div>
+            
+            <!-- Help Text -->
+            <div style="text-align: center; margin-top: 1rem;">
+                <small style="color: #6c757d;">
+                    <i class="fas fa-lock"></i> Your information is secure and encrypted
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Current step
+        let currentStep = 1;
+        let selectedUserType = '';
+        
+        // Toggle password visibility
+        function togglePassword(inputId, iconId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleIcon = document.getElementById(iconId);
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+        
+        // Select user type
+        function selectUserType(element, type) {
+            // Remove selected class from all cards
+            document.querySelectorAll('.user-type-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked card
+            element.classList.add('selected');
+            selectedUserType = type;
+            
+            // Hide error if shown
+            document.getElementById('userTypeError').classList.remove('show');
+        }
+        
+        // Next step
+        function nextStep() {
+            if (currentStep === 1) {
+                // Validate step 1
+                if (!selectedUserType) {
+                    document.getElementById('userTypeError').classList.add('show');
+                    return;
+                }
+                
+                // Update steps UI
+                document.getElementById('step1').classList.remove('active');
+                document.getElementById('step1').classList.add('completed');
+                document.getElementById('step2').classList.add('active');
+                
+                // Show/hide content
+                document.getElementById('step1-content').style.display = 'none';
+                document.getElementById('step2-content').style.display = 'block';
+                
+                currentStep = 2;
+            } else if (currentStep === 2) {
+                // Validate step 2
+                if (validateStep2()) {
+                    // Update steps UI
+                    document.getElementById('step2').classList.remove('active');
+                    document.getElementById('step2').classList.add('completed');
+                    document.getElementById('step3').classList.add('active');
+                    
+                    // Show/hide content
+                    document.getElementById('step2-content').style.display = 'none';
+                    document.getElementById('step3-content').style.display = 'block';
+                    
+                    currentStep = 3;
+                }
+            }
+        }
+        
+        // Previous step
+        function prevStep() {
+            if (currentStep === 2) {
+                document.getElementById('step1').classList.remove('completed');
+                document.getElementById('step1').classList.add('active');
+                document.getElementById('step2').classList.remove('active');
+                
+                document.getElementById('step2-content').style.display = 'none';
+                document.getElementById('step1-content').style.display = 'block';
+                
+                currentStep = 1;
+            } else if (currentStep === 3) {
+                document.getElementById('step2').classList.remove('completed');
+                document.getElementById('step2').classList.add('active');
+                document.getElementById('step3').classList.remove('active');
+                
+                document.getElementById('step3-content').style.display = 'none';
+                document.getElementById('step2-content').style.display = 'block';
+                
+                currentStep = 2;
+            }
+        }
+        
+        // Validate step 2
+        function validateStep2() {
+            let isValid = true;
+            
+            // Reset errors
+            document.querySelectorAll('#step2-content .error-message').forEach(msg => {
+                msg.classList.remove('show');
+            });
+            document.querySelectorAll('#step2-content .input-group').forEach(group => {
+                group.classList.remove('error');
+            });
+            
+            // Validate first name
+            const firstName = document.getElementById('firstName').value.trim();
+            if (!firstName) {
+                document.getElementById('firstNameGroup').classList.add('error');
+                document.getElementById('firstNameError').classList.add('show');
+                isValid = false;
+            }
+            
+            // Validate last name
+            const lastName = document.getElementById('lastName').value.trim();
+            if (!lastName) {
+                document.getElementById('lastNameGroup').classList.add('error');
+                document.getElementById('lastNameError').classList.add('show');
+                isValid = false;
+            }
+            
+            // Validate email
+            const email = document.getElementById('email').value.trim();
+            if (!email || !isValidEmail(email)) {
+                document.getElementById('emailGroup').classList.add('error');
+                document.getElementById('emailError').classList.add('show');
+                isValid = false;
+            }
+            
+            // Validate phone
+            const phone = document.getElementById('phone').value.trim();
+            if (!phone) {
+                document.getElementById('phoneGroup').classList.add('error');
+                document.getElementById('phoneError').classList.add('show');
+                isValid = false;
+            }
+            
+            // Validate password
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!password || password.length < 8) {
+                document.getElementById('passwordGroup').classList.add('error');
+                isValid = false;
+            }
+            
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordGroup').classList.add('error');
+                document.getElementById('confirmPasswordError').classList.add('show');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+        
+        // Email validation
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // Password strength meter
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strength1 = document.getElementById('strength1');
+            const strength2 = document.getElementById('strength2');
+            const strength3 = document.getElementById('strength3');
+            const strengthText = document.getElementById('strengthText');
+            
+            // Reset classes
+            strength1.className = 'strength-segment';
+            strength2.className = 'strength-segment';
+            strength3.className = 'strength-segment';
+            
+            if (!password) {
+                strengthText.textContent = 'Enter a password';
+                return;
+            }
+            
+            // Check strength
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/) && password.match(/[^a-zA-Z0-9]/)) strength++;
+            
+            // Update UI
+            if (strength === 1) {
+                strength1.classList.add('weak');
+                strengthText.textContent = 'Weak';
+            } else if (strength === 2) {
+                strength1.classList.add('medium');
+                strength2.classList.add('medium');
+                strengthText.textContent = 'Medium';
+            } else if (strength >= 3) {
+                strength1.classList.add('strong');
+                strength2.classList.add('strong');
+                strength3.classList.add('strong');
+                strengthText.textContent = 'Strong';
+            }
+        });
+        
+        // Handle registration
+        function handleRegistration(event) {
+            event.preventDefault();
+            
+            // Validate step 3
+            const businessName = document.getElementById('businessName').value.trim();
+            const location = document.getElementById('businessLocation').value;
+            
+            if (!businessName) {
+                document.getElementById('businessNameGroup').classList.add('error');
+                document.getElementById('businessNameError').classList.add('show');
+                return;
+            }
+            
+            if (!location) {
+                document.getElementById('locationGroup').classList.add('error');
+                document.getElementById('locationError').classList.add('show');
+                return;
+            }
+            
+            // Show loading state
+            const registerButton = document.getElementById('registerButton');
+            const originalText = registerButton.innerHTML;
+            registerButton.innerHTML = '<span class="spinner"></span> Creating Account...';
+            registerButton.disabled = true;
+            
+            // Gather form data
+            const userData = {
+                userType: selectedUserType,
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                businessName: businessName,
+                businessType: document.getElementById('businessType').value,
+                cipa: document.getElementById('cipa').value,
+                location: location,
+                address: document.getElementById('businessAddress').value,
+                description: document.getElementById('businessDescription').value,
+                registered: new Date().toISOString(),
+                verified: false
+            };
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Save to localStorage
+                let users = JSON.parse(localStorage.getItem('bbh_users')) || [];
+                users.push(userData);
+                localStorage.setItem('bbh_users', JSON.stringify(users));
+                
+                // Auto login
+                localStorage.setItem('bbh_user', JSON.stringify(userData));
+                
+                // Show success message
+                const successMessage = document.getElementById('successMessage');
+                successMessage.classList.add('show');
+                
+                // Reset button
+                registerButton.innerHTML = originalText;
+                
+                // Redirect to dashboard
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+                
+            }, 2000);
+        }
+        
+        // Add input event listeners for real-time validation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add listeners for step 2 fields
+            const fields = ['firstName', 'lastName', 'email', 'phone', 'password', 'confirmPassword'];
+            fields.forEach(field => {
+                const element = document.getElementById(field);
+                if (element) {
+                    element.addEventListener('input', function() {
+                        const group = document.getElementById(field + 'Group');
+                        const error = document.getElementById(field + 'Error');
+                        if (group) group.classList.remove('error');
+                        if (error) error.classList.remove('show');
+                    });
+                }
+            });
+            
+            // Add listener for business name
+            document.getElementById('businessName').addEventListener('input', function() {
+                document.getElementById('businessNameGroup').classList.remove('error');
+                document.getElementById('businessNameError').classList.remove('show');
+            });
+            
+            // Add listener for location
+            document.getElementById('businessLocation').addEventListener('change', function() {
+                document.getElementById('locationGroup').classList.remove('error');
+                document.getElementById('locationError').classList.remove('show');
+            });
+            
+            // Check if user is already logged in
+            const user = localStorage.getItem('bbh_user');
+            if (user) {
+                if (confirm('You are already logged in. Go to dashboard?')) {
+                    window.location.href = 'dashboard.html';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
