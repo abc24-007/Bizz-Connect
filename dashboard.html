@@ -311,6 +311,7 @@
             align-items: center;
             gap: 1rem;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .stat-card:hover {
@@ -650,6 +651,7 @@
             padding: 1rem;
             border-radius: 8px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .activity-item:hover {
@@ -704,6 +706,100 @@
             justify-content: center;
             color: #f4b400;
             font-weight: bold;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h3 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30,60,114,0.1);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-actions button {
+            flex: 1;
+        }
+
+        /* Notification */
+        .notification-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid #1e3c72;
+        }
+
+        .notification-toast.success { border-left-color: #28a745; }
+        .notification-toast.error { border-left-color: #dc3545; }
+        .notification-toast.info { border-left-color: #1e3c72; }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         /* Responsive */
@@ -787,7 +883,7 @@
                 <div class="top-nav-actions">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="globalSearch" placeholder="Search...">
+                        <input type="text" id="globalSearch" placeholder="Search..." onkeyup="handleSearch(event)">
                     </div>
                     
                     <div class="role-selector">
@@ -816,7 +912,6 @@
         </div>
     </div>
 
-    <!-- Templates for different roles -->
     <script>
         // User data (simulated - in real app, this comes from localStorage/backend)
         const userData = {
@@ -835,19 +930,19 @@
                 reviewsGiven: 12,
                 totalSpent: 2450,
                 recentActivity: [
-                    { type: 'booking', description: 'Booking confirmed with Keitumetse', time: '5 min ago' },
-                    { type: 'message', description: 'New message from Thabo', time: '2 hours ago' },
-                    { type: 'review', description: 'You reviewed Mpho Banda', time: 'Yesterday' }
+                    { id: 'act1', type: 'booking', description: 'Booking confirmed with Keitumetse Modise', time: '5 min ago', provider: 'Keitumetse Modise' },
+                    { id: 'act2', type: 'message', description: 'New message from Thabo Nkosi', time: '2 hours ago', sender: 'Thabo Nkosi' },
+                    { id: 'act3', type: 'review', description: 'You reviewed Mpho Banda', time: 'Yesterday', provider: 'Mpho Banda' }
                 ],
                 upcomingBookings: [
-                    { provider: 'Keitumetse Modise', service: 'Hair Braiding', date: '2024-03-15', time: '14:00', amount: 250, status: 'confirmed' },
-                    { provider: 'Thabo Nkosi', service: 'Car Repair', date: '2024-03-16', time: '10:00', amount: 450, status: 'pending' }
+                    { id: 'bk1', provider: 'Keitumetse Modise', service: 'Hair Braiding', date: '2024-03-15', time: '14:00', amount: 250, status: 'confirmed' },
+                    { id: 'bk2', provider: 'Thabo Nkosi', service: 'Car Repair', date: '2024-03-16', time: '10:00', amount: 450, status: 'pending' }
                 ],
                 recommendedProviders: [
-                    { name: 'Keitumetse Modise', category: 'Hair & Beauty', rating: 4.8, reviews: 124, avatar: 'K' },
-                    { name: 'Thabo Nkosi', category: 'Automotive', rating: 5.0, reviews: 89, avatar: 'T' },
-                    { name: 'Mpho Banda', category: 'Photography', rating: 5.0, reviews: 67, avatar: 'M' },
-                    { name: 'Grace Mokwena', category: 'Cleaning', rating: 4.7, reviews: 56, avatar: 'G' }
+                    { id: 'p1', name: 'Keitumetse Modise', category: 'Hair & Beauty', rating: 4.8, reviews: 124, avatar: 'K', favorite: true },
+                    { id: 'p2', name: 'Thabo Nkosi', category: 'Automotive', rating: 5.0, reviews: 89, avatar: 'T', favorite: false },
+                    { id: 'p3', name: 'Mpho Banda', category: 'Photography', rating: 5.0, reviews: 67, avatar: 'M', favorite: false },
+                    { id: 'p4', name: 'Grace Mokwena', category: 'Cleaning', rating: 4.7, reviews: 56, avatar: 'G', favorite: true }
                 ]
             },
             
@@ -856,17 +951,17 @@
                 totalBookings: 156,
                 avgRating: 4.8,
                 earnings: 12450,
-                pendingRequests: 5,
+                pendingRequests: 3,
                 services: [
-                    { name: 'Hair Braiding', price: '250 - 450', bookings: 45, icon: 'cut' },
-                    { name: 'Haircut & Styling', price: '150 - 300', bookings: 32, icon: 'cut' },
-                    { name: 'Hair Coloring', price: '350 - 600', bookings: 18, icon: 'paint-brush' },
-                    { name: 'Treatment & Care', price: '200 - 400', bookings: 12, icon: 'spa' }
+                    { id: 's1', name: 'Hair Braiding', price: '250 - 450', bookings: 45, icon: 'cut', status: 'active' },
+                    { id: 's2', name: 'Haircut & Styling', price: '150 - 300', bookings: 32, icon: 'cut', status: 'active' },
+                    { id: 's3', name: 'Hair Coloring', price: '350 - 600', bookings: 18, icon: 'paint-brush', status: 'active' },
+                    { id: 's4', name: 'Treatment & Care', price: '200 - 400', bookings: 12, icon: 'spa', status: 'inactive' }
                 ],
                 pendingBookings: [
-                    { customer: 'Mpho Banda', service: 'Hair Braiding', date: '2024-03-15', time: '14:00' },
-                    { customer: 'Thabo Nkosi', service: 'Haircut', date: '2024-03-16', time: '10:00' },
-                    { customer: 'Grace Mokwena', service: 'Wedding Hairstyle', date: '2024-03-17', time: '09:00' }
+                    { id: 'pb1', customer: 'Mpho Banda', service: 'Hair Braiding', date: '2024-03-15', time: '14:00' },
+                    { id: 'pb2', customer: 'Thabo Nkosi', service: 'Haircut', date: '2024-03-16', time: '10:00' },
+                    { id: 'pb3', customer: 'Grace Mokwena', service: 'Wedding Hairstyle', date: '2024-03-17', time: '09:00' }
                 ]
             },
             
@@ -876,9 +971,9 @@
                 manufacturers: 8,
                 monthlyRevenue: 45250,
                 lowStock: [
-                    { name: 'Traditional Prints', manufacturer: 'Botswana Textiles', price: 85, stock: 12, icon: 'tshirt' },
-                    { name: 'Smartphones', manufacturer: 'Tech Solutions', price: 1200, stock: 8, icon: 'mobile-alt' },
-                    { name: 'Cooking Oil', manufacturer: 'Botswana Mills', price: 45, stock: 25, icon: 'oil-can' }
+                    { id: 'ls1', name: 'Traditional Prints', manufacturer: 'Botswana Textiles', price: 85, stock: 12, icon: 'tshirt' },
+                    { id: 'ls2', name: 'Smartphones', manufacturer: 'Tech Solutions', price: 1200, stock: 8, icon: 'mobile-alt' },
+                    { id: 'ls3', name: 'Cooking Oil', manufacturer: 'Botswana Mills', price: 45, stock: 25, icon: 'oil-can' }
                 ],
                 recentOrders: [
                     { id: 'ORD-001', customer: 'Keitumetse Modise', items: 3, total: 450, date: '2024-03-14', status: 'shipped' },
@@ -886,9 +981,9 @@
                     { id: 'ORD-003', customer: 'Grace Mokwena', items: 2, total: 230, date: '2024-03-13', status: 'delivered' }
                 ],
                 manufacturers: [
-                    { name: 'Botswana Textiles', category: 'Clothing', rating: 5, connected: true },
-                    { name: 'Tech Solutions', category: 'Electronics', rating: 4.5, connected: true },
-                    { name: 'Botswana Mills', category: 'Food', rating: 5, connected: false }
+                    { id: 'm1', name: 'Botswana Textiles', category: 'Clothing', rating: 5, connected: true },
+                    { id: 'm2', name: 'Tech Solutions', category: 'Electronics', rating: 4.5, connected: true },
+                    { id: 'm3', name: 'Botswana Mills', category: 'Food', rating: 5, connected: false }
                 ]
             },
             
@@ -898,19 +993,19 @@
                 monthlyProduction: 15200,
                 revenue: 156000,
                 lowStock: [
-                    { name: 'Traditional Fabric', category: 'Textiles', stock: 150, minStock: 200, icon: 'tshirt' },
-                    { name: 'Smartphone X', category: 'Electronics', stock: 30, minStock: 50, icon: 'mobile-alt' },
-                    { name: 'Cooking Oil 5L', category: 'Food', stock: 200, minStock: 300, icon: 'oil-can' }
+                    { id: 'ls1', name: 'Traditional Fabric', category: 'Textiles', stock: 150, minStock: 200, icon: 'tshirt' },
+                    { id: 'ls2', name: 'Smartphone X', category: 'Electronics', stock: 30, minStock: 50, icon: 'mobile-alt' },
+                    { id: 'ls3', name: 'Cooking Oil 5L', category: 'Food', stock: 200, minStock: 300, icon: 'oil-can' }
                 ],
                 distributorRequests: [
-                    { name: 'Thabo Nkosi', company: 'TNDistributors', location: 'Francistown', products: 5 },
-                    { name: 'Mpho Banda', company: 'MB Supplies', location: 'Gaborone', products: 3 },
-                    { name: 'Grace Mokwena', company: 'Grace Enterprises', location: 'Maun', products: 2 }
+                    { id: 'dr1', name: 'Thabo Nkosi', company: 'TNDistributors', location: 'Francistown', products: 5 },
+                    { id: 'dr2', name: 'Mpho Banda', company: 'MB Supplies', location: 'Gaborone', products: 3 },
+                    { id: 'dr3', name: 'Grace Mokwena', company: 'Grace Enterprises', location: 'Maun', products: 2 }
                 ],
                 distributors: [
-                    { name: 'Thabo Nkosi', company: 'TNDistributors', rating: 4.8, orders: 45, status: 'active' },
-                    { name: 'Mpho Banda', company: 'MB Supplies', rating: 4.5, orders: 32, status: 'active' },
-                    { name: 'Olebogeng K.', company: 'OK Distribution', rating: 4.9, orders: 28, status: 'pending' }
+                    { id: 'd1', name: 'Thabo Nkosi', company: 'TNDistributors', rating: 4.8, orders: 45, status: 'active' },
+                    { id: 'd2', name: 'Mpho Banda', company: 'MB Supplies', rating: 4.5, orders: 32, status: 'active' },
+                    { id: 'd3', name: 'Olebogeng K.', company: 'OK Distribution', rating: 4.9, orders: 28, status: 'pending' }
                 ]
             }
         };
@@ -958,6 +1053,7 @@
         function switchRole(role) {
             userData.role = role;
             loadDashboard(role);
+            showNotification(`Switched to ${role} dashboard`, 'info');
         }
 
         // Load dashboard based on role
@@ -1153,28 +1249,28 @@
             return `
                 <!-- Stats Grid -->
                 <div class="stats-grid">
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('bookings')">
                         <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
                         <div class="stat-info">
                             <h3>Active Bookings</h3>
                             <div class="number">${data.activeBookings}</div>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('favorites')">
                         <div class="stat-icon"><i class="fas fa-heart"></i></div>
                         <div class="stat-info">
                             <h3>Favorite Providers</h3>
                             <div class="number">${data.favorites}</div>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('reviews')">
                         <div class="stat-icon"><i class="fas fa-star"></i></div>
                         <div class="stat-info">
                             <h3>Reviews Given</h3>
                             <div class="number">${data.reviewsGiven}</div>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('history')">
                         <div class="stat-icon"><i class="fas fa-pula-sign"></i></div>
                         <div class="stat-info">
                             <h3>Total Spent</h3>
@@ -1191,9 +1287,9 @@
                     </div>
                     <div class="grid-2">
                         ${data.upcomingBookings.map(booking => `
-                            <div class="service-card">
+                            <div class="service-card" id="booking-${booking.id}">
                                 <div style="display: flex; justify-content: space-between; align-items: start;">
-                                    <div>
+                                    <div onclick="viewProviderProfile('${booking.provider}')" style="cursor: pointer;">
                                         <h4>${booking.provider}</h4>
                                         <p>${booking.service}</p>
                                     </div>
@@ -1204,8 +1300,17 @@
                                     <div><i class="fas fa-pula-sign"></i> P${booking.amount}</div>
                                 </div>
                                 <div style="display: flex; gap: 0.5rem;">
-                                    <button class="btn btn-outline" onclick="rescheduleBooking()">Reschedule</button>
-                                    <button class="btn btn-primary" onclick="messageProvider()">Message</button>
+                                    <button class="btn btn-outline" onclick="rescheduleBooking('${booking.id}')">
+                                        <i class="fas fa-calendar-alt"></i> Reschedule
+                                    </button>
+                                    <button class="btn btn-primary" onclick="openMessageModal('${booking.provider}')">
+                                        <i class="fas fa-comment"></i> Message
+                                    </button>
+                                    ${booking.status === 'pending' ? 
+                                        `<button class="btn btn-danger" onclick="cancelBooking('${booking.id}')">
+                                            <i class="fas fa-times"></i> Cancel
+                                        </button>` : ''
+                                    }
                                 </div>
                             </div>
                         `).join('')}
@@ -1216,20 +1321,33 @@
                 <div class="section-card">
                     <div class="section-header">
                         <h3>Recommended for You</h3>
-                        <a href="providers.html" class="view-all-link">Browse All <i class="fas fa-arrow-right"></i></a>
+                        <button class="btn btn-outline" onclick="window.location.href='providers.html'">
+                            Browse All <i class="fas fa-arrow-right"></i>
+                        </button>
                     </div>
                     <div class="grid-4">
                         ${data.recommendedProviders.map(provider => `
-                            <div class="provider-card">
-                                <div class="avatar-large" style="margin: 0 auto;">${provider.avatar}</div>
-                                <h4 style="text-align: center;">${provider.name}</h4>
+                            <div class="provider-card" id="provider-${provider.id}">
+                                <div class="avatar-large" style="margin: 0 auto; cursor: pointer;" onclick="viewProviderProfile('${provider.name}')">
+                                    ${provider.avatar}
+                                </div>
+                                <h4 style="text-align: center; cursor: pointer;" onclick="viewProviderProfile('${provider.name}')">
+                                    ${provider.name}
+                                </h4>
                                 <p style="text-align: center; color: #6c757d;">${provider.category}</p>
                                 <div class="rating" style="text-align: center;">
                                     ${getStarRating(provider.rating)}
                                     <span>${provider.rating}</span>
                                     <span style="color: #6c757d;">(${provider.reviews})</span>
                                 </div>
-                                <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="bookNow('${provider.name}')">Book Now</button>
+                                <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                                    <button class="btn btn-outline" style="flex: 1;" onclick="toggleFavorite('${provider.id}', this)">
+                                        <i class="${provider.favorite ? 'fas' : 'far'} fa-heart" style="${provider.favorite ? 'color: #dc3545;' : ''}"></i>
+                                    </button>
+                                    <button class="btn btn-primary" style="flex: 2;" onclick="openBookingModal('${provider.name}')">
+                                        Book Now
+                                    </button>
+                                </div>
                             </div>
                         `).join('')}
                     </div>
@@ -1239,11 +1357,11 @@
                 <div class="section-card">
                     <div class="section-header">
                         <h3>Recent Activity</h3>
-                        <a class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+                        <a class="view-all-link" onclick="showSection('history')">View All <i class="fas fa-arrow-right"></i></a>
                     </div>
                     <div class="activity-list">
                         ${data.recentActivity.map(activity => `
-                            <div class="activity-item">
+                            <div class="activity-item" onclick="viewActivityDetails('${activity.id}')">
                                 <div class="activity-icon ${activity.type}">
                                     <i class="fas fa-${activity.type === 'booking' ? 'calendar-check' : activity.type === 'message' ? 'comment' : 'star'}"></i>
                                 </div>
@@ -1251,6 +1369,7 @@
                                     <p>${activity.description}</p>
                                     <small>${activity.time}</small>
                                 </div>
+                                <i class="fas fa-chevron-right" style="color: #6c757d;"></i>
                             </div>
                         `).join('')}
                     </div>
@@ -1264,7 +1383,7 @@
             return `
                 <!-- Stats Grid -->
                 <div class="stats-grid">
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('analytics')">
                         <div class="stat-icon"><i class="fas fa-eye"></i></div>
                         <div class="stat-info">
                             <h3>Profile Views</h3>
@@ -1272,7 +1391,7 @@
                             <div class="trend"><i class="fas fa-arrow-up"></i> +12.5%</div>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('bookings')">
                         <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
                         <div class="stat-info">
                             <h3>Total Bookings</h3>
@@ -1280,7 +1399,7 @@
                             <div class="trend"><i class="fas fa-arrow-up"></i> +8.2%</div>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('reviews')">
                         <div class="stat-icon"><i class="fas fa-star"></i></div>
                         <div class="stat-info">
                             <h3>Average Rating</h3>
@@ -1288,7 +1407,7 @@
                             <div class="trend"><i class="fas fa-arrow-up"></i> +0.3</div>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('earnings')">
                         <div class="stat-icon"><i class="fas fa-pula-sign"></i></div>
                         <div class="stat-info">
                             <h3>Total Earnings</h3>
@@ -1303,10 +1422,10 @@
                     <div class="chart-card">
                         <div class="chart-header">
                             <h3>Revenue Overview</h3>
-                            <select>
-                                <option>Last 7 days</option>
-                                <option>Last 30 days</option>
-                                <option>Last 3 months</option>
+                            <select onchange="updateChartPeriod(this.value, 'revenue')">
+                                <option value="7">Last 7 days</option>
+                                <option value="30">Last 30 days</option>
+                                <option value="90">Last 3 months</option>
                             </select>
                         </div>
                         <div class="chart-container">
@@ -1316,9 +1435,9 @@
                     <div class="chart-card">
                         <div class="chart-header">
                             <h3>Booking Statistics</h3>
-                            <select>
-                                <option>This month</option>
-                                <option>Last month</option>
+                            <select onchange="updateChartPeriod(this.value, 'bookings')">
+                                <option value="month">This month</option>
+                                <option value="lastMonth">Last month</option>
                             </select>
                         </div>
                         <div class="chart-container">
@@ -1346,14 +1465,15 @@
                             </thead>
                             <tbody>
                                 ${data.pendingBookings.map(booking => `
-                                    <tr>
-                                        <td>${booking.customer}</td>
+                                    <tr id="booking-${booking.id}">
+                                        <td onclick="viewCustomerProfile('${booking.customer}')" style="cursor: pointer;">${booking.customer}</td>
                                         <td>${booking.service}</td>
                                         <td>${booking.date}</td>
                                         <td>${booking.time}</td>
                                         <td>
-                                            <button class="action-btn accept" onclick="acceptBooking()">Accept</button>
-                                            <button class="action-btn decline" onclick="declineBooking()">Decline</button>
+                                            <button class="action-btn accept" onclick="acceptBooking('${booking.id}')">Accept</button>
+                                            <button class="action-btn decline" onclick="declineBooking('${booking.id}')">Decline</button>
+                                            <button class="action-btn" onclick="openMessageModal('${booking.customer}')"><i class="fas fa-comment"></i></button>
                                         </td>
                                     </tr>
                                 `).join('')}
@@ -1366,11 +1486,14 @@
                 <div class="section-card">
                     <div class="section-header">
                         <h3>My Services</h3>
-                        <button class="btn btn-primary" onclick="addService()">+ Add New Service</button>
+                        <button class="btn btn-primary" onclick="openAddServiceModal()">
+                            <i class="fas fa-plus"></i> Add New Service
+                        </button>
                     </div>
                     <div class="grid-4">
                         ${data.services.map(service => `
-                            <div class="service-card">
+                            <div class="service-card" id="service-${service.id}">
+                                <span class="badge ${service.status === 'active' ? 'in-stock' : 'low-stock'}">${service.status}</span>
                                 <div class="card-icon">
                                     <i class="fas fa-${service.icon}"></i>
                                 </div>
@@ -1378,8 +1501,15 @@
                                 <div class="service-price">P${service.price}</div>
                                 <div class="service-bookings">${service.bookings} bookings this month</div>
                                 <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-                                    <button class="btn btn-outline" style="flex: 1;" onclick="editService()">Edit</button>
-                                    <button class="btn btn-outline" style="flex: 1;" onclick="viewServiceStats()">Stats</button>
+                                    <button class="btn btn-outline" style="flex: 1;" onclick="editService('${service.id}')">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="btn btn-outline" style="flex: 1;" onclick="viewServiceStats('${service.id}')">
+                                        <i class="fas fa-chart-bar"></i> Stats
+                                    </button>
+                                    <button class="btn btn-outline" style="flex: 0;" onclick="toggleServiceStatus('${service.id}')">
+                                        <i class="fas ${service.status === 'active' ? 'fa-toggle-on' : 'fa-toggle-off'}"></i>
+                                    </button>
                                 </div>
                             </div>
                         `).join('')}
@@ -1394,7 +1524,7 @@
             return `
                 <!-- Stats Grid -->
                 <div class="stats-grid">
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('inventory')">
                         <div class="stat-icon"><i class="fas fa-boxes"></i></div>
                         <div class="stat-info">
                             <h3>Products in Stock</h3>
@@ -1402,7 +1532,7 @@
                             <div class="trend"><i class="fas fa-arrow-up"></i> +12</div>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('orders')">
                         <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
                         <div class="stat-info">
                             <h3>Active Orders</h3>
@@ -1410,7 +1540,7 @@
                             <div class="trend"><i class="fas fa-arrow-up"></i> +8.2%</div>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('manufacturers')">
                         <div class="stat-icon"><i class="fas fa-industry"></i></div>
                         <div class="stat-info">
                             <h3>Manufacturers</h3>
@@ -1418,7 +1548,7 @@
                             <div class="trend"><i class="fas fa-arrow-up"></i> +2</div>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('earnings')">
                         <div class="stat-icon"><i class="fas fa-pula-sign"></i></div>
                         <div class="stat-info">
                             <h3>Monthly Revenue</h3>
@@ -1433,10 +1563,10 @@
                     <div class="chart-card">
                         <div class="chart-header">
                             <h3>Sales Overview</h3>
-                            <select>
-                                <option>Last 7 days</option>
-                                <option>Last 30 days</option>
-                                <option>Last 3 months</option>
+                            <select onchange="updateChartPeriod(this.value, 'sales')">
+                                <option value="7">Last 7 days</option>
+                                <option value="30">Last 30 days</option>
+                                <option value="90">Last 3 months</option>
                             </select>
                         </div>
                         <div class="chart-container">
@@ -1446,9 +1576,9 @@
                     <div class="chart-card">
                         <div class="chart-header">
                             <h3>Inventory Status</h3>
-                            <select>
-                                <option>By Category</option>
-                                <option>By Manufacturer</option>
+                            <select onchange="updateChartPeriod(this.value, 'inventory')">
+                                <option value="category">By Category</option>
+                                <option value="manufacturer">By Manufacturer</option>
                             </select>
                         </div>
                         <div class="chart-container">
@@ -1465,7 +1595,7 @@
                     </div>
                     <div class="grid-3">
                         ${data.lowStock.map(product => `
-                            <div class="product-card">
+                            <div class="product-card" id="product-${product.id}">
                                 <span class="badge low-stock">Low Stock</span>
                                 <div class="card-icon">
                                     <i class="fas fa-${product.icon}"></i>
@@ -1479,7 +1609,9 @@
                                         <div class="stock-fill" style="width: ${(product.stock / 100) * 100}%;"></div>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary" style="width: 100%;" onclick="reorderProduct()">Reorder Now</button>
+                                <button class="btn btn-primary" style="width: 100%;" onclick="openReorderModal('${product.id}')">
+                                    <i class="fas fa-shopping-cart"></i> Reorder Now
+                                </button>
                             </div>
                         `).join('')}
                     </div>
@@ -1506,16 +1638,17 @@
                             </thead>
                             <tbody>
                                 ${data.recentOrders.map(order => `
-                                    <tr>
-                                        <td>#${order.id}</td>
-                                        <td>${order.customer}</td>
+                                    <tr id="order-${order.id}">
+                                        <td><strong>#${order.id}</strong></td>
+                                        <td onclick="viewCustomerProfile('${order.customer}')" style="cursor: pointer;">${order.customer}</td>
                                         <td>${order.items} items</td>
                                         <td>P${order.total}</td>
                                         <td>${order.date}</td>
                                         <td><span class="status-badge ${order.status}">${order.status}</span></td>
                                         <td>
-                                            <button class="action-btn" onclick="viewOrder()"><i class="fas fa-eye"></i></button>
-                                            <button class="action-btn" onclick="trackOrder()"><i class="fas fa-truck"></i></button>
+                                            <button class="action-btn" onclick="viewOrderDetails('${order.id}')"><i class="fas fa-eye"></i></button>
+                                            <button class="action-btn" onclick="trackOrder('${order.id}')"><i class="fas fa-truck"></i></button>
+                                            <button class="action-btn" onclick="updateOrderStatus('${order.id}')"><i class="fas fa-edit"></i></button>
                                         </td>
                                     </tr>
                                 `).join('')}
@@ -1528,22 +1661,24 @@
                 <div class="section-card">
                     <div class="section-header">
                         <h3>Partner Manufacturers</h3>
-                        <button class="btn btn-primary" onclick="findManufacturers()">Find New Partners</button>
+                        <button class="btn btn-primary" onclick="openFindManufacturersModal()">
+                            <i class="fas fa-search"></i> Find New Partners
+                        </button>
                     </div>
                     <div class="grid-3">
                         ${data.manufacturers.map(man => `
-                            <div class="manufacturer-card" style="display: flex; align-items: center; gap: 1rem;">
+                            <div class="manufacturer-card" id="manufacturer-${man.id}" style="display: flex; align-items: center; gap: 1rem;">
                                 <div class="card-icon" style="width: 50px; height: 50px; font-size: 1.2rem; margin-bottom: 0;">
                                     <i class="fas fa-industry"></i>
                                 </div>
-                                <div style="flex: 1;">
+                                <div style="flex: 1;" onclick="viewManufacturerProfile('${man.name}')" style="cursor: pointer;">
                                     <h4>${man.name}</h4>
                                     <p style="color: #6c757d;">${man.category}</p>
                                     <div class="rating">
                                         ${getStarRating(man.rating)}
                                     </div>
                                 </div>
-                                <button class="btn ${man.connected ? 'btn-success' : 'btn-primary'}" onclick="toggleConnect(this)">
+                                <button class="btn ${man.connected ? 'btn-success' : 'btn-primary'}" onclick="toggleManufacturerConnection('${man.id}', this)">
                                     ${man.connected ? 'Connected' : 'Connect'}
                                 </button>
                             </div>
@@ -1559,7 +1694,7 @@
             return `
                 <!-- Stats Grid -->
                 <div class="stats-grid">
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('products')">
                         <div class="stat-icon"><i class="fas fa-box"></i></div>
                         <div class="stat-info">
                             <h3>Total Products</h3>
@@ -1567,7 +1702,7 @@
                             <div class="trend"><i class="fas fa-arrow-up"></i> +5</div>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('distributors')">
                         <div class="stat-icon"><i class="fas fa-handshake"></i></div>
                         <div class="stat-info">
                             <h3>Active Distributors</h3>
@@ -1575,7 +1710,7 @@
                             <div class="trend"><i class="fas fa-arrow-up"></i> +3</div>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('production')">
                         <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
                         <div class="stat-info">
                             <h3>Monthly Production</h3>
@@ -1583,7 +1718,7 @@
                             <div class="trend"><i class="fas fa-arrow-up"></i> +15%</div>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showSection('earnings')">
                         <div class="stat-icon"><i class="fas fa-pula-sign"></i></div>
                         <div class="stat-info">
                             <h3>Revenue</h3>
@@ -1598,10 +1733,10 @@
                     <div class="chart-card">
                         <div class="chart-header">
                             <h3>Production Overview</h3>
-                            <select>
-                                <option>Last 7 days</option>
-                                <option>Last 30 days</option>
-                                <option>Last 3 months</option>
+                            <select onchange="updateChartPeriod(this.value, 'production')">
+                                <option value="7">Last 7 days</option>
+                                <option value="30">Last 30 days</option>
+                                <option value="90">Last 3 months</option>
                             </select>
                         </div>
                         <div class="chart-container">
@@ -1611,9 +1746,9 @@
                     <div class="chart-card">
                         <div class="chart-header">
                             <h3>Distribution Channels</h3>
-                            <select>
-                                <option>By Region</option>
-                                <option>By Distributor</option>
+                            <select onchange="updateChartPeriod(this.value, 'distribution')">
+                                <option value="region">By Region</option>
+                                <option value="distributor">By Distributor</option>
                             </select>
                         </div>
                         <div class="chart-container">
@@ -1630,7 +1765,7 @@
                     </div>
                     <div class="grid-3">
                         ${data.lowStock.map(product => `
-                            <div class="product-card">
+                            <div class="product-card" id="product-${product.id}">
                                 <span class="badge low-stock">Below Minimum</span>
                                 <div class="card-icon">
                                     <i class="fas fa-${product.icon}"></i>
@@ -1643,7 +1778,9 @@
                                         <div class="stock-fill" style="width: ${(product.stock / product.minStock) * 100}%; background: #dc3545;"></div>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary" style="width: 100%;" onclick="increaseProduction()">Increase Production</button>
+                                <button class="btn btn-primary" style="width: 100%;" onclick="openProductionModal('${product.id}')">
+                                    <i class="fas fa-industry"></i> Increase Production
+                                </button>
                             </div>
                         `).join('')}
                     </div>
@@ -1657,7 +1794,7 @@
                     </div>
                     <div class="grid-3">
                         ${data.distributorRequests.map(req => `
-                            <div class="service-card">
+                            <div class="service-card" id="request-${req.id}">
                                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                                     <div class="avatar-large" style="width: 50px; height: 50px; font-size: 1.2rem; margin: 0;">${req.name.charAt(0)}</div>
                                     <div>
@@ -1668,8 +1805,15 @@
                                 <p><i class="fas fa-map-marker-alt"></i> ${req.location}</p>
                                 <p><i class="fas fa-box"></i> Interested in ${req.products} products</p>
                                 <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-                                    <button class="btn btn-success" style="flex: 1;" onclick="approveDistributor()">Approve</button>
-                                    <button class="btn btn-danger" style="flex: 1;" onclick="declineDistributor()">Decline</button>
+                                    <button class="btn btn-success" style="flex: 1;" onclick="approveDistributor('${req.id}')">
+                                        <i class="fas fa-check"></i> Approve
+                                    </button>
+                                    <button class="btn btn-danger" style="flex: 1;" onclick="declineDistributor('${req.id}')">
+                                        <i class="fas fa-times"></i> Decline
+                                    </button>
+                                    <button class="btn btn-outline" style="flex: 0;" onclick="openMessageModal('${req.name}')">
+                                        <i class="fas fa-comment"></i>
+                                    </button>
                                 </div>
                             </div>
                         `).join('')}
@@ -1696,8 +1840,8 @@
                             </thead>
                             <tbody>
                                 ${data.distributors.map(dist => `
-                                    <tr>
-                                        <td>${dist.name}</td>
+                                    <tr id="distributor-${dist.id}">
+                                        <td onclick="viewDistributorProfile('${dist.name}')" style="cursor: pointer;">${dist.name}</td>
                                         <td>${dist.company}</td>
                                         <td>
                                             <div class="rating">
@@ -1708,8 +1852,9 @@
                                         <td>${dist.orders} orders</td>
                                         <td><span class="status-badge ${dist.status === 'active' ? 'confirmed' : 'pending'}">${dist.status}</span></td>
                                         <td>
-                                            <button class="action-btn" onclick="viewDistributor()"><i class="fas fa-eye"></i></button>
-                                            <button class="action-btn" onclick="messageDistributor()"><i class="fas fa-comment"></i></button>
+                                            <button class="action-btn" onclick="viewDistributorDetails('${dist.id}')"><i class="fas fa-eye"></i></button>
+                                            <button class="action-btn" onclick="openMessageModal('${dist.name}')"><i class="fas fa-comment"></i></button>
+                                            <button class="action-btn" onclick="updateDistributorStatus('${dist.id}')"><i class="fas fa-edit"></i></button>
                                         </td>
                                     </tr>
                                 `).join('')}
@@ -1770,7 +1915,16 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
+                            plugins: { 
+                                legend: { display: false },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return 'P' + context.raw;
+                                        }
+                                    }
+                                }
+                            },
                             scales: {
                                 y: {
                                     beginAtZero: true,
@@ -1797,7 +1951,16 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                            plugins: { legend: { position: 'bottom' } },
+                            plugins: { 
+                                legend: { position: 'bottom' },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return context.raw + ' bookings';
+                                        }
+                                    }
+                                }
+                            },
                             cutout: '70%'
                         }
                     });
@@ -1824,7 +1987,16 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
+                            plugins: { 
+                                legend: { display: false },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return 'P' + context.raw.toLocaleString();
+                                        }
+                                    }
+                                }
+                            },
                             scales: {
                                 y: {
                                     beginAtZero: true,
@@ -1876,7 +2048,16 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
+                            plugins: { 
+                                legend: { display: false },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return context.raw.toLocaleString() + ' units';
+                                        }
+                                    }
+                                }
+                            },
                             scales: {
                                 y: {
                                     beginAtZero: true,
@@ -1910,50 +2091,432 @@
             }
         }
 
-        // Section navigation
-        function showSection(section) {
-            // In a real app, this would navigate to different sections
-            console.log('Navigating to section:', section);
-            alert(`Navigating to ${section} section`);
+        // Update chart period
+        function updateChartPeriod(period, chartType) {
+            showNotification(`Updating ${chartType} chart for period: ${period}`, 'info');
+            // In a real app, this would fetch new data and update the chart
         }
 
-        // Action functions
-        function rescheduleBooking() { alert('Opening reschedule form...'); }
-        function messageProvider() { alert('Opening messaging...'); }
-        function bookNow(provider) { alert(`Booking with ${provider}...`); }
-        function acceptBooking() { alert('Booking accepted!'); }
-        function declineBooking() { alert('Booking declined'); }
-        function addService() { alert('Opening add service form...'); }
-        function editService() { alert('Editing service...'); }
-        function viewServiceStats() { showSection('analytics'); }
-        function reorderProduct() { alert('Opening reorder form...'); }
-        function viewOrder() { alert('Viewing order details...'); }
-        function trackOrder() { alert('Tracking order...'); }
-        function findManufacturers() { alert('Searching for manufacturers...'); }
-        function toggleConnect(btn) {
+        // Section navigation
+        function showSection(section) {
+            showNotification(`Navigating to ${section} section`, 'info');
+            // In a real app, this would navigate to different sections
+        }
+
+        // Customer Actions
+        function rescheduleBooking(bookingId) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3>Reschedule Booking</h3>
+                    <form onsubmit="confirmReschedule(event, '${bookingId}')">
+                        <div class="form-group">
+                            <label>New Date</label>
+                            <input type="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>New Time</label>
+                            <select required>
+                                <option>09:00</option>
+                                <option>10:00</option>
+                                <option>11:00</option>
+                                <option>14:00</option>
+                                <option>15:00</option>
+                                <option>16:00</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Reason for rescheduling</label>
+                            <textarea rows="3" placeholder="Please provide a reason..."></textarea>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="submit" class="btn btn-primary">Confirm Reschedule</button>
+                            <button type="button" class="btn btn-outline" onclick="closeModal(this)">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function confirmReschedule(event, bookingId) {
+            event.preventDefault();
+            closeModal(event.target);
+            showNotification(`Booking ${bookingId} rescheduled successfully!`, 'success');
+        }
+
+        function cancelBooking(bookingId) {
+            if (confirm('Are you sure you want to cancel this booking?')) {
+                showNotification(`Booking ${bookingId} cancelled`, 'info');
+            }
+        }
+
+        function toggleFavorite(providerId, btn) {
+            const icon = btn.querySelector('i');
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                icon.style.color = '#dc3545';
+                showNotification('Provider added to favorites', 'success');
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                icon.style.color = '';
+                showNotification('Provider removed from favorites', 'info');
+            }
+        }
+
+        function openBookingModal(providerName) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3>Book with ${providerName}</h3>
+                    <form onsubmit="confirmBooking(event, '${providerName}')">
+                        <div class="form-group">
+                            <label>Select Service</label>
+                            <select required>
+                                <option>Hair Braiding</option>
+                                <option>Haircut & Styling</option>
+                                <option>Hair Coloring</option>
+                                <option>Treatment & Care</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Date</label>
+                            <input type="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Time</label>
+                            <select required>
+                                <option>09:00</option>
+                                <option>10:00</option>
+                                <option>11:00</option>
+                                <option>14:00</option>
+                                <option>15:00</option>
+                                <option>16:00</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Additional Notes</label>
+                            <textarea rows="3" placeholder="Any special requests?"></textarea>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="submit" class="btn btn-primary">Confirm Booking</button>
+                            <button type="button" class="btn btn-outline" onclick="closeModal(this)">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function confirmBooking(event, providerName) {
+            event.preventDefault();
+            closeModal(event.target);
+            showNotification(`Booking confirmed with ${providerName}!`, 'success');
+        }
+
+        // Provider Actions
+        function acceptBooking(bookingId) {
+            showNotification(`Booking ${bookingId} accepted!`, 'success');
+            const row = document.getElementById(`booking-${bookingId}`);
+            if (row) {
+                const statusCell = row.querySelector('.status-badge');
+                if (statusCell) {
+                    statusCell.className = 'status-badge confirmed';
+                    statusCell.textContent = 'confirmed';
+                }
+            }
+        }
+
+        function declineBooking(bookingId) {
+            showNotification(`Booking ${bookingId} declined`, 'info');
+        }
+
+        function openAddServiceModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3>Add New Service</h3>
+                    <form onsubmit="addService(event)">
+                        <div class="form-group">
+                            <label>Service Name</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select required>
+                                <option>Hair & Beauty</option>
+                                <option>Automotive</option>
+                                <option>Photography</option>
+                                <option>Cleaning</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Price Range</label>
+                            <input type="text" placeholder="e.g., 250 - 450" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea rows="3" required></textarea>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="submit" class="btn btn-primary">Add Service</button>
+                            <button type="button" class="btn btn-outline" onclick="closeModal(this)">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function addService(event) {
+            event.preventDefault();
+            closeModal(event.target);
+            showNotification('New service added successfully!', 'success');
+        }
+
+        function editService(serviceId) {
+            showNotification(`Editing service ${serviceId}`, 'info');
+        }
+
+        function viewServiceStats(serviceId) {
+            showSection('analytics');
+            showNotification(`Viewing stats for service ${serviceId}`, 'info');
+        }
+
+        function toggleServiceStatus(serviceId) {
+            showNotification(`Service status toggled`, 'success');
+        }
+
+        // Distributor Actions
+        function openReorderModal(productId) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3>Reorder Product</h3>
+                    <form onsubmit="confirmReorder(event, '${productId}')">
+                        <div class="form-group">
+                            <label>Quantity to Order</label>
+                            <input type="number" min="1" value="50" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Manufacturer</label>
+                            <select required>
+                                <option>Botswana Textiles</option>
+                                <option>Tech Solutions</option>
+                                <option>Botswana Mills</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Delivery Date</label>
+                            <input type="date" required>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="submit" class="btn btn-primary">Place Order</button>
+                            <button type="button" class="btn btn-outline" onclick="closeModal(this)">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function confirmReorder(event, productId) {
+            event.preventDefault();
+            closeModal(event.target);
+            showNotification(`Reorder placed for product ${productId}`, 'success');
+        }
+
+        function viewOrderDetails(orderId) {
+            showNotification(`Viewing order ${orderId} details`, 'info');
+        }
+
+        function trackOrder(orderId) {
+            showNotification(`Tracking order ${orderId}`, 'info');
+        }
+
+        function updateOrderStatus(orderId) {
+            showNotification(`Order ${orderId} status updated`, 'success');
+        }
+
+        function toggleManufacturerConnection(manufacturerId, btn) {
             if (btn.textContent === 'Connect') {
                 btn.textContent = 'Connected';
                 btn.classList.remove('btn-primary');
                 btn.classList.add('btn-success');
+                showNotification('Connected to manufacturer', 'success');
             } else {
                 btn.textContent = 'Connect';
                 btn.classList.remove('btn-success');
                 btn.classList.add('btn-primary');
+                showNotification('Disconnected from manufacturer', 'info');
             }
         }
-        function increaseProduction() { alert('Opening production increase form...'); }
-        function approveDistributor() { alert('Distributor approved!'); }
-        function declineDistributor() { alert('Distributor declined'); }
-        function viewDistributor() { alert('Viewing distributor details...'); }
-        function messageDistributor() { alert('Opening messaging...'); }
-        
+
+        function openFindManufacturersModal() {
+            showNotification('Searching for manufacturers...', 'info');
+        }
+
+        // Manufacturer Actions
+        function openProductionModal(productId) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3>Increase Production</h3>
+                    <form onsubmit="confirmProductionIncrease(event, '${productId}')">
+                        <div class="form-group">
+                            <label>Additional Units to Produce</label>
+                            <input type="number" min="1" value="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Production Timeline</label>
+                            <select required>
+                                <option>1 week</option>
+                                <option>2 weeks</option>
+                                <option>3 weeks</option>
+                                <option>1 month</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Priority</label>
+                            <select required>
+                                <option>Normal</option>
+                                <option>High</option>
+                                <option>Urgent</option>
+                            </select>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="submit" class="btn btn-primary">Start Production</button>
+                            <button type="button" class="btn btn-outline" onclick="closeModal(this)">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function confirmProductionIncrease(event, productId) {
+            event.preventDefault();
+            closeModal(event.target);
+            showNotification(`Production increased for product ${productId}`, 'success');
+        }
+
+        function approveDistributor(requestId) {
+            showNotification(`Distributor request ${requestId} approved`, 'success');
+        }
+
+        function declineDistributor(requestId) {
+            showNotification(`Distributor request ${requestId} declined`, 'info');
+        }
+
+        function viewDistributorDetails(distributorId) {
+            showNotification(`Viewing distributor ${distributorId} details`, 'info');
+        }
+
+        function updateDistributorStatus(distributorId) {
+            showNotification(`Distributor ${distributorId} status updated`, 'success');
+        }
+
+        // Common Actions
+        function openMessageModal(recipient) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3>Message to ${recipient}</h3>
+                    <form onsubmit="sendMessage(event, '${recipient}')">
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea rows="5" required></textarea>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                            <button type="button" class="btn btn-outline" onclick="closeModal(this)">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function sendMessage(event, recipient) {
+            event.preventDefault();
+            closeModal(event.target);
+            showNotification(`Message sent to ${recipient}`, 'success');
+        }
+
+        function viewProviderProfile(providerName) {
+            showNotification(`Viewing ${providerName}'s profile`, 'info');
+        }
+
+        function viewCustomerProfile(customerName) {
+            showNotification(`Viewing ${customerName}'s profile`, 'info');
+        }
+
+        function viewManufacturerProfile(manufacturerName) {
+            showNotification(`Viewing ${manufacturerName}'s profile`, 'info');
+        }
+
+        function viewDistributorProfile(distributorName) {
+            showNotification(`Viewing ${distributorName}'s profile`, 'info');
+        }
+
+        function viewActivityDetails(activityId) {
+            showNotification(`Viewing activity ${activityId} details`, 'info');
+        }
+
+        // Utility Functions
+        function closeModal(element) {
+            const modal = element.closest('.modal');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
+        }
+
         function showNotifications() {
-            alert(`You have ${document.getElementById('notificationCount').textContent} new notifications`);
+            const count = document.getElementById('notificationCount').textContent;
+            showNotification(`You have ${count} new notifications`, 'info');
         }
 
         function toggleUserMenu() {
-            // In a real app, this would show a dropdown menu
-            console.log('Toggle user menu');
+            showNotification('User menu opened', 'info');
+        }
+
+        function handleSearch(event) {
+            const query = event.target.value;
+            if (query.length > 2) {
+                showNotification(`Searching for "${query}"...`, 'info');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification-toast ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
         }
 
         function logout() {
