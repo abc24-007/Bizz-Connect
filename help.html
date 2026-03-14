@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - Bizz Connect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .help-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .help-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .help-card i {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+        
+        .help-card h3 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+        
+        .help-card p {
+            color: #6c757d;
+        }
+        
+        .search-help {
+            margin: 2rem 0;
+        }
+        
+        .search-help input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Same navigation -->
+    <div class="page-content">
+        <div class="content-card">
+            <h1>Help Center</h1>
+            <p>How can we help you today?</p>
+            
+            <div class="search-help">
+                <input type="text" placeholder="Search for help articles..." onkeyup="searchHelp(this.value)">
+            </div>
+            
+            <div class="help-grid">
+                <div class="help-card" onclick="location.href='getting-started.html'">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Getting Started</h3>
+                    <p>New to Bizz Connect? Start here</p>
+                </div>
+                
+                <div class="help-card" onclick="location.href='account-help.html'">
+                    <i class="fas fa-user-circle"></i>
+                    <h3>Account & Profile</h3>
+                    <p>Manage your account settings</p>
+                </div>
+                
+                <div class="help-card" onclick="location.href='bookings-help.html'">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>Bookings</h3>
+                    <p>Learn about bookings and scheduling</p>
+                </div>
+                
+                <div class="help-card" onclick="location.href='payments-help.html'">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>Payments & Billing</h3>
+                    <p>Understand our payment system</p>
+                </div>
+                
+                <div class="help-card" onclick="location.href='security-help.html'">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Security & Privacy</h3>
+                    <p>Your safety is our priority</p>
+                </div>
+                
+                <div class="help-card" onclick="location.href='troubleshooting.html'">
+                    <i class="fas fa-tools"></i>
+                    <h3>Troubleshooting</h3>
+                    <p>Fix common issues</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
