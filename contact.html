@@ -23,9 +23,6 @@
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
-    <!-- Leaflet CSS for maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
     <!-- Custom styles for contact page -->
     <style>
         /* Hero Section */
@@ -102,10 +99,10 @@
         }
         
         .info-grid {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
         }
         
@@ -186,18 +183,15 @@
             gap: 1rem;
         }
         
-        /* Contact Form & Map Section */
+        /* Contact Form Section */
         .contact-main {
             padding: 4rem 2rem;
             background: #f8f9fa;
         }
         
         .contact-container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
         }
         
         .form-section {
@@ -211,11 +205,13 @@
             color: #1e3c72;
             margin-bottom: 0.5rem;
             font-size: 2rem;
+            text-align: center;
         }
         
         .form-section p {
             color: #6c757d;
             margin-bottom: 2rem;
+            text-align: center;
         }
         
         .contact-form .form-row {
@@ -326,249 +322,48 @@
             transform: translateX(5px);
         }
         
-        .map-section {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            height: fit-content;
-        }
-        
-        .map-container {
-            height: 300px;
-            background: #f8f9fa;
-        }
-        
-        #map {
-            height: 100%;
-            width: 100%;
-            z-index: 1;
-        }
-        
-        .map-info {
+        /* Virtual Office Hours */
+        .hours-section {
+            margin-top: 3rem;
             padding: 2rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            text-align: center;
         }
         
-        .map-info h3 {
+        .hours-section h3 {
             color: #1e3c72;
             margin-bottom: 1rem;
+            font-size: 1.5rem;
         }
         
-        .map-info p {
-            color: #6c757d;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .map-info i {
-            color: #f4b400;
-            width: 20px;
-        }
-        
-        .business-hours {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #dee2e6;
-        }
-        
-        .business-hours h4 {
-            color: #1e3c72;
-            margin-bottom: 0.5rem;
+        .hours-grid {
+            max-width: 400px;
+            margin: 1.5rem auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
         
         .hours-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            color: #6c757d;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
         .hours-item .days {
-            font-weight: 500;
+            display: block;
+            font-weight: 600;
+            color: #1e3c72;
+            margin-bottom: 0.25rem;
         }
         
         .hours-item .time {
-            color: #1e3c72;
-        }
-        
-        /* FAQ Section */
-        .faq-section {
-            padding: 4rem 2rem;
-            background: white;
-        }
-        
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .faq-item {
-            margin-bottom: 1rem;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .faq-question {
-            padding: 1.2rem;
-            background: white;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-        
-        .faq-question:hover {
-            background: #f8f9fa;
-        }
-        
-        .faq-question h4 {
-            color: #1e3c72;
-            margin: 0;
-            font-size: 1rem;
-        }
-        
-        .faq-question i {
-            color: #1e3c72;
-            transition: transform 0.3s ease;
-        }
-        
-        .faq-question.active i {
-            transform: rotate(180deg);
-        }
-        
-        .faq-answer {
-            max-height: 0;
-            padding: 0 1.2rem;
-            background: #f8f9fa;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .faq-answer.active {
-            max-height: 200px;
-            padding: 1.2rem;
-        }
-        
-        .faq-answer p {
             color: #6c757d;
-            line-height: 1.6;
-            margin: 0;
+            font-size: 0.9rem;
         }
         
-        /* Office Locations */
-        .offices-section {
-            padding: 4rem 2rem;
-            background: #f8f9fa;
-        }
-        
-        .offices-grid {
-            max-width: 1200px;
-            margin: 2rem auto 0;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-        
-        .office-card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-        
-        .office-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(30,60,114,0.2);
-        }
-        
-        .office-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: #f4b400;
-            font-size: 1.8rem;
-        }
-        
-        .office-card h3 {
-            color: #1e3c72;
-            margin-bottom: 1rem;
-        }
-        
-        .office-card p {
-            color: #6c757d;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-        
-        .office-card .phone {
-            color: #1e3c72;
-            font-weight: 500;
-            margin-top: 1rem;
-        }
-        
-        /* Social Connect */
-        .social-section {
-            padding: 4rem 2rem;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            text-align: center;
-        }
-        
-        .social-section h2 {
-            color: white;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .social-section p {
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-        
-        .social-grid {
-            max-width: 600px;
-            margin: 0 auto;
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .social-circle {
-            width: 70px;
-            height: 70px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        
-        .social-circle:hover {
-            background: #f4b400;
-            color: #1e3c72;
-            transform: scale(1.1) rotate(5deg);
-            border-color: white;
-        }
-        
-        /* Response Time Badge */
         .response-badge {
             background: #f8f9fa;
             border-radius: 30px;
@@ -647,21 +442,153 @@
             to { transform: rotate(360deg); }
         }
         
-        /* Responsive */
-        @media (max-width: 992px) {
-            .info-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .offices-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        /* FAQ Section */
+        .faq-section {
+            padding: 4rem 2rem;
+            background: white;
         }
         
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 1.2rem;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+        
+        .faq-question h4 {
+            color: #1e3c72;
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .faq-question i {
+            color: #1e3c72;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            padding: 0 1.2rem;
+            background: #f8f9fa;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-answer.active {
+            max-height: 200px;
+            padding: 1.2rem;
+        }
+        
+        .faq-answer p {
+            color: #6c757d;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        /* Simple Contact Section */
+        .simple-contact-section {
+            padding: 3rem 2rem;
+            background: #f8f9fa;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .simple-contact-section h3 {
+            color: #1e3c72;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .simple-contact-section p {
+            color: #6c757d;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-method {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .contact-method i {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            background: white;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-method span {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+        
+        .contact-method a {
+            color: #6c757d;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-method a:hover {
+            color: #f4b400;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
             .contact-hero h1 {
                 font-size: 2.2rem;
@@ -671,22 +598,26 @@
                 grid-template-columns: 1fr;
             }
             
-            .offices-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
             .contact-form .form-row {
                 grid-template-columns: 1fr;
             }
             
-            .social-circle {
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
+            .hours-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .contact-methods {
+                gap: 1.5rem;
+            }
+            
+            .contact-method i {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -742,49 +673,53 @@
                 </div>
                 <h3>Email Us</h3>
                 <p>24/7 Support</p>
-                <p><strong>info@bbh.co.bw</strong></p>
-                <a href="mailto:info@bbh.co.bw" class="info-link">
+                <p><strong>connectbizz384@gmail.com</strong></p>
+                <a href="mailto:connectbizz384@gmail.com" class="info-link">
                     Send Email <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-            
-            <div class="info-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="info-icon">
-                    <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <h3>Visit Us</h3>
-                <p>Gaborone, Botswana</p>
-                <p><strong>Plot 123, CBD</strong></p>
-                <a href="#map" class="info-link">
-                    Get Directions <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-            
-            <div class="info-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="info-icon">
-                    <i class="fas fa-clock"></i>
-                </div>
-                <h3>Business Hours</h3>
-                <p>Mon-Fri: 8am - 5pm</p>
-                <p><strong>Sat: 9am - 1pm</strong></p>
-                <a href="#hours" class="info-link">
-                    View Hours <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Contact Form & Map Section -->
+    <!-- Simple Contact Methods Section -->
+    <section class="simple-contact-section" data-aos="fade-up">
+        <h3>Direct Contact Methods</h3>
+        <p>Choose the way that works best for you to get in touch with our team</p>
+        
+        <div class="contact-methods">
+            <div class="contact-method">
+                <i class="fas fa-phone"></i>
+                <span>Phone</span>
+                <a href="tel:+2671234567">+267 123 4567</a>
+            </div>
+            
+            <div class="contact-method">
+                <i class="fas fa-envelope"></i>
+                <span>Email</span>
+                <a href="mailto:connectbizz384@gmail.com">connectbizz384@gmail.com</a>
+            </div>
+            
+            <div class="contact-method">
+                <i class="fas fa-comment"></i>
+                <span>Contact Form</span>
+                <a href="#contact-form">Fill out form below</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
     <section class="contact-main" id="contact">
-        <div class="contact-container">
+        <div class="contact-container" id="contact-form">
             <!-- Contact Form -->
-            <div class="form-section" data-aos="fade-right">
+            <div class="form-section" data-aos="fade-up">
                 <h2>Send us a Message</h2>
                 <p>We'll get back to you within 24 hours</p>
                 
-                <div class="response-badge">
-                    <i class="fas fa-clock"></i>
-                    <span>Average response time: 2 hours</span>
+                <div style="display: flex; justify-content: center;">
+                    <div class="response-badge">
+                        <i class="fas fa-clock"></i>
+                        <span>Average response time: 2 hours</span>
+                    </div>
                 </div>
                 
                 <!-- Success Message -->
@@ -870,80 +805,35 @@
                         Send Message <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
-            </div>
-            
-            <!-- Map Section -->
-            <div class="map-section" data-aos="fade-left">
-                <div class="map-container" id="map"></div>
-                <div class="map-info">
-                    <h3>Visit Our Office</h3>
-                    <p><i class="fas fa-map-pin"></i> Plot 123, Gaborone International Commerce Park</p>
-                    <p><i class="fas fa-building"></i> 3rd Floor, Business Hub Tower</p>
-                    <p><i class="fas fa-car"></i> Free parking available</p>
+                
+                <!-- Virtual Hours -->
+                <div class="hours-section" data-aos="fade-up">
+                    <h3><i class="fas fa-clock"></i> Virtual Support Hours</h3>
+                    <p>Our team is available online during these hours:</p>
                     
-                    <div class="business-hours" id="hours">
-                        <h4>Business Hours</h4>
+                    <div class="hours-grid">
                         <div class="hours-item">
                             <span class="days">Monday - Friday</span>
-                            <span class="time">8:00 AM - 5:00 PM</span>
+                            <span class="time">8:00 AM - 8:00 PM</span>
                         </div>
                         <div class="hours-item">
                             <span class="days">Saturday</span>
-                            <span class="time">9:00 AM - 1:00 PM</span>
+                            <span class="time">9:00 AM - 3:00 PM</span>
                         </div>
                         <div class="hours-item">
                             <span class="days">Sunday</span>
                             <span class="time">Closed</span>
                         </div>
                         <div class="hours-item">
-                            <span class="days">Public Holidays</span>
-                            <span class="time">Closed</span>
+                            <span class="days">Email Support</span>
+                            <span class="time">24/7 Monitoring</span>
                         </div>
                     </div>
+                    
+                    <p style="margin-top: 1rem; color: #1e3c72;">
+                        <i class="fas fa-video"></i> Virtual meetings available by appointment
+                    </p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Office Locations -->
-    <section class="offices-section">
-        <div class="section-title" data-aos="fade-up">
-            <h2>Our Locations</h2>
-            <p>Serving businesses across Botswana</p>
-        </div>
-        
-        <div class="offices-grid">
-            <div class="office-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="office-icon">
-                    <i class="fas fa-city"></i>
-                </div>
-                <h3>Gaborone (Head Office)</h3>
-                <p><i class="fas fa-map-marker-alt"></i> Plot 123, CBD</p>
-                <p><i class="fas fa-phone"></i> +267 123 4567</p>
-                <p><i class="fas fa-envelope"></i> gaborone@bbh.co.bw</p>
-                <div class="phone">Open Mon-Fri, 8am-5pm</div>
-            </div>
-            
-            <div class="office-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="office-icon">
-                    <i class="fas fa-city"></i>
-                </div>
-                <h3>Francistown Office</h3>
-                <p><i class="fas fa-map-marker-alt"></i> Plot 45, Somerset East</p>
-                <p><i class="fas fa-phone"></i> +267 234 5678</p>
-                <p><i class="fas fa-envelope"></i> francistown@bbh.co.bw</p>
-                <div class="phone">Open Mon-Fri, 8am-5pm</div>
-            </div>
-            
-            <div class="office-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="office-icon">
-                    <i class="fas fa-tree"></i>
-                </div>
-                <h3>Maun Office</h3>
-                <p><i class="fas fa-map-marker-alt"></i> Plot 78, Tawana Road</p>
-                <p><i class="fas fa-phone"></i> +267 345 6789</p>
-                <p><i class="fas fa-envelope"></i> maun@bbh.co.bw</p>
-                <div class="phone">Open Mon-Fri, 8am-5pm</div>
             </div>
         </div>
     </section>
@@ -968,48 +858,33 @@
             
             <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
                 <div class="faq-question" onclick="toggleFAQ(this)">
-                    <h4>Do you offer support for business registration?</h4>
+                    <h4>Do you offer virtual meetings?</h4>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                    <p>Yes! Our support team can guide you through the registration process and help you set up your business profile on the platform.</p>
+                    <p>Yes! We offer virtual meetings via Zoom, Google Meet, or Microsoft Teams. Use the contact form to request a meeting, and we'll send you a calendar invitation.</p>
                 </div>
             </div>
             
             <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
                 <div class="faq-question" onclick="toggleFAQ(this)">
-                    <h4>Can I schedule a meeting with your team?</h4>
+                    <h4>Can I get support in my local language?</h4>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                    <p>Absolutely! Use the contact form to request a meeting, and we'll send you a calendar invitation with available time slots.</p>
+                    <p>Yes! Our support team speaks multiple languages including English, Setswana, and more. Just let us know your preference when you contact us.</p>
                 </div>
             </div>
             
             <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
                 <div class="faq-question" onclick="toggleFAQ(this)">
-                    <h4>Do you have support in local languages?</h4>
+                    <h4>Do you have after-hours support?</h4>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                    <p>Yes! Our support team speaks English and Setswana. Just let us know your preference when you contact us.</p>
+                    <p>Our team is available during posted hours, but you can always send us a message and we'll respond first thing next business day. We monitor emails 24/7 for urgent matters.</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Social Connect Section -->
-    <section class="social-section">
-        <h2 data-aos="fade-up">Connect With Us</h2>
-        <p data-aos="fade-up">Follow us on social media for updates, tips, and community news</p>
-        
-        <div class="social-grid" data-aos="fade-up" data-aos-delay="200">
-            <a href="#" class="social-circle"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social-circle"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="social-circle"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="social-circle"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-circle"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" class="social-circle"><i class="fab fa-youtube"></i></a>
         </div>
     </section>
 
@@ -1019,13 +894,6 @@
             <div class="footer-section">
                 <h4>Bizz Connect</h4>
                 <p>Connecting businesses. Creating Opportunities</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
-                </div>
             </div>
             
             <div class="footer-section">
@@ -1053,9 +921,9 @@
             <div class="footer-section">
                 <h4>Contact Info</h4>
                 <ul class="footer-links">
-                    <li><i class="fas fa-map-marker-alt"></i> Gaborone, Botswana</li>
                     <li><i class="fas fa-phone"></i> +267 123 4567</li>
-                    <li><i class="fas fa-envelope"></i> info@botswanabusinesshub.com</li>
+                    <li><i class="fas fa-envelope"></i> connectbizz384@gmail.com</li>
+                    <li><i class="fas fa-globe"></i> Virtual Support Available</li>
                 </ul>
             </div>
         </div>
@@ -1065,9 +933,6 @@
         </div>
     </footer>
 
-    <!-- Leaflet JS for maps -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
     <!-- AOS Animation Library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
@@ -1080,19 +945,6 @@
             offset: 100
         });
         
-        // Initialize map
-        function initMap() {
-            const map = L.map('map').setView([-24.6282, 25.9231], 13); // Gaborone coordinates
-            
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
-            
-            // Add marker
-            const marker = L.marker([-24.6282, 25.9231]).addTo(map);
-            marker.bindPopup("<b>Botswana Business Hub</b><br>Plot 123, Gaborone").openPopup();
-        }
-        
         // Check if user is logged in
         document.addEventListener('DOMContentLoaded', function() {
             const user = localStorage.getItem('bbh_user');
@@ -1104,9 +956,6 @@
                     <a href="dashboard.html" class="btn btn-primary" style="background: #f4b400; color: #1e3c72;">Dashboard</a>
                 `;
             }
-            
-            // Initialize map
-            initMap();
             
             // Add input listeners for validation
             const inputs = ['firstName', 'lastName', 'email', 'subject', 'message'];
@@ -1199,37 +1048,5 @@
                     successMessage.classList.remove('show');
                 }, 5000);
                 
-                // Scroll to success message
-                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 1500);
-        }
-        
-        // Email validation
-        function isValidEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-        
-        // Toggle FAQ
-        function toggleFAQ(element) {
-            element.classList.toggle('active');
-            const answer = element.nextElementSibling;
-            answer.classList.toggle('active');
-        }
-        
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+                // Scroll
+  
