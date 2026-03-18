@@ -803,303 +803,341 @@
                 <span>or continue with email</span>
             </div>
             
-            <!-- Login Form -->
-            <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
-                <!-- Email Field -->
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <div class="input-group" id="emailGroup">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" id="email" name="email" placeholder="Enter your email" value="demo@business.co.bw" required>
-                    </div>
-                    <div class="error-message" id="emailError">Please enter a valid email address</div>
-                </div>
-                
-                <!-- Password Field -->
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="input-group" id="passwordGroup">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password" name="password" placeholder="Enter your password" value="Demo123!" required>
-                        <i class="fas fa-eye toggle-password" onclick="togglePassword()" id="togglePassword"></i>
-                    </div>
-                    <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
-                </div>
-                
-                <!-- Form Options -->
-                <div class="form-options">
-                    <label class="remember-me">
-                        <input type="checkbox" id="rememberMe" checked>
-                        <label for="rememberMe">Remember me for 30 days</label>
-                    </label>
-                    <a href="forgot-password.html" class="forgot-password">Forgot password?</a>
-                </div>
-                
-                <!-- Login Button -->
-                <button type="submit" class="login-btn" id="loginButton">
-                    <span>Sign In</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-                
-                <!-- Sign Up Link -->
-                <div class="signup-link">
-                    Don't have an account? <a href="register.html">Sign up for free</a>
-                </div>
-            </form>
-            
-            <!-- Demo Accounts -->
-            <div class="demo-accounts">
-                <p><i class="fas fa-info-circle"></i> Demo Accounts (Click to autofill)</p>
-                <div class="demo-buttons">
-                    <button class="demo-btn" onclick="fillDemoCredentials('provider')">
-                        <i class="fas fa-briefcase"></i> Service Provider
-                    </button>
-                    <button class="demo-btn" onclick="fillDemoCredentials('customer')">
-                        <i class="fas fa-user"></i> Customer
-                    </button>
-                    <button class="demo-btn" onclick="fillDemoCredentials('distributor')">
-                        <i class="fas fa-truck"></i> Distributor
-                    </button>
-                    <button class="demo-btn" onclick="fillDemoCredentials('manufacturer')">
-                        <i class="fas fa-industry"></i> Manufacturer
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Help Link -->
-            <div style="text-align: center; margin-top: 1.5rem;">
-                <a href="help.html" style="color: #6c757d; font-size: 0.85rem; text-decoration: none;">
-                    <i class="fas fa-question-circle"></i> Need help signing in?
-                </a>
-            </div>
+          <!-- Login Form -->
+<form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
+    <!-- Email Field -->
+    <div class="form-group">
+        <label for="email">Email Address</label>
+        <div class="input-group" id="emailGroup">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
         </div>
+        <div class="error-message" id="emailError">Please enter a valid email address</div>
     </div>
+    
+    <!-- Password Field -->
+    <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-group" id="passwordGroup">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <i class="fas fa-eye toggle-password" onclick="togglePassword()" id="togglePassword"></i>
+        </div>
+        <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
+    </div>
+    
+    <!-- Form Options -->
+    <div class="form-options">
+        <label class="remember-me">
+            <input type="checkbox" id="rememberMe">
+            <label for="rememberMe">Remember me for 30 days</label>
+        </label>
+        <a href="forgot-password.html" class="forgot-password">Forgot password?</a>
+    </div>
+    
+    <!-- Login Button -->
+    <button type="submit" class="login-btn" id="loginButton">
+        <span>Sign In</span>
+        <i class="fas fa-arrow-right"></i>
+    </button>
+    
+    <!-- Sign Up Link -->
+    <div class="signup-link">
+        Don't have an account? <a href="register.html">Sign up for free</a>
+    </div>
+</form>
 
-    <!-- JavaScript -->
-    <script>
-        // Toggle password visibility
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.getElementById('togglePassword');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            }
+<!-- Help Link -->
+<div style="text-align: center; margin-top: 1.5rem;">
+    <a href="help.html" style="color: #6c757d; font-size: 0.85rem; text-decoration: none;">
+        <i class="fas fa-question-circle"></i> Need help signing in?
+    </a>
+</div>
+
+<!-- JavaScript -->
+<script>
+    // Toggle password visibility
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('togglePassword');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    }
+    
+    // Handle login form submission
+    async function handleLogin(event) {
+        event.preventDefault();
+        
+        // Get form values
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const rememberMe = document.getElementById('rememberMe').checked;
+        
+        // Reset error messages
+        resetErrors();
+        
+        // Validate form
+        if (!validateForm(email, password)) {
+            return;
         }
         
-        // Handle login form submission
-        function handleLogin(event) {
-            event.preventDefault();
+        // Show loading state
+        const loginButton = document.getElementById('loginButton');
+        const originalText = loginButton.innerHTML;
+        loginButton.innerHTML = '<span class="spinner"></span> Signing in...';
+        loginButton.disabled = true;
+        
+        try {
+            // Send login request to your backend
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    email: email, 
+                    password: password,
+                    rememberMe: rememberMe 
+                })
+            });
             
-            // Get form values
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
+            const data = await response.json();
             
-            // Reset error messages
-            resetErrors();
-            
-            // Validate form
-            if (!validateForm(email, password)) {
-                return;
-            }
-            
-            // Show loading state
-            const loginButton = document.getElementById('loginButton');
-            const originalText = loginButton.innerHTML;
-            loginButton.innerHTML = '<span class="spinner"></span> Signing in...';
-            loginButton.disabled = true;
-            
-            // Simulate API call
-            setTimeout(() => {
-                // For demo purposes, accept any credentials
-                // In real app, this would validate against backend
-                
-                // Create user object
-                const user = {
-                    name: email.split('@')[0].replace(/[.]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-                    email: email,
-                    userType: getUserTypeFromEmail(email),
-                    lastLogin: new Date().toISOString(),
-                    verified: true
-                };
-                
-                // Save to localStorage
-                localStorage.setItem('bbh_user', JSON.stringify(user));
-                
+            if (response.ok) {
+                // Login successful
+                // Store auth token (JWT)
                 if (rememberMe) {
-                    localStorage.setItem('bbh_remember', 'true');
+                    localStorage.setItem('auth_token', data.token);
+                    localStorage.setItem('remember_me', 'true');
+                } else {
+                    sessionStorage.setItem('auth_token', data.token);
                 }
                 
+                // Store user data (non-sensitive)
+                localStorage.setItem('user_name', data.user.name);
+                localStorage.setItem('user_email', data.user.email);
+                
                 // Show success message
-                const successMessage = document.getElementById('successMessage');
-                successMessage.classList.add('show');
+                showNotification('Login successful! Redirecting...', 'success');
                 
                 // Redirect to dashboard
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
                 }, 1500);
-                
-            }, 1500);
-        }
-        
-        // Determine user type from email (for demo)
-        function getUserTypeFromEmail(email) {
-            if (email.includes('provider')) {
-                return 'Service Provider';
-            } else if (email.includes('distributor')) {
-                return 'Distributor';
-            } else if (email.includes('manufacturer')) {
-                return 'Manufacturer';
             } else {
-                return 'Customer';
-            }
-        }
-        
-        // Validate form fields
-        function validateForm(email, password) {
-            let isValid = true;
-            
-            // Validate email
-            if (!email || !isValidEmail(email)) {
-                document.getElementById('emailGroup').classList.add('error');
-                document.getElementById('emailError').classList.add('show');
-                isValid = false;
-            }
-            
-            // Validate password
-            if (!password || password.length < 6) {
-                document.getElementById('passwordGroup').classList.add('error');
-                document.getElementById('passwordError').classList.add('show');
-                isValid = false;
-            }
-            
-            return isValid;
-        }
-        
-        // Email validation
-        function isValidEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-        
-        // Reset error messages
-        function resetErrors() {
-            document.querySelectorAll('.input-group').forEach(group => {
-                group.classList.remove('error');
-            });
-            document.querySelectorAll('.error-message').forEach(msg => {
-                msg.classList.remove('show');
-            });
-        }
-        
-        // Fill demo credentials
-        function fillDemoCredentials(type) {
-            const emailField = document.getElementById('email');
-            const passwordField = document.getElementById('password');
-            
-            switch(type) {
-                case 'provider':
-                    emailField.value = 'provider@business.co.bw';
-                    passwordField.value = 'Demo123!';
-                    break;
-                case 'customer':
-                    emailField.value = 'customer@example.co.bw';
-                    passwordField.value = 'Demo123!';
-                    break;
-                case 'distributor':
-                    emailField.value = 'distributor@business.co.bw';
-                    passwordField.value = 'Demo123!';
-                    break;
-                case 'manufacturer':
-                    emailField.value = 'manufacturer@business.co.bw';
-                    passwordField.value = 'Demo123!';
-                    break;
-            }
-            
-            // Highlight fields briefly
-            emailField.style.transition = 'all 0.3s ease';
-            passwordField.style.transition = 'all 0.3s ease';
-            emailField.style.backgroundColor = '#e8f4fd';
-            passwordField.style.backgroundColor = '#e8f4fd';
-            
-            setTimeout(() => {
-                emailField.style.backgroundColor = '';
-                passwordField.style.backgroundColor = '';
-            }, 500);
-        }
-        
-        // Social login
-        function socialLogin(provider) {
-            // Show loading state
-            const button = event.currentTarget;
-            const originalText = button.innerHTML;
-            button.innerHTML = `<span class="spinner" style="border-top-color: ${provider === 'google' ? '#db4437' : provider === 'facebook' ? '#4267B2' : '#0077b5'}"></span> Connecting...`;
-            button.disabled = true;
-            
-            // Simulate OAuth redirect
-            setTimeout(() => {
-                alert(`Redirecting to ${provider} login...\n(This is a demo - in production, you would be redirected to OAuth)`);
-                button.innerHTML = originalText;
-                button.disabled = false;
-            }, 1500);
-        }
-        
-        // Check for existing session
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is already logged in
-            const user = localStorage.getItem('bbh_user');
-            const remember = localStorage.getItem('bbh_remember');
-            
-            if (user && remember === 'true') {
-                // Show quick message and redirect
-                const successMessage = document.getElementById('successMessage');
-                successMessage.querySelector('span').textContent = 'You are already logged in! Redirecting...';
-                successMessage.classList.add('show');
+                // Login failed
+                loginButton.innerHTML = originalText;
+                loginButton.disabled = false;
                 
+                // Show error message based on response
+                if (response.status === 401) {
+                    showNotification('Invalid email or password. Please try again.', 'error');
+                } else if (response.status === 403) {
+                    showNotification('Account not verified. Please check your email.', 'error');
+                } else {
+                    showNotification(data.message || 'Login failed. Please try again.', 'error');
+                }
+                
+                // Highlight fields
+                document.getElementById('emailGroup').classList.add('error');
+                document.getElementById('passwordGroup').classList.add('error');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            
+            // Restore button
+            loginButton.innerHTML = originalText;
+            loginButton.disabled = false;
+            
+            // Show network error
+            showNotification('Network error. Please check your connection and try again.', 'error');
+        }
+    }
+    
+    // Show notification function
+    function showNotification(message, type) {
+        // Create notification element if it doesn't exist
+        let notification = document.querySelector('.notification');
+        if (!notification) {
+            notification = document.createElement('div');
+            notification.className = 'notification';
+            document.body.appendChild(notification);
+        }
+        
+        // Set notification content and style
+        notification.textContent = message;
+        notification.className = `notification ${type}`;
+        notification.style.display = 'block';
+        
+        // Auto-hide after 3 seconds
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
+    
+    // Validate form fields
+    function validateForm(email, password) {
+        let isValid = true;
+        
+        // Validate email
+        if (!email || !isValidEmail(email)) {
+            document.getElementById('emailGroup').classList.add('error');
+            document.getElementById('emailError').classList.add('show');
+            isValid = false;
+        }
+        
+        // Validate password
+        if (!password || password.length < 6) {
+            document.getElementById('passwordGroup').classList.add('error');
+            document.getElementById('passwordError').classList.add('show');
+            isValid = false;
+        }
+        
+        return isValid;
+    }
+    
+    // Email validation
+    function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+    
+    // Reset error messages
+    function resetErrors() {
+        document.querySelectorAll('.input-group').forEach(group => {
+            group.classList.remove('error');
+        });
+        document.querySelectorAll('.error-message').forEach(msg => {
+            msg.classList.remove('show');
+        });
+    }
+    
+    // Check for existing session on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if user is already logged in
+        const token = localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
+        const remember = localStorage.getItem('remember_me');
+        
+        if (token && remember === 'true') {
+            // Verify token with backend
+            verifyToken(token);
+        }
+        
+        // Add input event listeners to remove error styling when user types
+        document.getElementById('email').addEventListener('input', function() {
+            document.getElementById('emailGroup').classList.remove('error');
+            document.getElementById('emailError').classList.remove('show');
+        });
+        
+        document.getElementById('password').addEventListener('input', function() {
+            document.getElementById('passwordGroup').classList.remove('error');
+            document.getElementById('passwordError').classList.remove('show');
+        });
+        
+        // Add animation to form fields
+        const formGroups = document.querySelectorAll('.form-group');
+        formGroups.forEach((group, index) => {
+            group.style.animation = `fadeInUp 0.5s ease ${index * 0.1}s both`;
+        });
+    });
+    
+    // Verify token with backend
+    async function verifyToken(token) {
+        try {
+            const response = await fetch('/api/verify-token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
+            if (response.ok) {
+                // Token is valid, redirect to dashboard
+                showNotification('Already logged in! Redirecting...', 'success');
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
                 }, 1500);
+            } else {
+                // Token invalid, clear storage
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('remember_me');
+                sessionStorage.removeItem('auth_token');
             }
-            
-            // Add input event listeners to remove error styling when user types
-            document.getElementById('email').addEventListener('input', function() {
-                document.getElementById('emailGroup').classList.remove('error');
-                document.getElementById('emailError').classList.remove('show');
-            });
-            
-            document.getElementById('password').addEventListener('input', function() {
-                document.getElementById('passwordGroup').classList.remove('error');
-                document.getElementById('passwordError').classList.remove('show');
-            });
-            
-            // Add animation to form fields
-            const formGroups = document.querySelectorAll('.form-group');
-            formGroups.forEach((group, index) => {
-                group.style.animation = `fadeInUp 0.5s ease ${index * 0.1}s both`;
-            });
-        });
+        } catch (error) {
+            console.error('Token verification failed:', error);
+        }
+    }
+    
+    // Add CSS for spinner and notifications
+    const style = document.createElement('style');
+    style.textContent = `
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
         
-        // Prevent form submission on enter key from demo buttons
-        document.querySelectorAll('.demo-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-            });
-        });
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
         
-        // Add keyboard shortcut for demo (Ctrl/Cmd + D to fill demo credentials)
-        document.addEventListener('keydown', function(e) {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
-                e.preventDefault();
-                fillDemoCredentials('provider');
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            z-index: 9999;
+            display: none;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .notification.success {
+            background-color: #28a745;
+        }
+        
+        .notification.error {
+            background-color: #dc3545;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
             }
-        });
-    </script>
-</body>
-</html>
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
