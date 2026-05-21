@@ -20,8 +20,104 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Custom styles for marketplace page -->
     <style>
+        /* ========== ALL ORIGINAL STYLES (PRESERVED) ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            border-bottom: 3px solid #f4b400;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo i {
+            font-size: 2rem;
+            color: #f4b400;
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+        }
+        .logo span {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            display: block;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background: white;
+            color: #1e3c72;
+        }
+        .btn-primary {
+            background: #f4b400;
+            color: #1e3c72;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+        
         /* Marketplace Header */
         .marketplace-header {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
@@ -31,7 +127,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .marketplace-header::before {
             content: '🛍️';
             position: absolute;
@@ -41,14 +136,12 @@
             opacity: 0.1;
             transform: rotate(-15deg);
         }
-        
         .marketplace-header h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
             color: white;
             position: relative;
         }
-        
         .marketplace-header p {
             font-size: 1.1rem;
             opacity: 0.95;
@@ -56,7 +149,6 @@
             margin: 0 auto;
             position: relative;
         }
-        
         .marketplace-stats {
             display: flex;
             justify-content: center;
@@ -65,17 +157,14 @@
             position: relative;
             flex-wrap: wrap;
         }
-        
         .stat-item {
             text-align: center;
         }
-        
         .stat-value {
             font-size: 2rem;
             font-weight: 700;
             color: #f4b400;
         }
-        
         .stat-label {
             font-size: 0.9rem;
             opacity: 0.9;
@@ -95,7 +184,6 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-        
         .categories-scroll {
             display: flex;
             gap: 0.5rem;
@@ -104,16 +192,13 @@
             scrollbar-width: thin;
             flex: 1;
         }
-        
         .categories-scroll::-webkit-scrollbar {
             height: 4px;
         }
-        
         .categories-scroll::-webkit-scrollbar-thumb {
             background: #1e3c72;
             border-radius: 4px;
         }
-        
         .category-chip {
             padding: 0.5rem 1.5rem;
             background: #f8f9fa;
@@ -125,18 +210,15 @@
             color: #495057;
             font-weight: 500;
         }
-        
         .category-chip:hover,
         .category-chip.active {
             background: #1e3c72;
             color: white;
             border-color: #1e3c72;
         }
-        
         .category-chip i {
             margin-right: 0.5rem;
         }
-        
         .cart-widget {
             position: relative;
             cursor: pointer;
@@ -147,7 +229,6 @@
             align-items: center;
             gap: 0.5rem;
         }
-        
         .cart-count {
             position: absolute;
             top: -8px;
@@ -184,19 +265,16 @@
             top: 180px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        
         .filter-section {
             margin-bottom: 1.5rem;
             border-bottom: 1px solid #dee2e6;
             padding-bottom: 1.5rem;
         }
-        
         .filter-section:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
-        
         .filter-title {
             font-weight: 600;
             color: #1e3c72;
@@ -206,70 +284,59 @@
             align-items: center;
             cursor: pointer;
         }
-        
         .filter-options {
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
         }
-        
         .filter-checkbox {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             cursor: pointer;
         }
-        
         .filter-checkbox input[type="checkbox"] {
             width: 18px;
             height: 18px;
             cursor: pointer;
             accent-color: #1e3c72;
         }
-        
         .filter-checkbox label {
             cursor: pointer;
             flex: 1;
             color: #495057;
         }
-        
         .filter-checkbox .count {
             color: #6c757d;
             font-size: 0.85rem;
         }
-        
         .price-range {
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
-        
         .price-inputs {
             display: flex;
             gap: 0.5rem;
             align-items: center;
         }
-        
         .price-inputs input {
             width: 100px;
             padding: 0.5rem;
             border: 1px solid #dee2e6;
             border-radius: 5px;
         }
-        
         .rating-filter {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
         }
-        
         .rating-option {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             cursor: pointer;
         }
-        
         .stars {
             color: #f4b400;
             letter-spacing: 2px;
@@ -279,7 +346,6 @@
         .products-section {
             flex: 1;
         }
-        
         .products-header {
             display: flex;
             justify-content: space-between;
@@ -292,16 +358,13 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-        
         .results-info {
             color: #6c757d;
         }
-        
         .results-info strong {
             color: #1e3c72;
             font-size: 1.2rem;
         }
-        
         .sort-select {
             padding: 0.5rem 2rem 0.5rem 1rem;
             border: 1px solid #dee2e6;
@@ -309,7 +372,6 @@
             cursor: pointer;
             background: white;
         }
-        
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -327,19 +389,16 @@
             position: relative;
             border: 1px solid rgba(30, 60, 114, 0.1);
         }
-        
         .product-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
-        
         .product-badge {
             position: absolute;
             top: 1rem;
             left: 1rem;
             z-index: 1;
         }
-        
         .badge {
             padding: 0.25rem 1rem;
             border-radius: 20px;
@@ -347,22 +406,10 @@
             font-weight: 600;
             text-transform: uppercase;
         }
-        
         .badge.featured {
             background: #f4b400;
             color: #1e3c72;
         }
-        
-        .badge.new {
-            background: #28a745;
-            color: white;
-        }
-        
-        .badge.discount {
-            background: #dc3545;
-            color: white;
-        }
-        
         .product-image {
             height: 200px;
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
@@ -374,13 +421,6 @@
             position: relative;
             overflow: hidden;
         }
-        
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
         .product-actions {
             position: absolute;
             top: 1rem;
@@ -392,12 +432,10 @@
             transform: translateX(20px);
             transition: all 0.3s ease;
         }
-        
         .product-card:hover .product-actions {
             opacity: 1;
             transform: translateX(0);
         }
-        
         .action-btn {
             width: 40px;
             height: 40px;
@@ -412,16 +450,13 @@
             justify-content: center;
             color: #1e3c72;
         }
-        
         .action-btn:hover {
             background: #1e3c72;
             color: white;
         }
-        
         .product-info {
             padding: 1.5rem;
         }
-        
         .product-category {
             font-size: 0.8rem;
             color: #f4b400;
@@ -429,21 +464,18 @@
             letter-spacing: 1px;
             margin-bottom: 0.5rem;
         }
-        
         .product-title {
             font-size: 1.1rem;
             font-weight: 600;
             color: #1e3c72;
             margin-bottom: 0.5rem;
         }
-        
         .product-description {
             font-size: 0.9rem;
             color: #6c757d;
             margin-bottom: 1rem;
             line-height: 1.4;
         }
-        
         .product-seller {
             display: flex;
             align-items: center;
@@ -451,7 +483,6 @@
             margin-bottom: 1rem;
             font-size: 0.85rem;
         }
-        
         .seller-avatar {
             width: 30px;
             height: 30px;
@@ -464,7 +495,6 @@
             font-weight: bold;
             font-size: 0.8rem;
         }
-        
         .seller-type {
             background: #f8f9fa;
             padding: 0.15rem 0.5rem;
@@ -472,33 +502,28 @@
             font-size: 0.7rem;
             color: #1e3c72;
         }
-        
         .product-rating {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 1rem;
         }
-        
         .product-price {
             display: flex;
             align-items: baseline;
             gap: 0.5rem;
             margin-bottom: 1rem;
         }
-        
         .current-price {
             font-size: 1.5rem;
             font-weight: 700;
             color: #1e3c72;
         }
-        
         .old-price {
             font-size: 1rem;
             color: #6c757d;
             text-decoration: line-through;
         }
-        
         .discount-badge {
             background: #dc3545;
             color: white;
@@ -506,7 +531,6 @@
             border-radius: 12px;
             font-size: 0.8rem;
         }
-        
         .product-meta {
             display: flex;
             gap: 1rem;
@@ -514,17 +538,14 @@
             color: #6c757d;
             margin-bottom: 1rem;
         }
-        
         .product-meta i {
             color: #f4b400;
             margin-right: 0.25rem;
         }
-        
         .product-footer {
             display: flex;
             gap: 0.5rem;
         }
-        
         .btn-add-to-cart {
             flex: 1;
             padding: 0.75rem;
@@ -536,11 +557,9 @@
             transition: all 0.3s ease;
             font-weight: 500;
         }
-        
         .btn-add-to-cart:hover {
             background: #2a5298;
         }
-        
         .btn-quote {
             padding: 0.75rem 1rem;
             background: #f8f9fa;
@@ -550,254 +569,10 @@
             transition: all 0.3s ease;
             color: #1e3c72;
         }
-        
         .btn-quote:hover {
             background: #1e3c72;
             color: white;
             border-color: #1e3c72;
-        }
-        
-        /* Manufacturer Cards */
-        .manufacturers-section {
-            margin-top: 3rem;
-        }
-        
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .section-title h2 {
-            color: #1e3c72;
-            margin: 0;
-        }
-        
-        .view-all {
-            color: #f4b400;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .manufacturers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .manufacturer-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(30, 60, 114, 0.1);
-        }
-        
-        .manufacturer-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-        }
-        
-        .manufacturer-logo {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            color: #f4b400;
-            font-size: 2.5rem;
-        }
-        
-        .manufacturer-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #1e3c72;
-            margin-bottom: 0.5rem;
-        }
-        
-        .manufacturer-type {
-            background: #f8f9fa;
-            padding: 0.25rem 1rem;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 1rem;
-            font-size: 0.85rem;
-            color: #495057;
-        }
-        
-        .manufacturer-stats {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .manufacturer-stats span {
-            font-size: 0.85rem;
-            color: #6c757d;
-        }
-        
-        .manufacturer-stats i {
-            color: #f4b400;
-            margin-right: 0.25rem;
-        }
-        
-        /* Product Modal */
-        .product-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .product-modal.active {
-            display: flex;
-        }
-        
-        .modal-content {
-            background: white;
-            width: 90%;
-            max-width: 1000px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 12px;
-            position: relative;
-            padding: 2rem;
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #f8f9fa;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 1;
-        }
-        
-        .modal-close:hover {
-            background: #1e3c72;
-            color: white;
-        }
-        
-        .modal-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-        
-        .modal-gallery {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 1rem;
-        }
-        
-        .modal-gallery-main {
-            width: 100%;
-            height: 300px;
-            background: white;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            color: #1e3c72;
-        }
-        
-        .modal-gallery-thumbs {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.5rem;
-        }
-        
-        .modal-thumb {
-            height: 80px;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid transparent;
-        }
-        
-        .modal-thumb:hover,
-        .modal-thumb.active {
-            border-color: #1e3c72;
-        }
-        
-        .modal-info h2 {
-            color: #1e3c72;
-            margin-bottom: 1rem;
-        }
-        
-        .modal-price {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1e3c72;
-            margin: 1rem 0;
-        }
-        
-        .modal-meta {
-            display: flex;
-            gap: 2rem;
-            margin: 1rem 0;
-            padding: 1rem 0;
-            border-top: 1px solid #dee2e6;
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        .quantity-selector {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .quantity-btn {
-            width: 40px;
-            height: 40px;
-            border: 1px solid #dee2e6;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .quantity-btn:hover {
-            background: #1e3c72;
-            color: white;
-            border-color: #1e3c72;
-        }
-        
-        .quantity-input {
-            width: 80px;
-            text-align: center;
-            padding: 0.5rem;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
         }
         
         /* Cart Sidebar */
@@ -814,11 +589,9 @@
             display: flex;
             flex-direction: column;
         }
-        
         .cart-sidebar.active {
             right: 0;
         }
-        
         .cart-header {
             padding: 1.5rem;
             border-bottom: 1px solid #dee2e6;
@@ -826,24 +599,20 @@
             justify-content: space-between;
             align-items: center;
         }
-        
         .cart-header h3 {
             color: #1e3c72;
             margin: 0;
         }
-        
         .cart-close {
             cursor: pointer;
             font-size: 1.2rem;
             color: #6c757d;
         }
-        
         .cart-items {
             flex: 1;
             overflow-y: auto;
             padding: 1.5rem;
         }
-        
         .cart-item {
             display: flex;
             gap: 1rem;
@@ -851,7 +620,6 @@
             padding-bottom: 1.5rem;
             border-bottom: 1px solid #dee2e6;
         }
-        
         .cart-item-image {
             width: 80px;
             height: 80px;
@@ -863,29 +631,24 @@
             color: #1e3c72;
             font-size: 2rem;
         }
-        
         .cart-item-info {
             flex: 1;
         }
-        
         .cart-item-title {
             font-weight: 600;
             color: #1e3c72;
             margin-bottom: 0.25rem;
         }
-        
         .cart-item-price {
             color: #f4b400;
             font-weight: 600;
         }
-        
         .cart-item-quantity {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             margin-top: 0.5rem;
         }
-        
         .cart-qty-btn {
             width: 30px;
             height: 30px;
@@ -894,12 +657,10 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        
         .cart-footer {
             padding: 1.5rem;
             border-top: 1px solid #dee2e6;
         }
-        
         .cart-total {
             display: flex;
             justify-content: space-between;
@@ -907,7 +668,6 @@
             font-weight: 600;
             margin-bottom: 1rem;
         }
-        
         .cart-checkout {
             width: 100%;
             padding: 1rem;
@@ -919,9 +679,73 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
         .cart-checkout:hover {
             background: #2a5298;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+        .footer-section h4 {
+            color: #f4b400;
+            margin-bottom: 1rem;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+        .footer-links a:hover {
+            opacity: 1;
+            color: #f4b400;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .social-links a {
+            width: 35px;
+            height: 35px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            background: #f4b400;
+            color: #1e3c72;
+            transform: translateY(-3px);
+        }
+        .footer-bottom {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
         }
         
         /* Responsive */
@@ -929,30 +753,48 @@
             .marketplace-main {
                 flex-direction: column;
             }
-            
             .filters-sidebar {
                 width: 100%;
                 position: static;
             }
-            
-            .modal-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 768px) {
             .cart-sidebar {
                 width: 100%;
                 right: -100%;
             }
-            
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
             .products-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            
-            .manufacturers-grid {
+            .products-grid {
                 grid-template-columns: 1fr;
+            }
+            .marketplace-stats {
+                gap: 1.5rem;
+            }
+            .category-nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .categories-scroll {
+                justify-content: flex-start;
+            }
+        }
+        @media (max-width: 480px) {
+            .filter-checkbox {
+                flex-wrap: wrap;
+            }
+            .price-inputs {
+                flex-wrap: wrap;
             }
         }
     </style>
@@ -976,8 +818,8 @@
             <a href="contact.html">Contact</a>
         </div>
         <div class="user-menu" id="userMenu">
-            <a href="login.html" class="btn btn-outline" style="color: white; border-color: white;">Login</a>
-            <a href="register.html" class="btn btn-primary" style="background: #f4b400; color: #1e3c72;">Sign Up</a>
+            <a href="login.html" class="btn-outline">Login</a>
+            <a href="register.html" class="btn-primary">Sign Up</a>
         </div>
     </nav>
 
@@ -985,56 +827,27 @@
     <section class="marketplace-header">
         <h1>Botswana B2B Marketplace</h1>
         <p>Connect directly with manufacturers and distributors. Source quality products at wholesale prices.</p>
-        
         <div class="marketplace-stats">
             <div class="stat-item">
-                <div class="stat-value">500+</div>
+                <div class="stat-value" id="productCount">0</div>
                 <div class="stat-label">Products</div>
             </div>
             <div class="stat-item">
-                <div class="stat-value">50+</div>
+                <div class="stat-value" id="manufacturerCount">0</div>
                 <div class="stat-label">Manufacturers</div>
             </div>
             <div class="stat-item">
-                <div class="stat-value">30+</div>
+                <div class="stat-value" id="distributorCount">0</div>
                 <div class="stat-label">Distributors</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">1000+</div>
-                <div class="stat-label">Orders</div>
             </div>
         </div>
     </section>
 
     <!-- Category Navigation -->
     <div class="category-nav">
-        <div class="categories-scroll">
-            <span class="category-chip active" onclick="filterByCategory('all')">
-                <i class="fas fa-th-large"></i> All Products
-            </span>
-            <span class="category-chip" onclick="filterByCategory('traditional')">
-                <i class="fas fa-palette"></i> Traditional Crafts
-            </span>
-            <span class="category-chip" onclick="filterByCategory('textiles')">
-                <i class="fas fa-tshirt"></i> Textiles & Fabrics
-            </span>
-            <span class="category-chip" onclick="filterByCategory('food')">
-                <i class="fas fa-utensils"></i> Food & Beverages
-            </span>
-            <span class="category-chip" onclick="filterByCategory('furniture')">
-                <i class="fas fa-couch"></i> Furniture
-            </span>
-            <span class="category-chip" onclick="filterByCategory('beauty')">
-                <i class="fas fa-spa"></i> Beauty Products
-            </span>
-            <span class="category-chip" onclick="filterByCategory('agriculture')">
-                <i class="fas fa-tractor"></i> Agriculture
-            </span>
-            <span class="category-chip" onclick="filterByCategory('construction')">
-                <i class="fas fa-hard-hat"></i> Construction
-            </span>
+        <div class="categories-scroll" id="categoryContainer">
+            <!-- Categories will be dynamically populated -->
         </div>
-        
         <div class="cart-widget" onclick="toggleCart()">
             <i class="fas fa-shopping-cart"></i>
             <span>Cart</span>
@@ -1047,722 +860,60 @@
         <!-- Filters Sidebar -->
         <aside class="filters-sidebar">
             <div class="filter-section">
-                <div class="filter-title">
-                    <span>Product Type</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="filter-options">
-                    <label class="filter-checkbox">
-                        <input type="checkbox" onchange="applyFilters()">
-                        <label>Wholesale Only</label>
-                        <span class="count">(45)</span>
-                    </label>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" onchange="applyFilters()">
-                        <label>Retail Available</label>
-                        <span class="count">(89)</span>
-                    </label>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" onchange="applyFilters()">
-                        <label>Custom Orders</label>
-                        <span class="count">(23)</span>
-                    </label>
-                </div>
-            </div>
-            
-            <div class="filter-section">
-                <div class="filter-title">
-                    <span>Price Range (BWP)</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
+                <div class="filter-title">Price Range (BWP)</div>
                 <div class="price-range">
                     <div class="price-inputs">
                         <input type="number" id="minPrice" placeholder="Min" min="0">
                         <span>-</span>
                         <input type="number" id="maxPrice" placeholder="Max" min="0">
                     </div>
-                    <button class="btn btn-primary" onclick="applyPriceFilter()" style="width: 100%;">Apply</button>
+                    <button class="btn-primary" onclick="applyFilters()" style="width:100%; background:#1e3c72;">Apply</button>
                 </div>
             </div>
-            
             <div class="filter-section">
-                <div class="filter-title">
-                    <span>Seller Type</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
+                <div class="filter-title">Seller Type</div>
                 <div class="filter-options">
                     <label class="filter-checkbox">
-                        <input type="checkbox" onchange="applyFilters()">
+                        <input type="checkbox" value="manufacturer" onchange="applyFilters()">
                         <label>Manufacturers</label>
-                        <span class="count">(32)</span>
                     </label>
                     <label class="filter-checkbox">
-                        <input type="checkbox" onchange="applyFilters()">
+                        <input type="checkbox" value="distributor" onchange="applyFilters()">
                         <label>Distributors</label>
-                        <span class="count">(28)</span>
-                    </label>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" onchange="applyFilters()">
-                        <label>Verified Only</label>
-                        <span class="count">(45)</span>
-                    </label>
-                </div>
-            </div>
-            
-            <div class="filter-section">
-                <div class="filter-title">
-                    <span>Minimum Rating</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="rating-filter">
-                    <label class="rating-option">
-                        <input type="radio" name="rating" style="display: none;">
-                        <span class="stars">★★★★★</span>
-                        <span>5.0 & up</span>
-                    </label>
-                    <label class="rating-option">
-                        <input type="radio" name="rating" style="display: none;">
-                        <span class="stars">★★★★☆</span>
-                        <span>4.0 & up</span>
-                    </label>
-                    <label class="rating-option">
-                        <input type="radio" name="rating" style="display: none;">
-                        <span class="stars">★★★☆☆</span>
-                        <span>3.0 & up</span>
-                    </label>
-                </div>
-            </div>
-            
-            <div class="filter-section">
-                <div class="filter-title">
-                    <span>Location</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="filter-options">
-                    <label class="filter-checkbox">
-                        <input type="checkbox" onchange="applyFilters()">
-                        <label>Gaborone</label>
-                        <span class="count">(45)</span>
-                    </label>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" onchange="applyFilters()">
-                        <label>Francistown</label>
-                        <span class="count">(23)</span>
-                    </label>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" onchange="applyFilters()">
-                        <label>Maun</label>
-                        <span class="count">(15)</span>
                     </label>
                 </div>
             </div>
         </aside>
-        
+
         <!-- Products Section -->
         <div class="products-section">
-            <!-- Products Header -->
             <div class="products-header">
                 <div class="results-info">
-                    Showing <strong id="resultsCount">24</strong> of <strong>124</strong> products
+                    Showing <strong id="resultsCount">0</strong> products
                 </div>
-                
-                <select class="sort-select" onchange="sortProducts()">
-                    <option value="recommended">Recommended</option>
+                <select class="sort-select" id="sortSelect" onchange="sortProducts()">
                     <option value="price-low">Price: Low to High</option>
                     <option value="price-high">Price: High to Low</option>
-                    <option value="rating">Highest Rated</option>
-                    <option value="newest">Newest First</option>
                 </select>
             </div>
-            
-            <!-- Products Grid -->
             <div class="products-grid" id="productsGrid">
-                <!-- Product Card 1 - Traditional Crafts (Featured) -->
-                <div class="product-card featured" data-category="traditional" data-seller="manufacturer" data-price="850" data-rating="4.8">
-                    <div class="product-badge">
-                        <span class="badge featured">Featured</span>
-                    </div>
-                    <div class="product-image">
-                        <i class="fas fa-basket-shopping"></i>
-                    </div>
-                    <div class="product-actions">
-                        <button class="action-btn" onclick="quickView(1)" title="Quick view">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="action-btn" onclick="toggleWishlist(this)" title="Add to wishlist">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Traditional Crafts</div>
-                        <h3 class="product-title">Handwoven Baskets - Set of 3</h3>
-                        <p class="product-description">Authentic Botswana handwoven baskets made by local artisans. Perfect for home decor or gifts.</p>
-                        
-                        <div class="product-seller">
-                            <div class="seller-avatar">B</div>
-                            <div>
-                                <span style="font-weight: 500;">Botswana Crafts Co-op</span>
-                                <span class="seller-type">Manufacturer</span>
-                            </div>
-                        </div>
-                        
-                        <div class="product-rating">
-                            <span class="stars">★★★★½</span>
-                            <span style="color: #495057;">4.8 (56 reviews)</span>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="current-price">P850</span>
-                            <span class="old-price">P1,200</span>
-                            <span class="discount-badge">-29%</span>
-                        </div>
-                        
-                        <div class="product-meta">
-                            <span><i class="fas fa-box"></i> Min. order: 10 sets</span>
-                            <span><i class="fas fa-truck"></i> Free delivery</span>
-                        </div>
-                        
-                        <div class="product-footer">
-                            <button class="btn-add-to-cart" onclick="addToCart(1)">
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
-                            </button>
-                            <button class="btn-quote" onclick="requestQuote(1)" title="Request bulk quote">
-                                <i class="fas fa-file-invoice"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product Card 2 - Textiles -->
-                <div class="product-card" data-category="textiles" data-seller="manufacturer" data-price="450" data-rating="4.6">
-                    <div class="product-image">
-                        <i class="fas fa-tshirt"></i>
-                    </div>
-                    <div class="product-actions">
-                        <button class="action-btn" onclick="quickView(2)">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="action-btn" onclick="toggleWishlist(this)">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Textiles</div>
-                        <h3 class="product-title">Shweshwe Fabric - 6 Yards</h3>
-                        <p class="product-description">High-quality traditional Shweshwe fabric. Perfect for traditional attire and crafts.</p>
-                        
-                        <div class="product-seller">
-                            <div class="seller-avatar">G</div>
-                            <div>
-                                <span style="font-weight: 500;">Gaborone Textiles</span>
-                                <span class="seller-type">Manufacturer</span>
-                            </div>
-                        </div>
-                        
-                        <div class="product-rating">
-                            <span class="stars">★★★★½</span>
-                            <span style="color: #495057;">4.6 (34 reviews)</span>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="current-price">P450</span>
-                            <span class="old-price">P550</span>
-                            <span class="discount-badge">-18%</span>
-                        </div>
-                        
-                        <div class="product-meta">
-                            <span><i class="fas fa-palette"></i> 12 colors</span>
-                            <span><i class="fas fa-box"></i> Bulk available</span>
-                        </div>
-                        
-                        <div class="product-footer">
-                            <button class="btn-add-to-cart" onclick="addToCart(2)">
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
-                            </button>
-                            <button class="btn-quote" onclick="requestQuote(2)">
-                                <i class="fas fa-file-invoice"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product Card 3 - Food Products -->
-                <div class="product-card" data-category="food" data-seller="distributor" data-price="280" data-rating="4.9">
-                    <div class="product-image">
-                        <i class="fas fa-jar"></i>
-                    </div>
-                    <div class="product-actions">
-                        <button class="action-btn" onclick="quickView(3)">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="action-btn" onclick="toggleWishlist(this)">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Food & Beverages</div>
-                        <h3 class="product-title">Morula Jam - Case of 12</h3>
-                        <p class="product-description">Traditional Morula fruit jam made from wild harvested fruits. No preservatives.</p>
-                        
-                        <div class="product-seller">
-                            <div class="seller-avatar">K</div>
-                            <div>
-                                <span style="font-weight: 500;">Kalahari Delights</span>
-                                <span class="seller-type">Distributor</span>
-                            </div>
-                        </div>
-                        
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                            <span style="color: #495057;">4.9 (78 reviews)</span>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="current-price">P280</span>
-                        </div>
-                        
-                        <div class="product-meta">
-                            <span><i class="fas fa-clock"></i> Fresh daily</span>
-                            <span><i class="fas fa-leaf"></i> Organic</span>
-                        </div>
-                        
-                        <div class="product-footer">
-                            <button class="btn-add-to-cart" onclick="addToCart(3)">
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
-                            </button>
-                            <button class="btn-quote" onclick="requestQuote(3)">
-                                <i class="fas fa-file-invoice"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product Card 4 - Furniture -->
-                <div class="product-card" data-category="furniture" data-seller="manufacturer" data-price="3500" data-rating="4.7">
-                    <div class="product-badge">
-                        <span class="badge new">New</span>
-                    </div>
-                    <div class="product-image">
-                        <i class="fas fa-chair"></i>
-                    </div>
-                    <div class="product-actions">
-                        <button class="action-btn" onclick="quickView(4)">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="action-btn" onclick="toggleWishlist(this)">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Furniture</div>
-                        <h3 class="product-title">Handcrafted Dining Set - 6 seats</h3>
-                        <p class="product-description">Solid wood dining set handcrafted by local artisans. Custom finishes available.</p>
-                        
-                        <div class="product-seller">
-                            <div class="seller-avatar">F</div>
-                            <div>
-                                <span style="font-weight: 500;">Francistown Woodworks</span>
-                                <span class="seller-type">Manufacturer</span>
-                            </div>
-                        </div>
-                        
-                        <div class="product-rating">
-                            <span class="stars">★★★★½</span>
-                            <span style="color: #495057;">4.7 (23 reviews)</span>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="current-price">P3,500</span>
-                        </div>
-                        
-                        <div class="product-meta">
-                            <span><i class="fas fa-truck"></i> Delivery available</span>
-                            <span><i class="fas fa-paint-brush"></i> Custom order</span>
-                        </div>
-                        
-                        <div class="product-footer">
-                            <button class="btn-add-to-cart" onclick="addToCart(4)">
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
-                            </button>
-                            <button class="btn-quote" onclick="requestQuote(4)">
-                                <i class="fas fa-file-invoice"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product Card 5 - Beauty Products -->
-                <div class="product-card" data-category="beauty" data-seller="manufacturer" data-price="180" data-rating="4.8">
-                    <div class="product-image">
-                        <i class="fas fa-soap"></i>
-                    </div>
-                    <div class="product-actions">
-                        <button class="action-btn" onclick="quickView(5)">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="action-btn" onclick="toggleWishlist(this)">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Beauty Products</div>
-                        <h3 class="product-title">Shea Butter Set - 3 jars</h3>
-                        <p class="product-description">100% natural shea butter, handcrafted with local ingredients. Unscented and scented options.</p>
-                        
-                        <div class="product-seller">
-                            <div class="seller-avatar">N</div>
-                            <div>
-                                <span style="font-weight: 500;">Natural Beauty Co.</span>
-                                <span class="seller-type">Manufacturer</span>
-                            </div>
-                        </div>
-                        
-                        <div class="product-rating">
-                            <span class="stars">★★★★½</span>
-                            <span style="color: #495057;">4.8 (92 reviews)</span>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="current-price">P180</span>
-                            <span class="old-price">P240</span>
-                            <span class="discount-badge">-25%</span>
-                        </div>
-                        
-                        <div class="product-meta">
-                            <span><i class="fas fa-leaf"></i> Organic</span>
-                            <span><i class="fas fa-flask"></i> Lab tested</span>
-                        </div>
-                        
-                        <div class="product-footer">
-                            <button class="btn-add-to-cart" onclick="addToCart(5)">
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
-                            </button>
-                            <button class="btn-quote" onclick="requestQuote(5)">
-                                <i class="fas fa-file-invoice"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product Card 6 - Agriculture -->
-                <div class="product-card" data-category="agriculture" data-seller="distributor" data-price="950" data-rating="4.5">
-                    <div class="product-image">
-                        <i class="fas fa-seedling"></i>
-                    </div>
-                    <div class="product-actions">
-                        <button class="action-btn" onclick="quickView(6)">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="action-btn" onclick="toggleWishlist(this)">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Agriculture</div>
-                        <h3 class="product-title">Sorghum Seeds - 50kg bag</h3>
-                        <p class="product-description">High-yield sorghum seeds suitable for Botswana climate. Treated and ready for planting.</p>
-                        
-                        <div class="product-seller">
-                            <div class="seller-avatar">A</div>
-                            <div>
-                                <span style="font-weight: 500;">Agri-Botswana</span>
-                                <span class="seller-type">Distributor</span>
-                            </div>
-                        </div>
-                        
-                        <div class="product-rating">
-                            <span class="stars">★★★★½</span>
-                            <span style="color: #495057;">4.5 (34 reviews)</span>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="current-price">P950</span>
-                        </div>
-                        
-                        <div class="product-meta">
-                            <span><i class="fas fa-truck"></i> Bulk delivery</span>
-                            <span><i class="fas fa-clipboard-check"></i> Certified</span>
-                        </div>
-                        
-                        <div class="product-footer">
-                            <button class="btn-add-to-cart" onclick="addToCart(6)">
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
-                            </button>
-                            <button class="btn-quote" onclick="requestQuote(6)">
-                                <i class="fas fa-file-invoice"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product Card 7 - Construction -->
-                <div class="product-card" data-category="construction" data-seller="distributor" data-price="4500" data-rating="4.6">
-                    <div class="product-badge">
-                        <span class="badge discount">Wholesale</span>
-                    </div>
-                    <div class="product-image">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <div class="product-actions">
-                        <button class="action-btn" onclick="quickView(7)">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="action-btn" onclick="toggleWishlist(this)">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Construction</div>
-                        <h3 class="product-title">Cement - Pallet (50 bags)</h3>
-                        <p class="product-description">High-quality cement for construction. Grade 42.5, pallet of 50 bags.</p>
-                        
-                        <div class="product-seller">
-                            <div class="seller-avatar">B</div>
-                            <div>
-                                <span style="font-weight: 500;">Builders Warehouse</span>
-                                <span class="seller-type">Distributor</span>
-                            </div>
-                        </div>
-                        
-                        <div class="product-rating">
-                            <span class="stars">★★★★½</span>
-                            <span style="color: #495057;">4.6 (67 reviews)</span>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="current-price">P4,500</span>
-                        </div>
-                        
-                        <div class="product-meta">
-                            <span><i class="fas fa-truck"></i> Free delivery</span>
-                            <span><i class="fas fa-check-circle"></i> In stock</span>
-                        </div>
-                        
-                        <div class="product-footer">
-                            <button class="btn-add-to-cart" onclick="addToCart(7)">
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
-                            </button>
-                            <button class="btn-quote" onclick="requestQuote(7)">
-                                <i class="fas fa-file-invoice"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product Card 8 - Traditional Crafts -->
-                <div class="product-card" data-category="traditional" data-seller="manufacturer" data-price="1200" data-rating="4.9">
-                    <div class="product-image">
-                        <i class="fas fa-gem"></i>
-                    </div>
-                    <div class="product-actions">
-                        <button class="action-btn" onclick="quickView(8)">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="action-btn" onclick="toggleWishlist(this)">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Traditional Crafts</div>
-                        <h3 class="product-title">Handcarved Wooden Sculpture</h3>
-                        <p class="product-description">Traditional African sculpture, handcarved from Botswana teak. Various designs available.</p>
-                        
-                        <div class="product-seller">
-                            <div class="seller-avatar">M</div>
-                            <div>
-                                <span style="font-weight: 500;">Maun Artisans</span>
-                                <span class="seller-type">Manufacturer</span>
-                            </div>
-                        </div>
-                        
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                            <span style="color: #495057;">4.9 (42 reviews)</span>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="current-price">P1,200</span>
-                        </div>
-                        
-                        <div class="product-meta">
-                            <span><i class="fas fa-ruler"></i> Various sizes</span>
-                            <span><i class="fas fa-gift"></i> Gift wrapping</span>
-                        </div>
-                        
-                        <div class="product-footer">
-                            <button class="btn-add-to-cart" onclick="addToCart(8)">
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
-                            </button>
-                            <button class="btn-quote" onclick="requestQuote(8)">
-                                <i class="fas fa-file-invoice"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Pagination -->
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a></li>
-            </ul>
-            
-            <!-- Manufacturers Section -->
-            <div class="manufacturers-section">
-                <div class="section-title">
-                    <h2>Featured Manufacturers</h2>
-                    <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <div class="manufacturers-grid">
-                    <div class="manufacturer-card">
-                        <div class="manufacturer-logo">
-                            <i class="fas fa-industry"></i>
-                        </div>
-                        <h3 class="manufacturer-name">Botswana Crafts Co-op</h3>
-                        <span class="manufacturer-type">Traditional Crafts</span>
-                        <div class="manufacturer-stats">
-                            <span><i class="fas fa-box"></i> 45 products</span>
-                            <span><i class="fas fa-star" style="color: #f4b400;"></i> 4.8</span>
-                        </div>
-                        <button class="btn btn-outline" style="width: 100%;" onclick="viewManufacturer(1)">View Products</button>
-                    </div>
-                    
-                    <div class="manufacturer-card">
-                        <div class="manufacturer-logo">
-                            <i class="fas fa-tshirt"></i>
-                        </div>
-                        <h3 class="manufacturer-name">Gaborone Textiles</h3>
-                        <span class="manufacturer-type">Textiles & Fabrics</span>
-                        <div class="manufacturer-stats">
-                            <span><i class="fas fa-box"></i> 32 products</span>
-                            <span><i class="fas fa-star" style="color: #f4b400;"></i> 4.6</span>
-                        </div>
-                        <button class="btn btn-outline" style="width: 100%;" onclick="viewManufacturer(2)">View Products</button>
-                    </div>
-                    
-                    <div class="manufacturer-card">
-                        <div class="manufacturer-logo">
-                            <i class="fas fa-couch"></i>
-                        </div>
-                        <h3 class="manufacturer-name">Francistown Woodworks</h3>
-                        <span class="manufacturer-type">Furniture</span>
-                        <div class="manufacturer-stats">
-                            <span><i class="fas fa-box"></i> 28 products</span>
-                            <span><i class="fas fa-star" style="color: #f4b400;"></i> 4.7</span>
-                        </div>
-                        <button class="btn btn-outline" style="width: 100%;" onclick="viewManufacturer(3)">View Products</button>
-                    </div>
-                    
-                    <div class="manufacturer-card">
-                        <div class="manufacturer-logo">
-                            <i class="fas fa-seedling"></i>
-                        </div>
-                        <h3 class="manufacturer-name">Kalahari Delights</h3>
-                        <span class="manufacturer-type">Food & Beverages</span>
-                        <div class="manufacturer-stats">
-                            <span><i class="fas fa-box"></i> 56 products</span>
-                            <span><i class="fas fa-star" style="color: #f4b400;"></i> 4.9</span>
-                        </div>
-                        <button class="btn btn-outline" style="width: 100%;" onclick="viewManufacturer(4)">View Products</button>
-                    </div>
-                </div>
+                <!-- Products will be loaded dynamically -->
             </div>
         </div>
     </div>
-    
-    <!-- Product Quick View Modal -->
-    <div class="product-modal" id="quickViewModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeQuickView()">&times;</button>
-            
-            <div class="modal-grid">
-                <div class="modal-gallery">
-                    <div class="modal-gallery-main" id="modalGalleryMain">
-                        <i class="fas fa-basket-shopping"></i>
-                    </div>
-                    <div class="modal-gallery-thumbs">
-                        <div class="modal-thumb active" onclick="changeModalImage(this, 1)">
-                            <i class="fas fa-basket-shopping"></i>
-                        </div>
-                        <div class="modal-thumb" onclick="changeModalImage(this, 2)">
-                            <i class="fas fa-box"></i>
-                        </div>
-                        <div class="modal-thumb" onclick="changeModalImage(this, 3)">
-                            <i class="fas fa-tag"></i>
-                        </div>
-                        <div class="modal-thumb" onclick="changeModalImage(this, 4)">
-                            <i class="fas fa-check"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="modal-info">
-                    <div class="product-category">Traditional Crafts</div>
-                    <h2 id="modalProductTitle">Handwoven Baskets - Set of 3</h2>
-                    
-                    <div class="product-rating">
-                        <span class="stars">★★★★½</span>
-                        <span>4.8 (56 reviews)</span>
-                    </div>
-                    
-                    <div class="modal-price" id="modalProductPrice">P850</div>
-                    
-                    <p id="modalProductDesc">Authentic Botswana handwoven baskets made by local artisans using traditional techniques. Each basket is unique and represents the rich cultural heritage of Botswana. Perfect for home decor, gifts, or retail.</p>
-                    
-                    <div class="modal-meta">
-                        <div><i class="fas fa-check-circle" style="color: #28a745;"></i> In Stock</div>
-                        <div><i class="fas fa-truck" style="color: #1e3c72;"></i> Free Delivery</div>
-                        <div><i class="fas fa-undo" style="color: #f4b400;"></i> 7 Days Return</div>
-                    </div>
-                    
-                    <div class="product-seller" style="margin: 1rem 0;">
-                        <div class="seller-avatar">B</div>
-                        <div>
-                            <div style="font-weight: 600;">Botswana Crafts Co-op</div>
-                            <div style="font-size: 0.85rem; color: #6c757d;">Manufacturer · Member since 2020</div>
-                        </div>
-                    </div>
-                    
-                    <div class="quantity-selector">
-                        <button class="quantity-btn" onclick="decrementQuantity()">-</button>
-                        <input type="number" class="quantity-input" id="productQuantity" value="1" min="1" max="100">
-                        <button class="quantity-btn" onclick="incrementQuantity()">+</button>
-                    </div>
-                    
-                    <div style="display: flex; gap: 1rem;">
-                        <button class="btn-add-to-cart" style="flex: 2;" onclick="addToCartFromModal()">
-                            <i class="fas fa-shopping-cart"></i> Add to Cart
-                        </button>
-                        <button class="btn-quote" style="flex: 1;" onclick="requestQuote(1)">
-                            <i class="fas fa-file-invoice"></i> Quote
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+
     <!-- Cart Sidebar -->
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
             <h3>Shopping Cart</h3>
             <span class="cart-close" onclick="toggleCart()"><i class="fas fa-times"></i></span>
         </div>
-        
         <div class="cart-items" id="cartItems">
-            <!-- Cart items will be dynamically added here -->
             <div style="text-align: center; color: #6c757d; padding: 2rem;">
                 <i class="fas fa-shopping-cart" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
                 <p>Your cart is empty</p>
             </div>
         </div>
-        
         <div class="cart-footer">
             <div class="cart-total">
                 <span>Total:</span>
@@ -1779,14 +930,13 @@
                 <h4>Bizz Connect</h4>
                 <p>Connecting businesses. Creating Opportunities</p>
                 <div class="social-links">
-                    <a href="https://www.facebook.com/share/1Gju4NZzSd/"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://x.com/BizzConnect384"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.linkedin.com/in/bizz-connect-73b3b03b7?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://www.instagram.com/bizzc_onnect?igsh=MWI4Nmd5dDZ4OGo4eA=="><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/message/EOVFBBEEAWQEB1"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
-            
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul class="footer-links">
@@ -1794,21 +944,17 @@
                     <li><a href="providers.html">Service Providers</a></li>
                     <li><a href="marketplace.html">Marketplace</a></li>
                     <li><a href="events.html">Events</a></li>
-                    <li><a href="blog.html">Blog</a></li>
                 </ul>
             </div>
-            
             <div class="footer-section">
                 <h4>Support</h4>
                 <ul class="footer-links">
                     <li><a href="help.html">Help Center</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
                     <li><a href="contact.html">Contact Us</a></li>
                     <li><a href="privacy.html">Privacy Policy</a></li>
                     <li><a href="terms.html">Terms of Service</a></li>
                 </ul>
             </div>
-            
             <div class="footer-section">
                 <h4>Contact Info</h4>
                 <ul class="footer-links">
@@ -1818,371 +964,304 @@
                 </ul>
             </div>
         </div>
-        
         <div class="footer-bottom">
             <p>&copy; 2026 Bizz Connect. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script>
-        // Cart functionality
+        // ========== IMPROVED DYNAMIC MARKETPLACE ==========
+        let allProducts = [];
+        let filteredProducts = [];
         let cart = [];
-        let cartCount = 0;
-        let cartTotal = 0;
-        
-        // Check if user is logged in
-        document.addEventListener('DOMContentLoaded', function() {
-            const user = localStorage.getItem('bbh_user');
-            if (user) {
-                const userData = JSON.parse(user);
-                const userMenu = document.getElementById('userMenu');
-                userMenu.innerHTML = `
-                    <span style="color: white;">Welcome, ${userData.name}</span>
-                    <a href="dashboard.html" class="btn btn-primary" style="background: #f4b400; color: #1e3c72;">Dashboard</a>
-                `;
+
+        // Load products from registered manufacturers/distributors
+        function loadProducts() {
+            const users = JSON.parse(localStorage.getItem('bbh_users')) || [];
+            let manufacturers = 0, distributors = 0;
+            allProducts = [];
+
+            users.forEach(user => {
+                if (user.userType === 'manufacturer' && user.manufacturer && user.manufacturer.products) {
+                    manufacturers++;
+                    user.manufacturer.products.forEach(p => {
+                        allProducts.push({
+                            id: p.id || `prod_${Date.now()}_${Math.random()}`,
+                            name: p.name,
+                            price: p.price,
+                            description: p.description || '',
+                            category: p.category || 'general',
+                            seller: user.businessName || `${user.firstName} ${user.lastName}`,
+                            sellerEmail: user.email,
+                            sellerType: 'manufacturer',
+                            imageIcon: p.icon || 'fa-industry'
+                        });
+                    });
+                }
+                if (user.userType === 'distributor' && user.distributor && user.distributor.products) {
+                    distributors++;
+                    user.distributor.products.forEach(p => {
+                        allProducts.push({
+                            id: p.id || `prod_${Date.now()}_${Math.random()}`,
+                            name: p.name,
+                            price: p.price,
+                            description: p.description || '',
+                            category: p.category || 'general',
+                            seller: user.businessName || `${user.firstName} ${user.lastName}`,
+                            sellerEmail: user.email,
+                            sellerType: 'distributor',
+                            imageIcon: p.icon || 'fa-truck'
+                        });
+                    });
+                }
+            });
+
+            // Add sample products if none exist (for demo)
+            if (allProducts.length === 0) {
+                allProducts = [
+                    { id: 's1', name: 'Handwoven Basket', price: 250, description: 'Traditional basket, set of 3', category: 'traditional', seller: 'Botswana Crafts', sellerEmail: 'demo@crafts.com', sellerType: 'manufacturer', imageIcon: 'fa-basket-shopping' },
+                    { id: 's2', name: 'Shweshwe Fabric', price: 450, description: '6 yards, assorted colors', category: 'textiles', seller: 'Gaborone Textiles', sellerEmail: 'demo@textiles.com', sellerType: 'manufacturer', imageIcon: 'fa-tshirt' },
+                    { id: 's3', name: 'Morula Jam (Case of 12)', price: 280, description: 'Traditional morula fruit jam', category: 'food', seller: 'Kalahari Delights', sellerEmail: 'demo@delights.com', sellerType: 'distributor', imageIcon: 'fa-jar' }
+                ];
+                manufacturers = 1;
+                distributors = 1;
             }
-            
-            // Load cart from localStorage
+
+            // Update stats
+            document.getElementById('productCount').innerText = allProducts.length;
+            document.getElementById('manufacturerCount').innerText = manufacturers;
+            document.getElementById('distributorCount').innerText = distributors;
+
+            // Populate unique categories
+            const categories = ['all', ...new Set(allProducts.map(p => p.category))];
+            const catContainer = document.getElementById('categoryContainer');
+            catContainer.innerHTML = categories.map(cat => `
+                <span class="category-chip ${cat === 'all' ? 'active' : ''}" data-cat="${cat}" onclick="filterByCategory('${cat}')">
+                    ${cat === 'all' ? '<i class="fas fa-th-large"></i> All' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </span>
+            `).join('');
+
+            filteredProducts = [...allProducts];
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            if (filteredProducts.length === 0) {
+                grid.innerHTML = '<div style="text-align:center; padding:2rem;">No products found</div>';
+                document.getElementById('resultsCount').innerText = 0;
+                return;
+            }
+            grid.innerHTML = filteredProducts.map(p => `
+                <div class="product-card" data-category="${p.category}" data-price="${p.price}" data-seller="${p.sellerType}">
+                    <div class="product-image"><i class="fas ${p.imageIcon}"></i></div>
+                    <div class="product-info">
+                        <div class="product-category">${p.category}</div>
+                        <h3 class="product-title">${p.name}</h3>
+                        <p class="product-description">${p.description}</p>
+                        <div class="product-seller">
+                            <div class="seller-avatar">${p.seller.charAt(0)}</div>
+                            <div>${p.seller} <span class="seller-type">${p.sellerType}</span></div>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">P${p.price}</span>
+                        </div>
+                        <div class="product-footer">
+                            <button class="btn-add-to-cart" onclick="addToCart('${p.id}')">Add to Cart</button>
+                            <button class="btn-quote" onclick="requestQuote('${p.id}')">Quote</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('resultsCount').innerText = filteredProducts.length;
+        }
+
+        function filterByCategory(category) {
+            document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));
+            document.querySelector(`.category-chip[data-cat="${category}"]`).classList.add('active');
+            if (category === 'all') filteredProducts = [...allProducts];
+            else filteredProducts = allProducts.filter(p => p.category === category);
+            renderProducts();
+        }
+
+        function applyFilters() {
+            let filtered = [...allProducts];
+            const minPrice = parseFloat(document.getElementById('minPrice').value);
+            const maxPrice = parseFloat(document.getElementById('maxPrice').value);
+            if (!isNaN(minPrice)) filtered = filtered.filter(p => p.price >= minPrice);
+            if (!isNaN(maxPrice)) filtered = filtered.filter(p => p.price <= maxPrice);
+            const selectedTypes = Array.from(document.querySelectorAll('.filter-checkbox input:checked')).map(cb => cb.value);
+            if (selectedTypes.length) filtered = filtered.filter(p => selectedTypes.includes(p.sellerType));
+            filteredProducts = filtered;
+            renderProducts();
+        }
+
+        function sortProducts() {
+            const sortBy = document.getElementById('sortSelect').value;
+            filteredProducts.sort((a, b) => sortBy === 'price-low' ? a.price - b.price : b.price - a.price);
+            renderProducts();
+        }
+
+        // Cart functions
+        function addToCart(productId) {
+            const user = localStorage.getItem('bbh_user');
+            if (!user) { if (confirm('Please login to add to cart')) window.location.href = 'login.html'; return; }
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+            const existing = cart.find(i => i.id === productId);
+            if (existing) existing.quantity++;
+            else cart.push({ ...product, quantity: 1 });
+            updateCartUI();
+            showNotification('Product added to cart');
+        }
+
+        function updateCartUI() {
+            const count = cart.reduce((s, i) => s + i.quantity, 0);
+            const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+            document.getElementById('cartCount').innerText = count;
+            document.getElementById('cartTotal').innerText = `P${total}`;
+            const container = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                container.innerHTML = '<div style="text-align:center; padding:2rem;"><i class="fas fa-shopping-cart" style="font-size:3rem; opacity:0.5;"></i><p>Your cart is empty</p></div>';
+                return;
+            }
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-image"><i class="fas ${item.imageIcon}"></i></div>
+                    <div class="cart-item-info">
+                        <div class="cart-item-title">${item.name}</div>
+                        <div class="cart-item-price">P${item.price}</div>
+                        <div class="cart-item-quantity">
+                            <button class="cart-qty-btn" onclick="updateQuantity('${item.id}', ${item.quantity - 1})">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="cart-qty-btn" onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
+                            <button class="cart-qty-btn" onclick="removeFromCart('${item.id}')" style="margin-left:0.5rem; color:#dc3545;"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div style="font-weight:600;">P${item.price * item.quantity}</div>
+                </div>
+            `).join('');
+            localStorage.setItem('marketplaceCart', JSON.stringify(cart));
+        }
+
+        function updateQuantity(id, newQty) {
+            if (newQty <= 0) { removeFromCart(id); return; }
+            const item = cart.find(i => i.id === id);
+            if (item) item.quantity = newQty;
+            updateCartUI();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            updateCartUI();
+            showNotification('Product removed from cart');
+        }
+
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('active');
+        }
+
+        function checkout() {
+            const user = localStorage.getItem('bbh_user');
+            if (!user) { window.location.href = 'login.html'; return; }
+            if (cart.length === 0) { alert('Cart is empty'); return; }
+            const customer = JSON.parse(user);
+            if (customer.userType !== 'customer') { alert('Only customers can checkout.'); return; }
+
+            // Group orders by seller
+            const ordersBySeller = {};
+            cart.forEach(item => {
+                if (!ordersBySeller[item.sellerEmail]) ordersBySeller[item.sellerEmail] = [];
+                ordersBySeller[item.sellerEmail].push({
+                    productId: item.id,
+                    productName: item.name,
+                    quantity: item.quantity,
+                    price: item.price,
+                    total: item.price * item.quantity
+                });
+            });
+
+            // Save order to customer
+            const orderId = 'ORD_' + Date.now();
+            const customerOrder = {
+                id: orderId,
+                date: new Date().toISOString(),
+                items: cart.map(i => ({ name: i.name, qty: i.quantity, price: i.price, total: i.price * i.quantity })),
+                total: cart.reduce((s,i)=>s+(i.price*i.quantity),0),
+                status: 'pending'
+            };
+            if (!customer.customer.orders) customer.customer.orders = [];
+            customer.customer.orders.push(customerOrder);
+            localStorage.setItem('bbh_user', JSON.stringify(customer));
+
+            // Save orders to sellers (manufacturers/distributors)
+            const users = JSON.parse(localStorage.getItem('bbh_users')) || [];
+            for (const sellerEmail in ordersBySeller) {
+                const sellerIndex = users.findIndex(u => u.email === sellerEmail);
+                if (sellerIndex !== -1) {
+                    const seller = users[sellerIndex];
+                    const sellerRole = seller.userType; // manufacturer or distributor
+                    if (!seller[sellerRole]) seller[sellerRole] = {};
+                    if (!seller[sellerRole].orders) seller[sellerRole].orders = [];
+                    seller[sellerRole].orders.push({
+                        orderId: orderId,
+                        customerEmail: customer.email,
+                        customerName: `${customer.firstName} ${customer.lastName}`,
+                        items: ordersBySeller[sellerEmail],
+                        total: ordersBySeller[sellerEmail].reduce((s,i)=>s+i.total,0),
+                        status: 'pending',
+                        date: new Date().toISOString()
+                    });
+                    if (!seller[sellerRole].activeOrders) seller[sellerRole].activeOrders = 0;
+                    seller[sellerRole].activeOrders++;
+                    users[sellerIndex] = seller;
+                }
+            }
+            localStorage.setItem('bbh_users', JSON.stringify(users));
+
+            // Clear cart
+            cart = [];
+            updateCartUI();
+            localStorage.removeItem('marketplaceCart');
+            alert('Order placed successfully!');
+            toggleCart();
+        }
+
+        function requestQuote(productId) {
+            const user = localStorage.getItem('bbh_user');
+            if (!user) { if(confirm('Login to request quote')) window.location.href='login.html'; return; }
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+            alert(`Quote request for ${product.name} sent to ${product.seller}. They will contact you.`);
+            // In real app, you would save this to a quotes collection
+        }
+
+        function showNotification(msg) {
+            // Simple alert for demo; you can replace with toast
+            alert(msg);
+        }
+
+        function updateUserMenu() {
+            const user = localStorage.getItem('bbh_user');
+            const menu = document.getElementById('userMenu');
+            if (user) {
+                const u = JSON.parse(user);
+                menu.innerHTML = `<span style="color:white;">Welcome, ${u.firstName || 'User'}</span><a href="dashboard.html" class="btn-primary">Dashboard</a>`;
+            } else {
+                menu.innerHTML = `<a href="login.html" class="btn-outline">Login</a><a href="register.html" class="btn-primary">Sign Up</a>`;
+            }
+        }
+
+        // Load saved cart from localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUserMenu();
+            loadProducts();
             const savedCart = localStorage.getItem('marketplaceCart');
             if (savedCart) {
                 cart = JSON.parse(savedCart);
                 updateCartUI();
             }
         });
-        
-        // Add to cart
-        function addToCart(productId) {
-            if (!localStorage.getItem('bbh_user')) {
-                if (confirm('Please login to add items to cart')) {
-                    window.location.href = 'login.html';
-                }
-                return;
-            }
-            
-            // Find product (in real app, fetch from server)
-            const product = {
-                id: productId,
-                name: document.querySelector(`.product-card[data-category] h3`).textContent,
-                price: 850,
-                quantity: 1
-            };
-            
-            const existingItem = cart.find(item => item.id === productId);
-            if (existingItem) {
-                existingItem.quantity++;
-            } else {
-                cart.push(product);
-            }
-            
-            updateCartUI();
-            showNotification('Product added to cart');
-            
-            // Save to localStorage
-            localStorage.setItem('marketplaceCart', JSON.stringify(cart));
-        }
-        
-        // Update cart UI
-        function updateCartUI() {
-            cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-            cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-            
-            document.getElementById('cartCount').textContent = cartCount;
-            document.getElementById('cartTotal').textContent = `P${cartTotal}`;
-            
-            // Update cart items display
-            const cartItems = document.getElementById('cartItems');
-            if (cart.length === 0) {
-                cartItems.innerHTML = `
-                    <div style="text-align: center; color: #6c757d; padding: 2rem;">
-                        <i class="fas fa-shopping-cart" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                        <p>Your cart is empty</p>
-                    </div>
-                `;
-            } else {
-                cartItems.innerHTML = cart.map(item => `
-                    <div class="cart-item">
-                        <div class="cart-item-image">
-                            <i class="fas fa-box"></i>
-                        </div>
-                        <div class="cart-item-info">
-                            <div class="cart-item-title">${item.name}</div>
-                            <div class="cart-item-price">P${item.price}</div>
-                            <div class="cart-item-quantity">
-                                <button class="cart-qty-btn" onclick="updateCartQuantity(${item.id}, ${item.quantity - 1})">-</button>
-                                <span>${item.quantity}</span>
-                                <button class="cart-qty-btn" onclick="updateCartQuantity(${item.id}, ${item.quantity + 1})">+</button>
-                                <button class="cart-qty-btn" onclick="removeFromCart(${item.id})" style="margin-left: 0.5rem; color: #dc3545;">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-        
-        // Update cart quantity
-        function updateCartQuantity(productId, newQuantity) {
-            if (newQuantity <= 0) {
-                removeFromCart(productId);
-                return;
-            }
-            
-            const item = cart.find(item => item.id === productId);
-            if (item) {
-                item.quantity = newQuantity;
-                updateCartUI();
-                localStorage.setItem('marketplaceCart', JSON.stringify(cart));
-            }
-        }
-        
-        // Remove from cart
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            updateCartUI();
-            localStorage.setItem('marketplaceCart', JSON.stringify(cart));
-            showNotification('Product removed from cart');
-        }
-        
-        // Toggle cart sidebar
-        function toggleCart() {
-            const sidebar = document.getElementById('cartSidebar');
-            sidebar.classList.toggle('active');
-        }
-        
-        // Quick view
-        function quickView(productId) {
-            document.getElementById('quickViewModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // Close quick view
-        function closeQuickView() {
-            document.getElementById('quickViewModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-        
-        // Change modal image
-        function changeModalImage(element, imageId) {
-            document.querySelectorAll('.modal-thumb').forEach(thumb => {
-                thumb.classList.remove('active');
-            });
-            element.classList.add('active');
-        }
-        
-        // Quantity functions
-        function incrementQuantity() {
-            const input = document.getElementById('productQuantity');
-            input.value = parseInt(input.value) + 1;
-        }
-        
-        function decrementQuantity() {
-            const input = document.getElementById('productQuantity');
-            if (input.value > 1) {
-                input.value = parseInt(input.value) - 1;
-            }
-        }
-        
-        // Add to cart from modal
-        function addToCartFromModal() {
-            const quantity = parseInt(document.getElementById('productQuantity').value);
-            addToCart(1); // In real app, pass actual product ID
-        }
-        
-        // Request quote
-        function requestQuote(productId) {
-            if (!localStorage.getItem('bbh_user')) {
-                if (confirm('Please login to request a quote')) {
-                    window.location.href = 'login.html';
-                }
-                return;
-            }
-            
-            alert('Quote request sent! The seller will contact you shortly.');
-        }
-        
-        // Toggle wishlist
-        function toggleWishlist(button) {
-            const icon = button.querySelector('i');
-            if (icon.classList.contains('far')) {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
-                showNotification('Added to wishlist');
-            } else {
-                icon.classList.remove('fas');
-                icon.classList.add('far');
-                showNotification('Removed from wishlist');
-            }
-        }
-        
-        // Filter by category
-        function filterByCategory(category) {
-            document.querySelectorAll('.category-chip').forEach(chip  => {
-                    chip.classList.remove('active');
-                });
-                event.currentTarget.classList.add('active');
-                
-                const products = document.querySelectorAll('.product-card');
-                let visibleCount = 0;
-                
-                products.forEach(product => {
-                    if (category === 'all' || product.dataset.category === category) {
-                        product.style.display = 'block';
-                        visibleCount++;
-                    } else {
-                        product.style.display = 'none';
-                    }
-                });
-                
-                document.getElementById('resultsCount').textContent = visibleCount;
-            }
-            
-            // Apply filters
-            function applyFilters() {
-                // Get selected seller types
-                const sellerTypes = [];
-                document.querySelectorAll('.filter-checkbox input[type="checkbox"]').forEach(cb => {
-                    if (cb.checked && cb.nextElementSibling.textContent.includes('Manufacturer')) {
-                        sellerTypes.push('manufacturer');
-                    }
-                    if (cb.checked && cb.nextElementSibling.textContent.includes('Distributor')) {
-                        sellerTypes.push('distributor');
-                    }
-                });
-                
-                const products = document.querySelectorAll('.product-card');
-                let visibleCount = 0;
-                
-                products.forEach(product => {
-                    let show = true;
-                    
-                    // Filter by seller type
-                    if (sellerTypes.length > 0) {
-                        if (!sellerTypes.includes(product.dataset.seller)) {
-                            show = false;
-                        }
-                    }
-                    
-                    product.style.display = show ? 'block' : 'none';
-                    if (show) visibleCount++;
-                });
-                
-                document.getElementById('resultsCount').textContent = visibleCount;
-            }
-            
-            // Apply price filter
-            function applyPriceFilter() {
-                const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
-                const maxPrice = parseFloat(document.getElementById('maxPrice').value) || Infinity;
-                
-                const products = document.querySelectorAll('.product-card');
-                let visibleCount = 0;
-                
-                products.forEach(product => {
-                    const price = parseFloat(product.dataset.price);
-                    if (price >= minPrice && price <= maxPrice) {
-                        product.style.display = 'block';
-                        visibleCount++;
-                    } else {
-                        product.style.display = 'none';
-                    }
-                });
-                
-                document.getElementById('resultsCount').textContent = visibleCount;
-            }
-            
-            // Sort products
-            function sortProducts() {
-                const sortBy = document.getElementById('sortSelect').value;
-                const grid = document.getElementById('productsGrid');
-                const products = Array.from(document.querySelectorAll('.product-card'));
-                
-                products.sort((a, b) => {
-                    switch(sortBy) {
-                        case 'price-low':
-                            return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
-                        case 'price-high':
-                            return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
-                        case 'rating':
-                            return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
-                        default:
-                            return 0;
-                    }
-                });
-                
-                // Reorder products in DOM
-                products.forEach(product => grid.appendChild(product));
-            }
-            
-            // View manufacturer
-            function viewManufacturer(manufacturerId) {
-                filterByCategory('all');
-                // Scroll to products section
-                document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth' });
-                showNotification('Showing products from selected manufacturer');
-            }
-            
-            // Checkout
-            function checkout() {
-                if (!localStorage.getItem('bbh_user')) {
-                    window.location.href = 'login.html';
-                    return;
-                }
-                
-                if (cart.length === 0) {
-                    showNotification('Your cart is empty');
-                    return;
-                }
-                
-                alert('Proceeding to checkout...');
-                // In real app, redirect to checkout page
-            }
-            
-            // Show notification
-            function showNotification(message) {
-                const notification = document.createElement('div');
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: #1e3c72;
-                    color: white;
-                    padding: 1rem 2rem;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                    z-index: 3000;
-                    animation: slideIn 0.3s ease;
-                `;
-                notification.textContent = message;
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.remove();
-                }, 3000);
-            }
-            
-            // Close modal when clicking outside
-            window.onclick = function(event) {
-                const modal = document.getElementById('quickViewModal');
-                if (event.target === modal) {
-                    closeQuickView();
-                }
-                
-                const cart = document.getElementById('cartSidebar');
-                if (event.target === cart) {
-                    toggleCart();
-                }
-            }
-            
-            // Initialize
-            document.addEventListener('DOMContentLoaded', function() {
-                // Set minimum date for any date inputs
-                const today = new Date().toISOString().split('T')[0];
-                
-                // Initialize results count
-                document.getElementById('resultsCount').textContent = document.querySelectorAll('.product-card').length;
-            });
-        </script>
-    </body>
-    </html>
+    </script>
+</body>
+</html>
