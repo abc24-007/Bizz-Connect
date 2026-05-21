@@ -4,37 +4,487 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Bizz Connect</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="Your business dashboard - manage your profile, view messages, track bookings, and grow your business.">
-    
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* (All styles remain identical to the previous version - no changes needed) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f5f7fa; min-height: 100vh; }
+        .dashboard-wrapper { display: flex; min-height: 100vh; }
+        .dashboard-sidebar { width: 280px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; position: fixed; height: 100vh; overflow-y: auto; transition: all 0.3s ease; z-index: 1000; }
+        .sidebar-header { padding: 2rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { display: flex; align-items: center; gap: 1rem; color: white; text-decoration: none; }
+        .sidebar-logo i { font-size: 2rem; color: #f4b400; }
+        .sidebar-logo span { font-size: 1.2rem; font-weight: 600; }
+        .sidebar-logo small { font-size: 0.8rem; opacity: 0.7; display: block; }
+        .user-info-sidebar { padding: 1.5rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .user-avatar-large { width: 100px; height: 100px; background: #f4b400; border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; color: #1e3c72; border: 4px solid white; }
+        .user-info-sidebar h3 { color: white; margin-bottom: 0.25rem; }
+        .user-info-sidebar p { opacity: 0.8; font-size: 0.9rem; }
+        .badge-sidebar { display: inline-block; padding: 0.25rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-top: 0.5rem; }
+        .badge-sidebar.customer { background: #28a745; color: white; }
+        .badge-sidebar.provider { background: #f4b400; color: #1e3c72; }
+        .badge-sidebar.distributor { background: #17a2b8; color: white; }
+        .badge-sidebar.manufacturer { background: #dc3545; color: white; }
+        .sidebar-menu { padding: 1.5rem 0; }
+        .sidebar-menu-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1.5rem; color: rgba(255,255,255,0.8); text-decoration: none; transition: all 0.3s ease; border-left: 3px solid transparent; cursor: pointer; }
+        .sidebar-menu-item:hover, .sidebar-menu-item.active { background: rgba(255,255,255,0.1); color: white; border-left-color: #f4b400; }
+        .sidebar-menu-item i { width: 20px; font-size: 1.1rem; }
+        .sidebar-menu-item span { flex: 1; }
+        .sidebar-menu-item .badge { background: #f4b400; color: #1e3c72; padding: 0.15rem 0.5rem; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+        .dashboard-main { flex: 1; margin-left: 280px; padding: 2rem; }
+        .top-nav { background: white; border-radius: 12px; padding: 1rem 2rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .page-title h2 { color: #1e3c72; margin: 0; }
+        .page-title p { color: #6c757d; font-size: 0.9rem; margin: 0.25rem 0 0; }
+        .top-nav-actions { display: flex; align-items: center; gap: 1.5rem; }
+        .search-box { position: relative; }
+        .search-box input { padding: 0.5rem 1rem 0.5rem 2.5rem; border: 1px solid #dee2e6; border-radius: 30px; width: 250px; font-size: 0.9rem; transition: all 0.3s ease; }
+        .search-box input:focus { outline: none; border-color: #1e3c72; box-shadow: 0 0 0 3px rgba(30,60,114,0.1); width: 300px; }
+        .search-box i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #6c757d; }
+        .notification-icon { position: relative; cursor: pointer; }
+        .notification-icon i { font-size: 1.3rem; color: #6c757d; transition: color 0.3s ease; }
+        .notification-icon:hover i { color: #1e3c72; }
+        .notification-badge { position: absolute; top: -5px; right: -5px; background: #dc3545; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
+        .role-selector { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: #f8f9fa; border-radius: 30px; cursor: pointer; border: 1px solid #dee2e6; }
+        .role-selector select { border: none; background: transparent; font-weight: 500; color: #1e3c72; cursor: pointer; outline: none; }
+        .user-avatar-small { width: 40px; height: 40px; background: linear-gradient(135deg, #1e3c72, #2a5298); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #f4b400; font-weight: bold; cursor: pointer; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 1rem; transition: all 0.3s ease; cursor: pointer; }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(30,60,114,0.15); }
+        .stat-icon { width: 60px; height: 60px; background: linear-gradient(135deg, #1e3c72, #2a5298); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #f4b400; font-size: 1.8rem; }
+        .stat-info h3 { color: #6c757d; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .stat-info .number { font-size: 1.8rem; font-weight: 700; color: #1e3c72; line-height: 1.2; }
+        .stat-info .trend { font-size: 0.8rem; color: #28a745; display: flex; align-items: center; gap: 0.25rem; }
+        .charts-row { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        .chart-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .chart-header h3 { color: #1e3c72; margin: 0; }
+        .chart-header select { padding: 0.25rem 0.5rem; border: 1px solid #dee2e6; border-radius: 5px; font-size: 0.9rem; }
+        .chart-container { height: 300px; position: relative; }
+        .section-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .section-header h3 { color: #1e3c72; margin: 0; }
+        .view-all-link { color: #1e3c72; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 1rem; color: #1e3c72; font-weight: 600; border-bottom: 2px solid #dee2e6; }
+        td { padding: 1rem; border-bottom: 1px solid #dee2e6; color: #495057; }
+        .status-badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500; display: inline-block; }
+        .status-badge.confirmed { background: #d4edda; color: #155724; }
+        .status-badge.pending { background: #fff3cd; color: #856404; }
+        .status-badge.completed { background: #cce5ff; color: #004085; }
+        .status-badge.cancelled { background: #f8d7da; color: #721c24; }
+        .action-btn { padding: 0.25rem 0.75rem; border: 1px solid #dee2e6; border-radius: 5px; background: white; color: #1e3c72; cursor: pointer; transition: all 0.3s ease; margin: 0 0.25rem; }
+        .action-btn:hover { background: #1e3c72; color: white; }
+        .action-btn.accept { background: #28a745; color: white; border: none; }
+        .action-btn.decline { background: #dc3545; color: white; border: none; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .service-card, .product-card, .provider-card, .manufacturer-card { background: #f8f9fa; border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; border: 1px solid #dee2e6; position: relative; }
+        .service-card:hover, .product-card:hover, .provider-card:hover, .manufacturer-card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .badge { position: absolute; top: 1rem; right: 1rem; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+        .badge.low-stock { background: #dc3545; color: white; }
+        .badge.in-stock { background: #28a745; color: white; }
+        .card-icon { width: 60px; height: 60px; background: linear-gradient(135deg, #1e3c72, #2a5298); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #f4b400; font-size: 1.8rem; margin-bottom: 1rem; }
+        .avatar-large { width: 80px; height: 80px; background: #f4b400; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: #1e3c72; margin-bottom: 1rem; }
+        .rating { color: #f4b400; margin: 0.5rem 0; }
+        .btn { padding: 0.5rem 1rem; border: none; border-radius: 5px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { background: #1e3c72; color: white; }
+        .btn-primary:hover { background: #2a5298; }
+        .btn-outline { background: transparent; border: 1px solid #1e3c72; color: #1e3c72; }
+        .btn-outline:hover { background: #1e3c72; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+        .stock-bar { width: 100%; height: 6px; background: #e9ecef; border-radius: 3px; margin: 0.5rem 0; }
+        .stock-fill { height: 100%; background: linear-gradient(90deg, #1e3c72, #2a5298); border-radius: 3px; }
+        .activity-list { display: flex; flex-direction: column; gap: 1rem; }
+        .activity-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 8px; transition: all 0.3s ease; cursor: pointer; }
+        .activity-item:hover { background: #f8f9fa; }
+        .activity-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .activity-icon.booking { background: #e3f2fd; color: #1e3c72; }
+        .activity-icon.message { background: #f3e5f5; color: #6f42c1; }
+        .activity-icon.review { background: #fff3e0; color: #f4b400; }
+        .activity-icon.payment { background: #e8f5e9; color: #28a745; }
+        .message-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid #dee2e6; cursor: pointer; }
+        .message-item:last-child { border-bottom: none; }
+        .message-item:hover { background: #f8f9fa; }
+        .message-item.unread { background: #fff3cd; }
+        .message-avatar { width: 50px; height: 50px; background: linear-gradient(135deg, #1e3c72, #2a5298); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #f4b400; font-weight: bold; }
+        .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10000; }
+        .modal-content { background: white; padding: 2rem; border-radius: 12px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto; }
+        .modal-content h3 { color: #1e3c72; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: #495057; font-weight: 500; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #dee2e6; border-radius: 5px; font-family: inherit; }
+        .modal-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .modal-actions button { flex: 1; }
+        .notification-toast { position: fixed; top: 20px; right: 20px; padding: 1rem 1.5rem; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 9999; display: flex; align-items: center; gap: 1rem; animation: slideIn 0.3s ease; border-left: 4px solid #1e3c72; }
+        .notification-toast.success { border-left-color: #28a745; }
+        .notification-toast.error { border-left-color: #dc3545; }
+        .notification-toast.info { border-left-color: #1e3c72; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @media (max-width: 1200px) { .stats-grid, .grid-4 { grid-template-columns: repeat(2, 1fr); } .grid-3 { grid-template-columns: repeat(2, 1fr); } .charts-row { grid-template-columns: 1fr; } }
+        @media (max-width: 992px) { .dashboard-sidebar { left: -280px; } .dashboard-sidebar.active { left: 0; } .dashboard-main { margin-left: 0; } }
+        @media (max-width: 768px) { .stats-grid, .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; } .top-nav { flex-direction: column; gap: 1rem; } .search-box input { width: 200px; } }
+    </style>
+</head>
+<body>
+<div class="dashboard-wrapper">
+    <div class="dashboard-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-logo">
+                <i class="fas fa-store"></i>
+                <div><span>Bizz Connect</span><small id="sidebarRole">Dashboard</small></div>
+            </a>
+        </div>
+        <div class="user-info-sidebar">
+            <div class="user-avatar-large" id="sidebarAvatar">K</div>
+            <h3 id="sidebarName">User</h3>
+            <p id="sidebarUserType">Customer</p>
+            <span class="badge-sidebar" id="sidebarBadge">Verified</span>
+        </div>
+        <div class="sidebar-menu" id="sidebarMenu"></div>
+    </div>
+    <div class="dashboard-main">
+        <div class="top-nav">
+            <div class="page-title">
+                <h2 id="pageTitle">Dashboard Overview</h2>
+                <p id="pageSubtitle">Welcome back! Here's what's happening today.</p>
+            </div>
+            <div class="top-nav-actions">
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" id="globalSearch" placeholder="Search..." onkeyup="handleSearch(event)"></div>
+                <div class="role-selector"><i class="fas fa-user-tag"></i><select id="roleSelector" onchange="switchRole(this.value)"><option value="customer">Customer</option><option value="provider">Service Provider</option><option value="distributor">Distributor</option><option value="manufacturer">Manufacturer</option></select></div>
+                <div class="notification-icon" onclick="showNotifications()"><i class="far fa-bell"></i><span class="notification-badge" id="notificationCount">3</span></div>
+                <div class="user-avatar-small" id="headerAvatar" onclick="toggleUserMenu()">K</div>
+            </div>
+        </div>
+        <div id="dashboardContent"></div>
+    </div>
+</div>
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f5f7fa;
-            min-height: 100vh;
-        }
+<script>
+    // Global current user data – loaded from localStorage
+    let currentUser = null;
+    let currentRole = 'customer';
+    let charts = {};
 
-        /* Dashboard Layout */
-        .dashboard-wrapper {
-            display: flex;
-            min-height: 100vh;
+    // Load user from localStorage or use demo (fallback)
+    function loadUserFromStorage() {
+        const stored = localStorage.getItem('bbh_user');
+        if (stored) {
+            try {
+                currentUser = JSON.parse(stored);
+                // Ensure role is set
+                if (!currentUser.role) currentUser.role = currentUser.userType ? currentUser.userType.toLowerCase() : 'customer';
+                // Ensure role-specific data containers exist
+                if (!currentUser.customer) currentUser.customer = { activeBookings:0, favorites:0, reviewsGiven:0, totalSpent:0, upcomingBookings:[], recommendedProviders:[], recentActivity:[] };
+                if (!currentUser.provider) currentUser.provider = { profileViews:0, totalBookings:0, avgRating:0, earnings:0, pendingRequests:0, services:[], pendingBookings:[] };
+                if (!currentUser.distributor) currentUser.distributor = { productsInStock:0, activeOrders:0, manufacturers:0, monthlyRevenue:0, lowStock:[], recentOrders:[], manufacturers:[] };
+                if (!currentUser.manufacturer) currentUser.manufacturer = { totalProducts:0, activeDistributors:0, monthlyProduction:0, revenue:0, lowStock:[], distributorRequests:[], distributors:[] };
+                // For demonstration, if the user has no data, populate with sample data matching their role
+                populateSampleDataIfNeeded();
+            } catch(e) { console.error(e); }
         }
+        if (!currentUser) {
+            // Demo fallback (should not happen if login required)
+            currentUser = {
+                name: "Demo User",
+                firstName: "Demo",
+                lastName: "User",
+                email: "demo@example.com",
+                role: "customer",
+                verified: true,
+                customer: { activeBookings:1, favorites:2, reviewsGiven:5, totalSpent:1250, upcomingBookings:[{id:"demo1", provider:"Demo Provider", service:"Demo Service", date:"2025-01-20", time:"14:00", amount:250, status:"confirmed"}], recommendedProviders:[{id:"p1", name:"Sample Provider", category:"Demo", rating:4.5, avatar:"S"}], recentActivity:[] },
+                provider: { profileViews:100, totalBookings:20, avgRating:4.5, earnings:5000, pendingRequests:2, services:[{id:"s1", name:"Demo Service", price:"100-200", bookings:10, icon:"cut", status:"active"}], pendingBookings:[{id:"pb1", customer:"Test Customer", service:"Test", date:"2025-01-21", time:"10:00"}] },
+                distributor: { productsInStock:50, activeOrders:5, manufacturers:3, monthlyRevenue:15000, lowStock:[{id:"ls1", name:"Product A", manufacturer:"Manu A", price:50, stock:20, icon:"box"}], recentOrders:[{id:"ORD001", customer:"Client X", items:2, total:450, date:"2025-01-15", status:"shipped"}], manufacturers:[] },
+                manufacturer: { totalProducts:12, activeDistributors:4, monthlyProduction:5000, revenue:60000, lowStock:[{id:"ls1", name:"Product X", category:"Electronics", stock:30, minStock:50, icon:"mobile-alt"}], distributorRequests:[{id:"dr1", name:"Dist A", company:"DistCo", location:"Gaborone", products:3}], distributors:[{id:"d1", name:"Distributor One", company:"Co", rating:4.5, orders:20, status:"active"}] }
+            };
+        }
+        currentRole = currentUser.role;
+        document.getElementById('roleSelector').value = currentRole;
+        updateUIWithUser();
+        loadDashboard(currentRole);
+    }
+
+    function populateSampleDataIfNeeded() {
+        // Ensure each role has at least some data for display
+        if (currentUser.role === 'customer' && (!currentUser.customer.upcomingBookings || currentUser.customer.upcomingBookings.length===0)) {
+            currentUser.customer.upcomingBookings = [{id:"def1", provider:"Thabo's Auto", service:"Oil Change", date:"2025-01-25", time:"09:00", amount:350, status:"confirmed"}];
+            currentUser.customer.recommendedProviders = [{id:"p1", name:"Grace Cleaning", category:"Cleaning", rating:4.8, avatar:"G"}];
+            currentUser.customer.recentActivity = [{id:"act1", type:"booking", description:"Booked with Thabo", time:"2 days ago"}];
+        }
+        if (currentUser.role === 'provider' && (!currentUser.provider.pendingBookings || currentUser.provider.pendingBookings.length===0)) {
+            currentUser.provider.pendingBookings = [{id:"pb1", customer:"Jane Doe", service:"Haircut", date:"2025-01-22", time:"11:00"}];
+        }
+        if (currentUser.role === 'distributor' && (!currentUser.distributor.lowStock || currentUser.distributor.lowStock.length===0)) {
+            currentUser.distributor.lowStock = [{id:"ls1", name:"Product A", manufacturer:"Manu", price:75, stock:15, icon:"box"}];
+            currentUser.distributor.recentOrders = [{id:"ORD001", customer:"Client", items:1, total:75, date:"2025-01-18", status:"shipped"}];
+        }
+        if (currentUser.role === 'manufacturer' && (!currentUser.manufacturer.lowStock || currentUser.manufacturer.lowStock.length===0)) {
+            currentUser.manufacturer.lowStock = [{id:"ls1", name:"Item X", category:"Parts", stock:40, minStock:100, icon:"cogs"}];
+            currentUser.manufacturer.distributorRequests = [{id:"dr1", name:"New Dist", company:"Dist Ltd", location:"Gaborone", products:5}];
+        }
+    }
+
+    function updateUIWithUser() {
+        const name = currentUser.name || `${currentUser.firstName || ''} ${currentUser.lastName || ''}`.trim() || 'User';
+        const initials = name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+        document.getElementById('sidebarName').innerText = name;
+        document.getElementById('sidebarUserType').innerText = currentRole.charAt(0).toUpperCase() + currentRole.slice(1);
+        document.getElementById('sidebarAvatar').innerText = initials;
+        document.getElementById('headerAvatar').innerText = initials;
+        const badge = document.getElementById('sidebarBadge');
+        badge.innerText = currentUser.verified ? 'Verified' : 'Pending';
+        badge.className = `badge-sidebar ${currentRole}`;
+        document.getElementById('sidebarRole').innerHTML = currentRole.charAt(0).toUpperCase() + currentRole.slice(1);
+    }
+
+    function switchRole(role) {
+        if (role === currentRole) return;
+        currentRole = role;
+        currentUser.role = role;
+        localStorage.setItem('bbh_user', JSON.stringify(currentUser));
+        loadDashboard(role);
+        showNotification(`Switched to ${role} dashboard`, 'info');
+    }
+
+    function loadDashboard(role) {
+        const menuHtml = getSidebarMenuHtml(role);
+        document.getElementById('sidebarMenu').innerHTML = menuHtml;
+        document.getElementById('pageTitle').innerText = getPageTitle(role);
+        document.getElementById('pageSubtitle').innerText = getPageSubtitle(role);
+        // Render overview by default
+        renderContent('overview', role);
+        // Activate first menu item
+        const firstItem = document.querySelector('.sidebar-menu-item');
+        if (firstItem) firstItem.classList.add('active');
+        setTimeout(() => initCharts(role), 100);
+    }
+
+    function getSidebarMenuHtml(role) {
+        const menus = {
+            customer: `
+                <a class="sidebar-menu-item" onclick="showSection('overview')"><i class="fas fa-tachometer-alt"></i><span>Overview</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('bookings')"><i class="fas fa-calendar-check"></i><span>My Bookings</span><span class="badge">${currentUser.customer.activeBookings}</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('favorites')"><i class="fas fa-heart"></i><span>Favorite Providers</span><span class="badge">${currentUser.customer.favorites}</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('messages')"><i class="fas fa-comments"></i><span>Messages</span><span class="badge">2</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('reviews')"><i class="fas fa-star"></i><span>My Reviews</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('history')"><i class="fas fa-history"></i><span>Service History</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('profile')"><i class="fas fa-user"></i><span>Profile Settings</span></a>
+                <a class="sidebar-menu-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+            `,
+            provider: `
+                <a class="sidebar-menu-item" onclick="showSection('overview')"><i class="fas fa-tachometer-alt"></i><span>Overview</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('bookings')"><i class="fas fa-calendar-check"></i><span>Booking Requests</span><span class="badge">${currentUser.provider.pendingRequests}</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('schedule')"><i class="fas fa-clock"></i><span>My Schedule</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('services')"><i class="fas fa-cut"></i><span>My Services</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('messages')"><i class="fas fa-comments"></i><span>Messages</span><span class="badge">3</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('reviews')"><i class="fas fa-star"></i><span>Reviews</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('earnings')"><i class="fas fa-pula-sign"></i><span>Earnings</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('profile')"><i class="fas fa-user"></i><span>Business Profile</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('analytics')"><i class="fas fa-chart-line"></i><span>Analytics</span></a>
+                <a class="sidebar-menu-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+            `,
+            distributor: `
+                <a class="sidebar-menu-item" onclick="showSection('overview')"><i class="fas fa-tachometer-alt"></i><span>Overview</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('inventory')"><i class="fas fa-boxes"></i><span>Inventory</span><span class="badge">3 low</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('orders')"><i class="fas fa-shopping-cart"></i><span>Orders</span><span class="badge">${currentUser.distributor.activeOrders}</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('manufacturers')"><i class="fas fa-industry"></i><span>Manufacturers</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('messages')"><i class="fas fa-comments"></i><span>Messages</span><span class="badge">2</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('shipments')"><i class="fas fa-truck"></i><span>Shipments</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('earnings')"><i class="fas fa-pula-sign"></i><span>Earnings</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('profile')"><i class="fas fa-user"></i><span>Company Profile</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('analytics')"><i class="fas fa-chart-line"></i><span>Analytics</span></a>
+                <a class="sidebar-menu-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+            `,
+            manufacturer: `
+                <a class="sidebar-menu-item" onclick="showSection('overview')"><i class="fas fa-tachometer-alt"></i><span>Overview</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('products')"><i class="fas fa-box"></i><span>Products</span><span class="badge">3 low</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('distributors')"><i class="fas fa-handshake"></i><span>Distributors</span><span class="badge">${currentUser.manufacturer.activeDistributors}</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('requests')"><i class="fas fa-user-plus"></i><span>Partner Requests</span><span class="badge">3</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('messages')"><i class="fas fa-comments"></i><span>Messages</span><span class="badge">4</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('production')"><i class="fas fa-industry"></i><span>Production</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('orders')"><i class="fas fa-truck"></i><span>Orders</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('earnings')"><i class="fas fa-pula-sign"></i><span>Revenue</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('profile')"><i class="fas fa-building"></i><span>Company Profile</span></a>
+                <a class="sidebar-menu-item" onclick="showSection('analytics')"><i class="fas fa-chart-line"></i><span>Analytics</span></a>
+                <a class="sidebar-menu-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+            `
+        };
+        return menus[role] || menus.customer;
+    }
+
+    function getPageTitle(role) {
+        const titles = { customer:'Customer Dashboard', provider:'Service Provider Dashboard', distributor:'Distributor Dashboard', manufacturer:'Manufacturer Dashboard' };
+        return titles[role];
+    }
+    function getPageSubtitle(role) {
+        const subs = { customer:'Find and book the best services in Botswana', provider:'Manage your services and grow your business', distributor:'Manage your inventory and expand your network', manufacturer:'Manage production and distribution channels' };
+        return subs[role];
+    }
+
+    function renderContent(section, role) {
+        const container = document.getElementById('dashboardContent');
+        if (section === 'overview') {
+            if (role === 'customer') container.innerHTML = getCustomerOverviewHTML();
+            else if (role === 'provider') container.innerHTML = getProviderOverviewHTML();
+            else if (role === 'distributor') container.innerHTML = getDistributorOverviewHTML();
+            else if (role === 'manufacturer') container.innerHTML = getManufacturerOverviewHTML();
+        } else {
+            // For non-overview sections, show a simple placeholder (can be extended)
+            container.innerHTML = `<div class="section-card"><div class="section-header"><h3>${section.charAt(0).toUpperCase()+section.slice(1)}</h3><button class="btn btn-outline" onclick="showSection('overview')"><i class="fas fa-arrow-left"></i> Back to Overview</button></div><p>This section will show detailed ${section} data. (Coming soon)</p></div>`;
+        }
+        // Re-attach chart initialization after content update if charts exist
+        if (section === 'overview' && (role === 'provider' || role === 'distributor' || role === 'manufacturer')) {
+            setTimeout(() => initCharts(role), 50);
+        }
+    }
+
+    window.showSection = function(section) {
+        // Update active class on sidebar
+        document.querySelectorAll('.sidebar-menu-item').forEach(el => el.classList.remove('active'));
+        if (event && event.target) {
+            const clicked = event.target.closest('.sidebar-menu-item');
+            if (clicked) clicked.classList.add('active');
+        }
+        renderContent(section, currentRole);
+    };
+
+    // HTML generators for each role (overview) - using currentUser data
+    function getCustomerOverviewHTML() {
+        const d = currentUser.customer;
+        return `
+            <div class="stats-grid">
+                <div class="stat-card" onclick="showSection('bookings')"><div class="stat-icon"><i class="fas fa-calendar-check"></i></div><div class="stat-info"><h3>Active Bookings</h3><div class="number">${d.activeBookings}</div></div></div>
+                <div class="stat-card" onclick="showSection('favorites')"><div class="stat-icon"><i class="fas fa-heart"></i></div><div class="stat-info"><h3>Favorite Providers</h3><div class="number">${d.favorites}</div></div></div>
+                <div class="stat-card" onclick="showSection('reviews')"><div class="stat-icon"><i class="fas fa-star"></i></div><div class="stat-info"><h3>Reviews Given</h3><div class="number">${d.reviewsGiven}</div></div></div>
+                <div class="stat-card" onclick="showSection('history')"><div class="stat-icon"><i class="fas fa-pula-sign"></i></div><div class="stat-info"><h3>Total Spent</h3><div class="number">P${d.totalSpent}</div></div></div>
+            </div>
+            <div class="section-card"><div class="section-header"><h3>Upcoming Bookings</h3><a class="view-all-link" onclick="showSection('bookings')">View All <i class="fas fa-arrow-right"></i></a></div>
+            <div class="grid-2">${(d.upcomingBookings||[]).map(b => `<div class="service-card"><div style="display:flex; justify-content:space-between;"><h4>${b.provider}</h4><span class="status-badge ${b.status}">${b.status}</span></div><p>${b.service}</p><div><i class="fas fa-calendar"></i> ${b.date} ${b.time}</div><div><i class="fas fa-pula-sign"></i> P${b.amount}</div><div style="margin-top:1rem;"><button class="btn btn-outline" onclick="rescheduleBooking('${b.id}')">Reschedule</button><button class="btn btn-primary" onclick="openMessageModal('${b.provider}')">Message</button></div></div>`).join('')}</div></div>
+            <div class="section-card"><div class="section-header"><h3>Recommended for You</h3><button class="btn btn-outline" onclick="window.location.href='providers.html'">Browse All</button></div>
+            <div class="grid-4">${(d.recommendedProviders||[]).map(p => `<div class="provider-card"><div class="avatar-large" style="margin:0 auto">${p.avatar}</div><h4 style="text-align:center">${p.name}</h4><p style="text-align:center">${p.category}</p><div class="rating" style="text-align:center">${getStarRating(p.rating)} ${p.rating}</div><div style="display:flex; gap:0.5rem;"><button class="btn btn-outline" onclick="toggleFavorite('${p.id}',this)"><i class="far fa-heart"></i></button><button class="btn btn-primary" onclick="openBookingModal('${p.name}')">Book Now</button></div></div>`).join('')}</div></div>
+            <div class="section-card"><div class="section-header"><h3>Recent Activity</h3><a class="view-all-link" onclick="showSection('history')">View All</a></div>
+            <div class="activity-list">${(d.recentActivity||[]).map(a => `<div class="activity-item"><div class="activity-icon ${a.type}"><i class="fas fa-${a.type === 'booking' ? 'calendar-check' : a.type === 'message' ? 'comment' : 'star'}"></i></div><div style="flex:1"><p>${a.description}</p><small>${a.time}</small></div></div>`).join('')}</div></div>
+        `;
+    }
+
+    function getProviderOverviewHTML() {
+        const d = currentUser.provider;
+        return `
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-eye"></i></div><div class="stat-info"><h3>Profile Views</h3><div class="number">${d.profileViews}</div><div class="trend"><i class="fas fa-arrow-up"></i> +12.5%</div></div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-calendar-check"></i></div><div class="stat-info"><h3>Total Bookings</h3><div class="number">${d.totalBookings}</div><div class="trend"><i class="fas fa-arrow-up"></i> +8.2%</div></div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-star"></i></div><div class="stat-info"><h3>Average Rating</h3><div class="number">${d.avgRating}</div><div class="trend"><i class="fas fa-arrow-up"></i> +0.3</div></div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-pula-sign"></i></div><div class="stat-info"><h3>Total Earnings</h3><div class="number">P${d.earnings}</div><div class="trend"><i class="fas fa-arrow-up"></i> +23%</div></div></div>
+            </div>
+            <div class="charts-row"><div class="chart-card"><div class="chart-header"><h3>Revenue Overview</h3><select onchange="updateChartPeriod(this.value,'revenue')"><option>Last 7 days</option></select></div><div class="chart-container"><canvas id="revenueChart"></canvas></div></div>
+            <div class="chart-card"><div class="chart-header"><h3>Booking Statistics</h3><select onchange="updateChartPeriod(this.value,'bookings')"><option>This month</option></select></div><div class="chart-container"><canvas id="bookingsChart"></canvas></div></div></div>
+            <div class="section-card"><div class="section-header"><h3>Pending Booking Requests</h3><a class="view-all-link" onclick="showSection('bookings')">View All</a></div><div class="table-responsive"><table><thead><tr><th>Customer</th><th>Service</th><th>Date</th><th>Time</th><th>Actions</th></tr></thead><tbody>${(d.pendingBookings||[]).map(b => `<tr><td>${b.customer}</td><td>${b.service}</td><td>${b.date}</td><td>${b.time}</td><td><button class="action-btn accept" onclick="acceptBooking('${b.id}')">Accept</button><button class="action-btn decline" onclick="declineBooking('${b.id}')">Decline</button><button class="action-btn" onclick="openMessageModal('${b.customer}')"><i class="fas fa-comment"></i></button></td></tr>`).join('')}</tbody></table></div></div>
+            <div class="section-card"><div class="section-header"><h3>My Services</h3><button class="btn btn-primary" onclick="openAddServiceModal()">Add New Service</button></div><div class="grid-4">${(d.services||[]).map(s => `<div class="service-card"><span class="badge ${s.status === 'active' ? 'in-stock' : 'low-stock'}">${s.status}</span><div class="card-icon"><i class="fas fa-${s.icon}"></i></div><h4>${s.name}</h4><div>P${s.price}</div><div>${s.bookings} bookings</div><div style="display:flex; gap:0.5rem; margin-top:1rem;"><button class="btn btn-outline" onclick="editService('${s.id}')">Edit</button><button class="btn btn-outline" onclick="toggleServiceStatus('${s.id}')">${s.status === 'active' ? 'Disable' : 'Enable'}</button></div></div>`).join('')}</div></div>
+        `;
+    }
+
+    function getDistributorOverviewHTML() {
+        const d = currentUser.distributor;
+        return `
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-boxes"></i></div><div class="stat-info"><h3>Products in Stock</h3><div class="number">${d.productsInStock}</div></div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-shopping-cart"></i></div><div class="stat-info"><h3>Active Orders</h3><div class="number">${d.activeOrders}</div></div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-industry"></i></div><div class="stat-info"><h3>Manufacturers</h3><div class="number">${d.manufacturers}</div></div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-pula-sign"></i></div><div class="stat-info"><h3>Monthly Revenue</h3><div class="number">P${d.monthlyRevenue.toLocaleString()}</div></div></div>
+            </div>
+            <div class="charts-row"><div class="chart-card"><div class="chart-header"><h3>Sales Overview</h3><select onchange="updateChartPeriod(this.value,'sales')"><option>Last 7 days</option></select></div><div class="chart-container"><canvas id="salesChart"></canvas></div></div>
+            <div class="chart-card"><div class="chart-header"><h3>Inventory Status</h3><select onchange="updateChartPeriod(this.value,'inventory')"><option>By Category</option></select></div><div class="chart-container"><canvas id="inventoryChart"></canvas></div></div></div>
+            <div class="section-card"><div class="section-header"><h3>Low Stock Alert</h3><a class="view-all-link" onclick="showSection('inventory')">View Inventory</a></div><div class="grid-3">${(d.lowStock||[]).map(p => `<div class="product-card"><span class="badge low-stock">Low Stock</span><div class="card-icon"><i class="fas fa-${p.icon}"></i></div><h4>${p.name}</h4><p>${p.manufacturer}</p><div>P${p.price}</div><div class="stock-bar"><div class="stock-fill" style="width:${(p.stock/100)*100}%"></div></div><button class="btn btn-primary" onclick="openReorderModal('${p.id}')">Reorder Now</button></div>`).join('')}</div></div>
+            <div class="section-card"><div class="section-header"><h3>Recent Orders</h3><a class="view-all-link" onclick="showSection('orders')">View All</a></div><div class="table-responsive"><table><thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>${(d.recentOrders||[]).map(o => `<tr><td>${o.id}</td><td>${o.customer}</td><td>${o.items}</td><td>P${o.total}</td><td>${o.date}</td><td><span class="status-badge ${o.status}">${o.status}</span></td><td><button class="action-btn" onclick="viewOrderDetails('${o.id}')"><i class="fas fa-eye"></i></button></td></tr>`).join('')}</tbody></table></div></div>
+        `;
+    }
+
+    function getManufacturerOverviewHTML() {
+        const d = currentUser.manufacturer;
+        return `
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-box"></i></div><div class="stat-info"><h3>Total Products</h3><div class="number">${d.totalProducts}</div></div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-handshake"></i></div><div class="stat-info"><h3>Active Distributors</h3><div class="number">${d.activeDistributors}</div></div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-chart-line"></i></div><div class="stat-info"><h3>Monthly Production</h3><div class="number">${d.monthlyProduction.toLocaleString()}</div></div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-pula-sign"></i></div><div class="stat-info"><h3>Revenue</h3><div class="number">P${d.revenue.toLocaleString()}</div></div></div>
+            </div>
+            <div class="charts-row"><div class="chart-card"><div class="chart-header"><h3>Production Overview</h3><select onchange="updateChartPeriod(this.value,'production')"><option>Last 7 days</option></select></div><div class="chart-container"><canvas id="productionChart"></canvas></div></div>
+            <div class="chart-card"><div class="chart-header"><h3>Distribution Channels</h3><select onchange="updateChartPeriod(this.value,'distribution')"><option>By Region</option></select></div><div class="chart-container"><canvas id="distributionChart"></canvas></div></div></div>
+            <div class="section-card"><div class="section-header"><h3>Low Stock Alert</h3><a class="view-all-link" onclick="showSection('products')">View Products</a></div><div class="grid-3">${(d.lowStock||[]).map(p => `<div class="product-card"><span class="badge low-stock">Below Minimum</span><div class="card-icon"><i class="fas fa-${p.icon}"></i></div><h4>${p.name}</h4><p>Stock: ${p.stock} / Min: ${p.minStock}</p><div class="stock-bar"><div class="stock-fill" style="width:${(p.stock/p.minStock)*100}%; background:#dc3545;"></div></div><button class="btn btn-primary" onclick="openProductionModal('${p.id}')">Increase Production</button></div>`).join('')}</div></div>
+            <div class="section-card"><div class="section-header"><h3>New Distributor Requests</h3><a class="view-all-link" onclick="showSection('requests')">View All</a></div><div class="grid-3">${(d.distributorRequests||[]).map(r => `<div class="service-card"><div style="display:flex; gap:1rem; margin-bottom:1rem;"><div class="avatar-large" style="width:50px; height:50px;">${r.name.charAt(0)}</div><div><h4>${r.name}</h4><p>${r.company}</p></div></div><p><i class="fas fa-map-marker-alt"></i> ${r.location}</p><div style="display:flex; gap:0.5rem;"><button class="btn btn-success" onclick="approveDistributor('${r.id}')">Approve</button><button class="btn btn-danger" onclick="declineDistributor('${r.id}')">Decline</button><button class="btn btn-outline" onclick="openMessageModal('${r.name}')">Message</button></div></div>`).join('')}</div></div>
+        `;
+    }
+
+    function getStarRating(rating) {
+        let stars = '';
+        for (let i=0; i<Math.floor(rating); i++) stars += '<i class="fas fa-star"></i>';
+        if (rating % 1 >= 0.5) stars += '<i class="fas fa-star-half-alt"></i>';
+        for (let i=Math.ceil(rating); i<5; i++) stars += '<i class="far fa-star"></i>';
+        return stars;
+    }
+
+    // Chart initialization (for provider/distributor/manufacturer)
+    function initCharts(role) {
+        // Destroy previous charts
+        Object.values(charts).forEach(ch => { if(ch) ch.destroy(); });
+        charts = {};
+        if (role === 'provider') {
+            const revCtx = document.getElementById('revenueChart')?.getContext('2d');
+            if (revCtx) charts.revenue = new Chart(revCtx, { type:'line', data:{ labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], datasets:[{ label:'Revenue (P)', data:[1200,1900,1500,2200,2800,2100,1800], borderColor:'#1e3c72', backgroundColor:'rgba(30,60,114,0.1)', tension:0.4, fill:true }] }, options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ ticks:{ callback:val=>'P'+val } } } } });
+            const bookCtx = document.getElementById('bookingsChart')?.getContext('2d');
+            if (bookCtx) charts.bookings = new Chart(bookCtx, { type:'doughnut', data:{ labels:['Completed','Pending','Confirmed','Cancelled'], datasets:[{ data:[45,12,28,5], backgroundColor:['#28a745','#f4b400','#1e3c72','#dc3545'], borderWidth:0 }] }, options:{ responsive:true, maintainAspectRatio:false, cutout:'70%' } });
+        }
+        if (role === 'distributor') {
+            const salesCtx = document.getElementById('salesChart')?.getContext('2d');
+            if (salesCtx) charts.sales = new Chart(salesCtx, { type:'line', data:{ labels:['Jan','Feb','Mar','Apr','May','Jun'], datasets:[{ label:'Sales (P)', data:[45000,52000,48000,58000,62000,68000], borderColor:'#1e3c72', backgroundColor:'rgba(30,60,114,0.1)', fill:true }] }, options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ ticks:{ callback:val=>'P'+val.toLocaleString() } } } } });
+            const invCtx = document.getElementById('inventoryChart')?.getContext('2d');
+            if (invCtx) charts.inventory = new Chart(invCtx, { type:'doughnut', data:{ labels:['Clothing','Electronics','Food','Household'], datasets:[{ data:[45,30,25,20], backgroundColor:['#1e3c72','#2a5298','#f4b400','#28a745'] }] }, options:{ responsive:true, maintainAspectRatio:false, cutout:'70%' } });
+        }
+        if (role === 'manufacturer') {
+            const prodCtx = document.getElementById('productionChart')?.getContext('2d');
+            if (prodCtx) charts.production = new Chart(prodCtx, { type:'bar', data:{ labels:['Week1','Week2','Week3','Week4'], datasets:[{ label:'Units', data:[3800,4200,3900,4500], backgroundColor:'#1e3c72', borderRadius:5 }] }, options:{ responsive:true, maintainAspectRatio:false } });
+            const distCtx = document.getElementById('distributionChart')?.getContext('2d');
+            if (distCtx) charts.distribution = new Chart(distCtx, { type:'pie', data:{ labels:['Gaborone','Francistown','Maun','Other'], datasets:[{ data:[45,25,20,10], backgroundColor:['#1e3c72','#2a5298','#f4b400','#28a745'] }] }, options:{ responsive:true, maintainAspectRatio:false } });
+        }
+    }
+
+    // Action functions (global)
+    window.rescheduleBooking = (id) => showNotification(`Reschedule booking ${id}`, 'info');
+    window.acceptBooking = (id) => showNotification(`Booking ${id} accepted!`, 'success');
+    window.declineBooking = (id) => showNotification(`Booking ${id} declined`, 'info');
+    window.openAddServiceModal = () => showNotification('Add service feature coming soon', 'info');
+    window.editService = (id) => showNotification(`Edit service ${id}`, 'info');
+    window.toggleServiceStatus = (id) => showNotification(`Service ${id} toggled`, 'success');
+    window.openReorderModal = (id) => showNotification(`Reorder product ${id}`, 'info');
+    window.viewOrderDetails = (id) => showNotification(`Order details ${id}`, 'info');
+    window.openProductionModal = (id) => showNotification(`Production for product ${id}`, 'info');
+    window.approveDistributor = (id) => showNotification(`Distributor request ${id} approved`, 'success');
+    window.declineDistributor = (id) => showNotification(`Request ${id} declined`, 'info');
+    window.openMessageModal = (name) => showNotification(`Open message to ${name}`, 'info');
+    window.toggleFavorite = (id, btn) => { const icon = btn.querySelector('i'); if(icon.classList.contains('far')){ icon.classList.remove('far'); icon.classList.add('fas'); icon.style.color='#dc3545'; showNotification('Added to favorites','success'); } else { icon.classList.remove('fas'); icon.classList.add('far'); icon.style.color=''; showNotification('Removed from favorites','info'); } };
+    window.openBookingModal = (name) => showNotification(`Booking with ${name}`, 'info');
+    window.updateChartPeriod = (val, type) => showNotification(`Chart updated for ${type}`, 'info');
+    window.showNotifications = () => showNotification(`You have ${document.getElementById('notificationCount').innerText} notifications`, 'info');
+    window.toggleUserMenu = () => showNotification('User menu (demo)', 'info');
+    window.handleSearch = (e) => { if(e.target.value.length>2) showNotification(`Search: ${e.target.value}`, 'info'); };
+    window.logout = () => { if(confirm('Logout?')){ localStorage.removeItem('bbh_user'); window.location.href='index.html'; } };
+    function showNotification(msg, type='info') {
+        const toast = document.createElement('div');
+        toast.className = `notification-toast ${type}`;
+        toast.innerHTML = `<i class="fas fa-${type==='success'?'check-circle':type==='error'?'exclamation-circle':'info-circle'}"></i><span>${msg}</span>`;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.style.animation='slideIn 0.3s ease reverse'; setTimeout(()=>toast.remove(),300); }, 3000);
+    }
+
+    // Start
+    loadUserFromStorage();
+</script>
+</body>
+</html>        }
 
         /* Sidebar */
         .dashboard-sidebar {
