@@ -8,28 +8,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* ---------- RESET & BASE ---------- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #f5f7fa; min-height: 100vh; }
         
-        /* ---------- DASHBOARD LAYOUT ---------- */
         .dashboard-wrapper { display: flex; min-height: 100vh; position: relative; }
         
-        /* Sidebar (off-canvas on mobile) */
+        /* Sidebar - default visible on desktop, hidden on mobile */
         .dashboard-sidebar {
             width: 280px;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             position: fixed;
             top: 0;
-            left: -280px;
+            left: 0;  /* visible by default on larger screens */
             height: 100vh;
             overflow-y: auto;
             transition: left 0.3s ease;
             z-index: 1000;
             box-shadow: 2px 0 10px rgba(0,0,0,0.2);
         }
-        .dashboard-sidebar.active { left: 0; }
+        
+        /* On mobile, hide sidebar initially */
+        @media (max-width: 992px) {
+            .dashboard-sidebar {
+                left: -280px;
+            }
+            .dashboard-sidebar.active {
+                left: 0;
+            }
+            .menu-toggle {
+                display: block !important;
+            }
+        }
+        
+        /* On desktop, ensure sidebar is always visible */
+        @media (min-width: 993px) {
+            .dashboard-sidebar {
+                left: 0 !important;
+            }
+            .sidebar-overlay {
+                display: none !important;
+            }
+            .menu-toggle {
+                display: none !important;
+            }
+        }
         
         .sidebar-header { padding: 2rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .sidebar-logo { display: flex; align-items: center; gap: 1rem; color: white; text-decoration: none; }
@@ -54,10 +77,19 @@
         .sidebar-menu-item span { flex: 1; }
         .sidebar-menu-item .badge { background: #f4b400; color: #1e3c72; padding: 0.15rem 0.5rem; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
         
-        /* Main content */
-        .dashboard-main { flex: 1; margin-left: 0; padding: 2rem; transition: margin-left 0.3s ease; }
+        .dashboard-main {
+            flex: 1;
+            margin-left: 280px;  /* space for sidebar on desktop */
+            padding: 2rem;
+            transition: margin-left 0.3s ease;
+        }
         
-        /* Top Navigation */
+        @media (max-width: 992px) {
+            .dashboard-main {
+                margin-left: 0;
+            }
+        }
+        
         .top-nav {
             background: white;
             border-radius: 12px;
@@ -70,26 +102,41 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-        .menu-toggle { background: none; border: none; font-size: 1.5rem; color: #1e3c72; cursor: pointer; display: none; }
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #1e3c72;
+            cursor: pointer;
+            display: none;
+        }
         .page-title h2 { color: #1e3c72; margin: 0; }
         .page-title p { color: #6c757d; font-size: 0.9rem; margin: 0.25rem 0 0; }
         .top-nav-actions { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
         .search-box { position: relative; }
-        .search-box input { padding: 0.5rem 1rem 0.5rem 2.5rem; border: 1px solid #dee2e6; border-radius: 30px; width: 250px; font-size: 0.9rem; transition: all 0.3s ease; }
-        .search-box input:focus { outline: none; border-color: #1e3c72; box-shadow: 0 0 0 3px rgba(30,60,114,0.1); width: 300px; }
+        .search-box input { padding: 0.5rem 1rem 0.5rem 2.5rem; border: 1px solid #dee2e6; border-radius: 30px; width: 250px; font-size: 0.9rem; }
+        .search-box input:focus { outline: none; border-color: #1e3c72; width: 300px; }
         .search-box i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #6c757d; }
         .role-selector { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: #f8f9fa; border-radius: 30px; border: 1px solid #dee2e6; }
-        .role-selector select { border: none; background: transparent; font-weight: 500; color: #1e3c72; cursor: pointer; outline: none; }
+        .role-selector select { border: none; background: transparent; font-weight: 500; color: #1e3c72; cursor: pointer; }
         .notification-icon { position: relative; cursor: pointer; }
         .notification-icon i { font-size: 1.3rem; color: #6c757d; }
         .notification-badge { position: absolute; top: -5px; right: -5px; background: #dc3545; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
         .user-avatar-small { width: 40px; height: 40px; background: linear-gradient(135deg, #1e3c72, #2a5298); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #f4b400; font-weight: bold; cursor: pointer; }
         
-        /* Overlay for mobile */
-        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
         .sidebar-overlay.active { display: block; }
         
-        /* Stats & Cards */
+        /* All other styles (stats, cards, grids, etc.) remain unchanged - keep them from your original */
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
         .stat-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 1rem; transition: all 0.3s ease; cursor: pointer; }
         .stat-card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(30,60,114,0.15); }
@@ -153,7 +200,6 @@
         .activity-icon.booking { background: #e3f2fd; color: #1e3c72; }
         .activity-icon.message { background: #f3e5f5; color: #6f42c1; }
         
-        /* Notification */
         .notification-toast {
             position: fixed;
             top: 20px;
@@ -173,11 +219,7 @@
         .notification-toast.error { border-left-color: #dc3545; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         
-        /* Responsive */
         @media (max-width: 992px) {
-            .menu-toggle { display: block; }
-            .dashboard-sidebar { left: -280px; }
-            .dashboard-sidebar.active { left: 0; }
             .stats-grid, .grid-4 { grid-template-columns: repeat(2, 1fr); }
             .grid-3 { grid-template-columns: repeat(2, 1fr); }
             .charts-row { grid-template-columns: 1fr; }
@@ -236,25 +278,24 @@
 </div>
 
 <script>
-    // ---------- GLOBALS ----------
+    // Global variables
     let currentUser = null;
     let currentRole = 'customer';
     let charts = {};
 
-    // ---------- SIDEBAR TOGGLE (MOBILE) ----------
+    // Sidebar toggle for mobile only
     function openSidebar() { document.getElementById('sidebar').classList.add('active'); document.getElementById('sidebarOverlay').classList.add('active'); }
     function closeSidebar() { document.getElementById('sidebar').classList.remove('active'); document.getElementById('sidebarOverlay').classList.remove('active'); }
     document.getElementById('menuToggle').addEventListener('click', openSidebar);
     function closeSidebarAfterNav() { if(window.innerWidth <= 992) closeSidebar(); }
 
-    // ---------- LOAD USER FROM STORAGE ----------
+    // Load user from localStorage
     function loadUserFromStorage() {
         const stored = localStorage.getItem('bbh_user');
         if (!stored) { window.location.href = 'login.html'; return; }
         try {
             currentUser = JSON.parse(stored);
             if (!currentUser.role) currentUser.role = currentUser.userType ? currentUser.userType.toLowerCase() : 'customer';
-            // Ensure role data structures exist
             if (!currentUser.customer) currentUser.customer = { activeBookings:0, favorites:0, reviewsGiven:0, totalSpent:0, upcomingBookings:[], recommendedProviders:[], recentActivity:[] };
             if (!currentUser.provider) currentUser.provider = { profileViews:0, totalBookings:0, avgRating:0, earnings:0, pendingRequests:0, services:[], pendingBookings:[] };
             if (!currentUser.distributor) currentUser.distributor = { productsInStock:0, activeOrders:0, manufacturers:0, monthlyRevenue:0, lowStock:[], recentOrders:[], manufacturers:[] };
@@ -276,26 +317,17 @@
         if (currentUser.role === 'provider' && (!currentUser.provider.pendingBookings || currentUser.provider.pendingBookings.length===0)) {
             currentUser.provider.pendingBookings = [{id:"pb1", customer:"Jane Doe", service:"Haircut", date:"2025-03-18", time:"11:00"}];
             currentUser.provider.services = [{id:"s1", name:"Hair Braiding", price:"250-450", bookings:12, icon:"cut", status:"active"}];
-            currentUser.provider.profileViews = 1247;
-            currentUser.provider.totalBookings = 156;
-            currentUser.provider.avgRating = 4.8;
-            currentUser.provider.earnings = 12450;
+            currentUser.provider.profileViews = 1247; currentUser.provider.totalBookings = 156; currentUser.provider.avgRating = 4.8; currentUser.provider.earnings = 12450;
         }
         if (currentUser.role === 'distributor' && (!currentUser.distributor.lowStock || currentUser.distributor.lowStock.length===0)) {
             currentUser.distributor.lowStock = [{id:"ls1", name:"Product A", manufacturer:"ManuCo", price:75, stock:15, icon:"box"}];
             currentUser.distributor.recentOrders = [{id:"ORD001", customer:"Client X", items:2, total:450, date:"2025-03-15", status:"shipped"}];
-            currentUser.distributor.productsInStock = 156;
-            currentUser.distributor.activeOrders = 24;
-            currentUser.distributor.manufacturers = 8;
-            currentUser.distributor.monthlyRevenue = 45250;
+            currentUser.distributor.productsInStock = 156; currentUser.distributor.activeOrders = 24; currentUser.distributor.manufacturers = 8; currentUser.distributor.monthlyRevenue = 45250;
         }
         if (currentUser.role === 'manufacturer' && (!currentUser.manufacturer.lowStock || currentUser.manufacturer.lowStock.length===0)) {
             currentUser.manufacturer.lowStock = [{id:"ls1", name:"Component X", category:"Parts", stock:40, minStock:100, icon:"cogs"}];
             currentUser.manufacturer.distributorRequests = [{id:"dr1", name:"New Dist", company:"Dist Ltd", location:"Gaborone", products:5}];
-            currentUser.manufacturer.totalProducts = 45;
-            currentUser.manufacturer.activeDistributors = 12;
-            currentUser.manufacturer.monthlyProduction = 15200;
-            currentUser.manufacturer.revenue = 156000;
+            currentUser.manufacturer.totalProducts = 45; currentUser.manufacturer.activeDistributors = 12; currentUser.manufacturer.monthlyProduction = 15200; currentUser.manufacturer.revenue = 156000;
         }
         localStorage.setItem('bbh_user', JSON.stringify(currentUser));
     }
@@ -402,7 +434,7 @@
             else if (role === 'distributor') container.innerHTML = getDistributorOverviewHTML();
             else if (role === 'manufacturer') container.innerHTML = getManufacturerOverviewHTML();
         } else {
-            container.innerHTML = `<div class="section-card"><div class="section-header"><h3>${section.charAt(0).toUpperCase()+section.slice(1)}</h3><button class="btn btn-outline" onclick="showSection('overview')"><i class="fas fa-arrow-left"></i> Back to Overview</button></div><p>This section is under development. Full details will appear here.</p></div>`;
+            container.innerHTML = `<div class="section-card"><div class="section-header"><h3>${section.charAt(0).toUpperCase()+section.slice(1)}</h3><button class="btn btn-outline" onclick="showSection('overview')"><i class="fas fa-arrow-left"></i> Back to Overview</button></div><p>This section is under development.</p></div>`;
         }
         setTimeout(() => { if(window.innerWidth <= 992) closeSidebar(); }, 100);
     }
@@ -416,7 +448,7 @@
         renderContent(section, currentRole);
     };
 
-    // ---------- ROLE-SPECIFIC OVERVIEW HTML ----------
+    // HTML generators (simplified but complete – same as before, include all functions)
     function getCustomerOverviewHTML() {
         const d = currentUser.customer;
         return `<div class="stats-grid"><div class="stat-card" onclick="showSection('bookings')"><div class="stat-icon"><i class="fas fa-calendar-check"></i></div><div class="stat-info"><h3>Active Bookings</h3><div class="number">${d.activeBookings}</div></div></div>
@@ -434,7 +466,7 @@
         <div class="stat-card" onclick="showSection('reviews')"><div class="stat-icon"><i class="fas fa-star"></i></div><div class="stat-info"><h3>Rating</h3><div class="number">${d.avgRating}</div><div class="trend"><i class="fas fa-arrow-up"></i> +0.2</div></div></div>
         <div class="stat-card" onclick="showSection('earnings')"><div class="stat-icon"><i class="fas fa-pula-sign"></i></div><div class="stat-info"><h3>Earnings</h3><div class="number">P${d.earnings}</div><div class="trend"><i class="fas fa-arrow-up"></i> +23%</div></div></div></div>
         <div class="charts-row"><div class="chart-card"><div class="chart-header"><h3>Revenue (Last 7 days)</h3></div><div class="chart-container"><canvas id="revenueChart"></canvas></div></div><div class="chart-card"><div class="chart-header"><h3>Booking Status</h3></div><div class="chart-container"><canvas id="bookingsChart"></canvas></div></div></div>
-        <div class="section-card"><div class="section-header"><h3>Pending Booking Requests</h3><a class="view-all-link" onclick="showSection('bookings')">View All</a></div><div class="table-responsive"><table><thead><tr><th>Customer</th><th>Service</th><th>Date</th><th>Actions</th></tr></thead><tbody>${(d.pendingBookings||[]).map(b=>`<tr><td>${b.customer}</td><td>${b.service}</td><td>${b.date}</td><td><button class="action-btn accept" onclick="acceptBooking('${b.id}')">Accept</button><button class="action-btn decline" onclick="declineBooking('${b.id}')">Decline</button></td></tr>`).join('')}</tbody></table></div></div>
+        <div class="section-card"><div class="section-header"><h3>Pending Booking Requests</h3><a class="view-all-link" onclick="showSection('bookings')">View All</a></div><div class="table-responsive"><td><thead><tr><th>Customer</th><th>Service</th><th>Date</th><th>Actions</th></tr></thead><tbody>${(d.pendingBookings||[]).map(b=>`<tr><td>${b.customer}</td><td>${b.service}</td><td>${b.date}</td><td><button class="action-btn accept" onclick="acceptBooking('${b.id}')">Accept</button><button class="action-btn decline" onclick="declineBooking('${b.id}')">Decline</button></td></tr>`).join('')}</tbody></table></div></div>
         <div class="section-card"><div class="section-header"><h3>My Services</h3><button class="btn btn-primary" onclick="openAddServiceModal()">Add New Service</button></div><div class="grid-4">${(d.services||[]).map(s=>`<div class="service-card"><span class="badge ${s.status==='active'?'in-stock':'low-stock'}">${s.status}</span><div class="card-icon"><i class="fas fa-${s.icon}"></i></div><h4>${s.name}</h4><div>P${s.price}</div><div>${s.bookings} bookings</div><button class="btn btn-outline" onclick="editService('${s.id}')">Edit</button></div>`).join('')}</div></div>`;
     }
 
@@ -468,8 +500,10 @@
         return stars;
     }
 
-    // ---------- CHART INITIALIZATION ----------
     function initCharts(role) {
+        // Destroy existing charts
+        Object.values(charts).forEach(ch => { if(ch) ch.destroy(); });
+        charts = {};
         if (role === 'provider') {
             const revCtx = document.getElementById('revenueChart')?.getContext('2d');
             if (revCtx) charts.revenue = new Chart(revCtx, { type:'line', data:{ labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], datasets:[{ label:'Revenue (P)', data:[1200,1900,1500,2200,2800,2100,1800], borderColor:'#1e3c72', fill:true }] }, options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ ticks:{ callback:val=>'P'+val } } } } });
@@ -490,7 +524,7 @@
         }
     }
 
-    // ---------- ACTION FUNCTIONS ----------
+    // Action functions
     window.rescheduleBooking = (id)=>showNotification(`Reschedule request sent for booking ${id}`, 'info');
     window.acceptBooking = (id)=>showNotification(`Booking ${id} accepted`, 'success');
     window.declineBooking = (id)=>showNotification(`Booking ${id} declined`, 'info');
@@ -521,7 +555,6 @@
         }
     }
 
-    // Expose globals for inline onclick handlers
     window.closeSidebarAfterNav = closeSidebarAfterNav;
     window.logout = logout;
     window.acceptBooking = acceptBooking;
@@ -538,7 +571,6 @@
     window.approveDistributor = approveDistributor;
     window.declineDistributor = declineDistributor;
 
-    // Start
     loadUserFromStorage();
 </script>
 </body>
