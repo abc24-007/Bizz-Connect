@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews - Bizz Connect</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Read and write reviews for service providers in Botswana. Share your experience and help others find trusted businesses.">
+    <meta name="keywords" content="reviews, ratings, service providers, Botswana business reviews, customer feedback">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            border-bottom: 3px solid #f4b400;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo i {
+            font-size: 2rem;
+            color: #f4b400;
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+        }
+        .logo span {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            display: block;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background: white;
+            color: #1e3c72;
+        }
+        .btn-primary {
+            background: #f4b400;
+            color: #1e3c72;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Reviews Header */
+        .reviews-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .reviews-header::before {
+            content: '⭐';
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            font-size: 200px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        .reviews-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            position: relative;
+        }
+        .reviews-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* Main Layout */
+        .reviews-main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        /* Write Review Section */
+        .write-review-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .write-review-section h2 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .review-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .review-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1e3c72;
+            font-weight: 500;
+        }
+        .review-form select,
+        .review-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        .review-form select:focus,
+        .review-form textarea:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30,60,114,0.1);
+        }
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            font-size: 2rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #f4b400;
+        }
+        .submit-review {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        .submit-review:hover {
+            background: #2a5298;
+            transform: translateY(-2px);
+        }
+        
+        /* Reviews List Section */
+        .reviews-list-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .reviews-list-section h2 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        .reviews-filter {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .reviews-filter input {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+        .reviews-filter select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .review-card {
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .review-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f4b400;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .reviewer-name {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+        .review-date {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        .review-stars {
+            color: #f4b400;
+            font-size: 1.1rem;
+        }
+        .review-service {
+            display: inline-block;
+            background: #f8f9fa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #1e3c72;
+            margin-bottom: 0.75rem;
+        }
+        .review-content {
+            color: #495057;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .review-response {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border-left: 3px solid #f4b400;
+        }
+        .review-response p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        .response-author {
+            font-weight: 600;
+            color: #1e3c72;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .no-reviews {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        
+        /* Provider View (when logged in as provider) */
+        .provider-stats {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .provider-rating-large {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #f4b400;
+        }
+        .provider-review-count {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Notification Toast */
+        .notification-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid #1e3c72;
+        }
+        .notification-toast.success { border-left-color: #28a745; }
+        .notification-toast.error { border-left-color: #dc3545; }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .reviews-main {
+                grid-template-columns: 1fr;
+            }
+            .write-review-section {
+                position: static;
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .reviews-header h1 {
+                font-size: 1.8rem;
+            }
+            .review-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-store"></i>
+            <div>
+                <h1>Bizz Connect</h1>
+                <span>Connecting Businesses. Creating Opportunities</span>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="providers.html">Providers</a>
+            <a href="marketplace.html">Marketplace</a>
+            <a href="events.html">Events</a>
+            <a href="reviews.html" class="active">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="user-menu" id="userMenu">
+            <a href="login.html" class="btn-outline">Login</a>
+            <a href="register.html" class="btn-primary">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Reviews Header -->
+    <section class="reviews-header">
+        <h1>Customer Reviews</h1>
+        <p>Read what others are saying about service providers in Botswana</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="reviews-main" id="reviewsMain">
+        <!-- Content will be dynamically loaded based on user role -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Bizz Connect. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let allReviews = [];
+        let providers = [];
+
+        // Load reviews from localStorage
+        function loadReviews() {
+            const stored = localStorage.getItem('bbh_reviews');
+            if (stored) {
+                allReviews = JSON.parse(stored);
+            } else {
+                // Sample reviews for demo
+                allReviews = [
+                    {
+                        id: 'rev1',
+                        providerId: 'provider1',
+                        providerName: 'Keitumetse Modise',
+                        providerEmail: 'keitumetse@example.com',
+                        customerName: 'Thabo Nkosi',
+                        customerEmail: 'thabo@example.com',
+                        rating: 5,
+                        comment: 'Excellent service! Very professional and friendly. Highly recommend!',
+                        date: '2026-03-15',
+                        service: 'Hair Braiding',
+                        response: null
+                    },
+                    {
+                        id: 'rev2',
+                        providerId: 'provider2',
+                        providerName: 'Thabo Nkosi',
+                        providerEmail: 'thabo@example.com',
+                        customerName: 'Mpho Banda',
+                        customerEmail: 'mpho@example.com',
+                        rating: 4,
+                        comment: 'Good service, car fixed quickly. Would use again.',
+                        date: '2026-03-10',
+                        service: 'Car Repair',
+                        response: 'Thank you for your feedback!'
+                    }
+                ];
+                localStorage.setItem('bbh_reviews', JSON.stringify(allReviews));
+            }
+            
+            // Load providers from users
+            const users = JSON.parse(localStorage.getItem('bbh_users')) || [];
+            providers = users.filter(u => u.userType === 'provider');
+        }
+
+        // Save reviews to localStorage
+        function saveReviews() {
+            localStorage.setItem('bbh_reviews', JSON.stringify(allReviews));
+        }
+
+        // Get current user from localStorage
+        function getCurrentUser() {
+            const user = localStorage.getItem('bbh_user');
+            if (user) {
+                currentUser = JSON.parse(user);
+                return currentUser;
+            }
+            return null;
+        }
+
+        // Update user menu based on login status
+        function updateUserMenu() {
+            const menu = document.getElementById('userMenu');
+            if (currentUser) {
+                menu.innerHTML = `<span style="color:white;">Welcome, ${currentUser.firstName || 'User'}</span>
+                                  <a href="dashboard.html" class="btn-primary">Dashboard</a>`;
+            } else {
+                menu.innerHTML = `<a href="login.html" class="btn-outline">Login</a>
+                                  <a href="register.html" class="btn-primary">Sign Up</a>`;
+            }
+        }
+
+        // Render the appropriate view based on user role
+        function renderView() {
+            const container = document.getElementById('reviewsMain');
+            
+            if (!currentUser) {
+                // Guest view - show all reviews
+                renderGuestView(container);
+            } else if (currentUser.userType === 'customer') {
+                // Customer view - can write reviews for completed bookings
+                renderCustomerView(container);
+            } else if (currentUser.userType === 'provider') {
+                // Provider view - see reviews about them and respond
+                renderProviderView(container);
+            } else {
+                // Other roles - just view reviews
+                renderGuestView(container);
+            }
+        }
+
+        // Guest view - show all reviews
+        function renderGuestView(container) {
+            const providerReviews = allReviews.filter(r => r.providerEmail);
+            
+            container.innerHTML = `
+                <div class="reviews-list-section" style="grid-column: 1 / -1;">
+                    <h2>All Customer Reviews</h2>
+                    <div class="reviews-filter">
+                        <input type="text" id="searchReviews" placeholder="Search by provider or customer..." onkeyup="filterReviews()">
+                        <select id="ratingFilter" onchange="filterReviews()">
+                            <option value="all">All Ratings</option>
+                            <option value="5">5 Stars</option>
+                            <option value="4">4 Stars & Up</option>
+                            <option value="3">3 Stars & Up</option>
+                        </select>
+                    </div>
+                    <div class="reviews-list" id="reviewsList">
+                        ${renderReviewCards(providerReviews)}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Customer view - can write reviews for completed bookings
+        async function renderCustomerView(container) {
+            // Get completed bookings for this customer
+            const completedBookings = currentUser.customer?.completedBookings || [];
+            
+            // Get reviews already written by this customer
+            const writtenReviews = allReviews.filter(r => r.customerEmail === currentUser.email);
+            const writtenProviderIds = writtenReviews.map(r => r.providerId);
+            
+            // Available providers to review (completed bookings not yet reviewed)
+            const availableToReview = completedBookings.filter(b => !writtenProviderIds.includes(b.providerId));
+            
+            container.innerHTML = `
+                <div class="write-review-section">
+                    <h2>Write a Review</h2>
+                    ${availableToReview.length > 0 ? `
+                        <form class="review-form" id="reviewForm" onsubmit="submitReview(event)">
+                            <div class="form-group">
+                                <label for="providerSelect">Select Service Provider</label>
+                                <select id="providerSelect" required>
+                                    <option value="">Choose a provider...</option>
+                                    ${availableToReview.map(p => `<option value="${p.providerId}" data-name="${p.providerName}" data-email="${p.providerEmail}" data-service="${p.service}">${p.providerName} - ${p.service}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Your Rating</label>
+                                <div class="star-rating" id="starRating">
+                                    <input type="radio" name="rating" value="5" id="star5"><label for="star5">★</label>
+                                    <input type="radio" name="rating" value="4" id="star4"><label for="star4">★</label>
+                                    <input type="radio" name="rating" value="3" id="star3"><label for="star3">★</label>
+                                    <input type="radio" name="rating" value="2" id="star2"><label for="star2">★</label>
+                                    <input type="radio" name="rating" value="1" id="star1"><label for="star1">★</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reviewComment">Your Review</label>
+                                <textarea id="reviewComment" rows="4" placeholder="Share your experience..." required></textarea>
+                            </div>
+                            <button type="submit" class="submit-review">Submit Review</button>
+                        </form>
+                    ` : `
+                        <div style="text-align:center; padding:2rem; color:#6c757d;">
+                            <i class="fas fa-check-circle" style="font-size:3rem; color:#28a745;"></i>
+                            <p>You've reviewed all your completed services!</p>
+                            <p style="font-size:0.9rem;">New reviews will appear here after you complete bookings.</p>
+                        </div>
+                    `}
+                </div>
+                <div class="reviews-list-section">
+                    <h2>Your Reviews</h2>
+                    <div class="reviews-list">
+                        ${writtenReviews.length > 0 ? renderReviewCards(writtenReviews) : '<div class="no-reviews">You haven\'t written any reviews yet.</div>'}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Provider view - see reviews about them
+        function renderProviderView(container) {
+            const myReviews = allReviews.filter(r => r.providerEmail === currentUser.email);
+            const avgRating = myReviews.length > 0 
+                ? (myReviews.reduce((sum, r) => sum + r.rating, 0) / myReviews.length).toFixed(1)
+                : 0;
+            
+            container.innerHTML = `
+                <div class="reviews-list-section" style="grid-column: 1 / -1;">
+                    <div class="provider-stats">
+                        <div class="provider-rating-large">${avgRating} ⭐</div>
+                        <div class="provider-review-count">Based on ${myReviews.length} reviews</div>
+                    </div>
+                    <h2>Reviews About You</h2>
+                    <div class="reviews-filter">
+                        <input type="text" id="searchReviews" placeholder="Search by customer..." onkeyup="filterReviews()">
+                        <select id="ratingFilter" onchange="filterReviews()">
+                            <option value="all">All Ratings</option>
+                            <option value="5">5 Stars</option>
+                            <option value="4">4 Stars & Up</option>
+                            <option value="3">3 Stars & Up</option>
+                        </select>
+                    </div>
+                    <div class="reviews-list" id="reviewsList">
+                        ${renderReviewCards(myReviews, true)}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render review cards
+        function renderReviewCards(reviews, showResponseForm = false) {
+            if (reviews.length === 0) {
+                return '<div class="no-reviews">No reviews yet.</div>';
+            }
+            
+            return reviews.map(review => `
+                <div class="review-card" data-rating="${review.rating}">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">${review.customerName?.charAt(0) || 'C'}</div>
+                            <div>
+                                <div class="reviewer-name">${review.customerName || 'Customer'}</div>
+                                <div class="review-date">${new Date(review.date).toLocaleDateString()}</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
+                    </div>
+                    <div class="review-service">${review.service || 'Service'}</div>
+                    <p class="review-content">${review.comment}</p>
+                    ${review.response ? `
+                        <div class="review-response">
+                            <p><strong>Response from provider:</strong></p>
+                            <p>${review.response}</p>
+                            <div class="response-author">- ${review.providerName}</div>
+                        </div>
+                    ` : (showResponseForm ? `
+                        <div class="review-response">
+                            <textarea id="response-${review.id}" rows="2" placeholder="Write a response to this review..." style="width:100%; padding:0.5rem; border-radius:5px; border:1px solid #dee2e6;"></textarea>
+                            <button class="btn-primary" style="margin-top:0.5rem; padding:0.5rem 1rem;" onclick="respondToReview('${review.id}')">Post Response</button>
+                        </div>
+                    ` : '')}
+                </div>
+            `).join('');
+        }
+
+        // Submit a new review
+        function submitReview(event) {
+            event.preventDefault();
+            
+            if (!currentUser || currentUser.userType !== 'customer') {
+                showNotification('Please login as a customer to write a review', 'error');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const providerSelect = document.getElementById('providerSelect');
+            const selectedOption = providerSelect.options[providerSelect.selectedIndex];
+            const providerId = providerSelect.value;
+            const providerName = selectedOption.getAttribute('data-name');
+            const providerEmail = selectedOption.getAttribute('data-email');
+            const service = selectedOption.getAttribute('data-service');
+            
+            const rating = document.querySelector('input[name="rating"]:checked');
+            const comment = document.getElementById('reviewComment').value;
+            
+            if (!providerId) {
+                showNotification('Please select a provider', 'error');
+                return;
+            }
+            if (!rating) {
+                showNotification('Please select a rating', 'error');
+                return;
+            }
+            if (!comment.trim()) {
+                showNotification('Please write a review', 'error');
+                return;
+            }
+            
+            const newReview = {
+                id: 'rev_' + Date.now(),
+                providerId: providerId,
+                providerName: providerName,
+                providerEmail: providerEmail,
+                customerName: `${currentUser.firstName} ${currentUser.lastName}`,
+                customerEmail: currentUser.email,
+                rating: parseInt(rating.value),
+                comment: comment.trim(),
+                date: new Date().toISOString().split('T')[0],
+                service: service,
+                response: null
+            };
+            
+            allReviews.push(newReview);
+            saveReviews();
+            
+            // Update provider's rating in their profile
+            updateProviderRating(providerEmail);
+            
+            // Clear form
+            document.getElementById('reviewForm').reset();
+            showNotification('Review submitted successfully!', 'success');
+            
+            // Re-render view
+            renderView();
+        }
+        
+        // Respond to a review (provider only)
+        function respondToReview(reviewId) {
+            if (!currentUser || currentUser.userType !== 'provider') {
+                showNotification('Only providers can respond to reviews', 'error');
+                return;
+            }
+            
+            const responseText = document.getElementById(`response-${reviewId}`).value;
+            if (!responseText.trim()) {
+                showNotification('Please enter a response', 'error');
+                return;
+            }
+            
+            const reviewIndex = allReviews.findIndex(r => r.id === reviewId);
+            if (reviewIndex !== -1 && allReviews[reviewIndex].providerEmail === currentUser.email) {
+                allReviews[reviewIndex].response = responseText.trim();
+                saveReviews();
+                showNotification('Response posted successfully!', 'success');
+                renderView();
+            }
+        }
+        
+        // Update provider's average rating in their user data
+        function updateProviderRating(providerEmail) {
+            const providerReviews = allReviews.filter(r => r.providerEmail === providerEmail);
+            const avgRating = providerReviews.length > 0 
+                ? providerReviews.reduce((sum, r) => sum + r.rating, 0) / providerReviews.length 
+                : 0;
+            
+            const users = JSON.parse(localStorage.getItem('bbh_users')) || [];
+            const providerIndex = users.findIndex(u => u.email === providerEmail);
+            if (providerIndex !== -1) {
+                if (!users[providerIndex].provider) users[providerIndex].provider = {};
+                users[providerIndex].provider.avgRating = avgRating;
+                users[providerIndex].provider.reviewCount = providerReviews.length;
+                localStorage.setItem('bbh_users', JSON.stringify(users));
+            }
+        }
+        
+        // Filter reviews by search and rating
+        function filterReviews() {
+            const searchTerm = document.getElementById('searchReviews')?.value.toLowerCase() || '';
+            const ratingFilter = document.getElementById('ratingFilter')?.value || 'all';
+            
+            let filtered = [...allReviews];
+            
+            // Apply role-based filtering
+            if (currentUser?.userType === 'provider') {
+                filtered = filtered.filter(r => r.providerEmail === currentUser.email);
+            }
+            
+            // Apply search
+            if (searchTerm) {
+                filtered = filtered.filter(r => 
+                    r.providerName?.toLowerCase().includes(searchTerm) ||
+                    r.customerName?.toLowerCase().includes(searchTerm) ||
+                    r.comment?.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Apply rating filter
+            if (ratingFilter !== 'all') {
+                const minRating = parseInt(ratingFilter);
+                filtered = filtered.filter(r => r.rating >= minRating);
+            }
+            
+            // Re-render the filtered list
+            const reviewsList = document.getElementById('reviewsList');
+            if (reviewsList) {
+                const showResponseForm = currentUser?.userType === 'provider';
+                reviewsList.innerHTML = renderReviewCards(filtered, showResponseForm);
+            }
+        }
+        
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `notification-toast ${type}`;
+            toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i><span>${message}</span>`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            getCurrentUser();
+            updateUserMenu();
+            loadReviews();
+            renderView();
+        });
+        
+        // Make functions global for inline event handlers
+        window.submitReview = submitReview;
+        window.respondToReview = respondToReview;
+        window.filterReviews = filterReviews;
+    </script>
+</body>
+</html>
